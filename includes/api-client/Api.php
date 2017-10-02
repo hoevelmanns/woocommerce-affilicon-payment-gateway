@@ -2,7 +2,7 @@
 /**
  * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
  *
- * @file        WC_Affilicon_Payment_Gateway_API_Client.php
+ * @file        Api.php
  * @author      Marcelle Hövelmanns
  * @site        http://www.artsolution.de
  * @date        02.10.17
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-class AffiliconApi extends WC_Affilicon_Payment_Gateway_Request
+class AffiliconApi
 {
 
   public $token;
@@ -23,13 +23,10 @@ class AffiliconApi extends WC_Affilicon_Payment_Gateway_Request
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
-    //todo $apiRequestUrl = WC()->api_request_url();
-
     define('ROUTES', [
       'auth' => '/auth/anonymous/token',
       'refresh' => '/auth/refresh'
     ]);
-
   }
 
   /**
@@ -49,20 +46,13 @@ class AffiliconApi extends WC_Affilicon_Payment_Gateway_Request
         'body' => $args
     ]);
 
-    return json_decode( wp_remote_retrieve_body( $response ), true );
+    return json_decode(wp_remote_retrieve_body($response), true);
   }
 
-  public function refreshToken()
-  {
-    try{
-      $response = $this->post(ROUTES['refresh']);
-    }catch (Exception $e) {
-      return new WP_Error('affilicon_payment_error_authentication_failed', $e->getMessage(), array( 'status' => $e->getCode() ));
-    }
-
-    return $response;
-  }
-
+  /**
+   * authenticate to api
+   * @return mixed|WP_Error
+   */
   public function authenticate()
   {
     try{

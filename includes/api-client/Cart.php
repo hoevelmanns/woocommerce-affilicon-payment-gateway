@@ -19,9 +19,12 @@ class AffiliconCart extends AffiliconApi
     $this->gateway = $gateway;
     parent::__construct($gateway);
     parent::authenticate();
-
   }
 
+  /**
+   * create new cart
+   * @return object
+   */
   public function create()
   {
 
@@ -37,24 +40,26 @@ class AffiliconCart extends AffiliconApi
 
     $this->cart = (object) $cart['data'];
 
-    return $this->cart;
+    return $this;
   }
 
   /**
    * add product to cart
    * @param int $productId
+   * @return $this
    */
   public function add(int $productId)
   {
     $route = '/cart-items/products';
 
-    $store = $this->post($route, [
+    // todo error handling
+    $cartItem = $this->post($route, [
       'cart_id' => $this->cart->id,
       'product_id' => $productId
     ]);
 
-    var_dump($store);
-
+    $this->cart->cart_items[] = $cartItem['data'];
+    return $this;
   }
 
 }
