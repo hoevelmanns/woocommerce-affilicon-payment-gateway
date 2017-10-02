@@ -13,22 +13,21 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-class AffiliconApi extends WC_Affilicon_Payment_Gateway
+class AffiliconApi extends WC_Affilicon_Payment_Gateway_Request
 {
 
-  private $request;
-  private $cart;
   public $token;
+  public $gateway;
+
   const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
 
-  public function __construct()
+  public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
     //todo $apiRequestUrl = WC()->api_request_url();
 
     define('ROUTES', [
       'auth' => '/auth/anonymous/token',
-      'refresh' => '/auth/refresh',
-      'createCart' => '/carts'
+      'refresh' => '/auth/refresh'
     ]);
 
   }

@@ -16,8 +16,6 @@ class WC_Affilicon_Payment_Gateway_Request
 
   // @todo stores the line items
   private $line_items = [];
-  /** @var  WC_Affilicon_Payment_Gateway_Api_Client $apiClient */
-  private $apiClient;
 
   const ORDERFORM_URL = "https://secure.affilibank.de";
 
@@ -26,7 +24,7 @@ class WC_Affilicon_Payment_Gateway_Request
    * @var WC_Affilicon_Payment_Gateway
    */
 
-  protected $gateway;
+  public $gateway;
   private $checkoutFormUrl = "";
 
   /** @var  WC_Order $order */
@@ -44,13 +42,15 @@ class WC_Affilicon_Payment_Gateway_Request
    */
   public function prepareCheckoutForm()
   {
-   /* if ($this->apiClient->authenticate()) {
-        $this->apiClient->create();
-        //$cart = (new AffiliconCart($this->apiClient))->create();
-        //var_dump($cart);
-    }*/
-   $cart = (new AffiliconCart())->create();
-   var_dump($cart);
+
+   $cartApi = new AffiliconCart($this->gateway);
+   $cart = $cartApi->create();
+
+   if (!$cart) {
+     //todo exception handling
+   }
+
+   $cartApi->add(12476);
 
   }
 
