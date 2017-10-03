@@ -23,10 +23,12 @@ class AffiliconApi
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
+
     define('ROUTES', [
       'auth' => '/auth/anonymous/token',
       'refresh' => '/auth/refresh'
     ]);
+
   }
 
   /**
@@ -36,6 +38,7 @@ class AffiliconApi
    */
   public function post($route, array $args = [])
   {
+
     $url = self::ENDPOINT . $route;
 
     $response = wp_remote_post($url, [
@@ -47,6 +50,7 @@ class AffiliconApi
     ]);
 
     return json_decode(wp_remote_retrieve_body($response), true);
+
   }
 
   /**
@@ -55,6 +59,7 @@ class AffiliconApi
    */
   public function authenticate()
   {
+
     try{
       $response = $this->post(ROUTES['auth']);
     }catch (Exception $e) {

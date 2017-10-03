@@ -14,6 +14,16 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 
   public function __construct()
   {
+    // define additional product attributes for woocommerce product
+    if (!defined('extraProductFields')) {
+      define('extraProductFields', [
+        'affilicon_product_id' => [
+          'placeholder' => __('Please enter the affilicon product id', 'woocommerce-affilicon-payment-gateway'),
+          'label' => __('affilicon Product-ID', 'woocommerce-affilicon-payment-gateway'),
+          'type' => 'text'
+        ]
+      ]);
+    }
 
     // Includes
     if (!is_admin()) {
@@ -48,6 +58,11 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     $this->receiver_email = "marcelle.hoevelmanns@gmail.com"; // todo option
 
     add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+
+    // generate custom product fields
+    add_action('woocommerce_product_options_general_product_data', array($this, 'custom_woocommerce_product_fields'));
+    // save custom field inputs
+    add_action( 'woocommerce_process_product_meta', array($this, 'save_custom_woocommerce_product_fields'));
 
     // Versuch
     add_filter('query_vars', array($this, 'add_query_vars'));
@@ -144,9 +159,43 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     <?php
   }
 
+
+  public function custom_woocommerce_product_fields()
+  {
+    foreach (extraProductFields as $key => $field) {
+      woocommerce_wp_text_input([
+        'label' => $field['label'],
+        'placeholder' => $field['placeholder'],
+        'class' => 'short wc_input_price',
+        'style' => '',
+        'wrapper_class' => 'form-field',
+        'id' => $key,
+        'name' => $key,
+        'type' => $field['type'],
+        'desc_tip' => '',
+        'data_type'   => '',
+        'custom_attributes' => '',
+        'description' => '' // todo field description
+      ]);
+    }
+  }
+
+  /**
+   * iterate defined custom fields and store input values
+   * @param $post_id
+   */
+  public function save_custom_woocommerce_product_fields($post_id)
+  {
+    foreach (extraProductFields as $key => $field) {
+      $fieldValue = isset( $_POST[$key] ) ? $_POST[$key] : '';
+      $product = wc_get_product( $post_id );
+      $product->update_meta_data( $key, $fieldValue );
+      $product->save();
+    }
+  }
+
   public function init_form_fields()
   {
-
     $this->form_fields = array(
       'enabled' => array(
         'title' => __('Enable/Disable', 'woocommerce-affilicon-payment-gateway'),

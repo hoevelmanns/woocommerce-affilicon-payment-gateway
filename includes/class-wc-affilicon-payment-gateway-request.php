@@ -24,9 +24,20 @@ class WC_Affilicon_Payment_Gateway_Request
 
   public function __construct($gateway, $order)
   {
+
     $this->order = $order;
     $this->gateway = $gateway;
-    //@todo notifyUrl: $this->notifyUrl = WC()->api_request_url( 'WC_Affilicon_Payment_Gateway' );
+
+  }
+
+  public function getAffiliconProductIdFromMetaData(WC_Product $product)
+  {
+    foreach ($product->get_meta_data() as $meta) {
+      if ($meta->key === 'affilicon_product_id') {
+        return (int) $meta->value;
+      }
+    }
+    return false;
   }
 
   /**
@@ -35,17 +46,30 @@ class WC_Affilicon_Payment_Gateway_Request
   public function prepareCheckoutForm()
   {
 
-   $cart = new AffiliconCart($this->gateway);
-   $cart->create();
+    /** @var AffiliconCart $cart */
+    $cart = (new AffiliconCart($this->gateway))->create();
 
-   //todo iterate woocommerce cart and push product
-   $cart
-     ->add(12476)
-     ->add(12594);
+    $order = $this->order;
+    $cartItems = $order->get_items();
 
-   var_dump($cart);
+    /** @var WC_Order_Item $item */
+    foreach ($cartItems as $item) {
+      /** @var WC_Product $product */
+      $product = $item->get_product();
+      $affiliconProductId = $this->getAffiliconProductIdFromMetaData($product);
+
+      if (!$affiliconProductId) {
+        // no affilicon product id was found, so continue
+        continue;
+      }
+      $cart->add($affiliconProductId);
+    }
+
+
+    var_dump($cart);
 
   }
+
 
   /**
    * build form parameter for legacy checkout form (Versions 2-3)
@@ -55,7 +79,7 @@ class WC_Affilicon_Payment_Gateway_Request
    */
   public function prepareLegacyForm()
   {
-    return $this->legacyFormUrl($this->order);
+    $this->legacyFormUrl($this->order);
   }
 
   public function getCheckoutFormUrl()

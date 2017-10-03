@@ -16,9 +16,11 @@ class AffiliconCart extends AffiliconApi
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
+
     $this->gateway = $gateway;
     parent::__construct($gateway);
     parent::authenticate();
+
   }
 
   /**
@@ -41,6 +43,7 @@ class AffiliconCart extends AffiliconApi
     $this->cart = (object) $cart['data'];
 
     return $this;
+
   }
 
   /**
@@ -50,6 +53,7 @@ class AffiliconCart extends AffiliconApi
    */
   public function add(int $productId)
   {
+
     $route = '/cart-items/products';
 
     // todo error handling
@@ -60,6 +64,7 @@ class AffiliconCart extends AffiliconApi
 
     $this->cart->cart_items[] = $cartItem['data'];
     return $this;
+
   }
 
 }
