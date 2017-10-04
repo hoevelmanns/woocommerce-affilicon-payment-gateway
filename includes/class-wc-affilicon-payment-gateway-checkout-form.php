@@ -79,7 +79,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         $this->legacyFormUrl($this->order);
     }
 
-    public function getCheckoutFormUrl()
+    public function getUrl()
     {
         return $this->checkoutFormUrl;
     }
@@ -104,7 +104,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
             "cartId/{$this->cart->getId()}",
             "countryId/$countryId",
             "token/{$this->cart->getToken()}"
-        ];
+        ]; // todo testmode
 
         $this->checkoutFormUrl = self::ORDERFORM_URL_LEGACY . "/" . join('/', $params);
 

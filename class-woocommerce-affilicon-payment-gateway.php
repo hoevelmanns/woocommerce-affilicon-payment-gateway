@@ -9,7 +9,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     const CHECKOUT_FORM_VERSIONS = [
         '4' => 'Checkout form 4',
         '3' => 'Modern (flat design / Responsive)',
-        '2' => 'Classic (conventional theme'
+        '2' => 'Classic (conventional theme' // todo i18n
     ];
 
     const AFFILICON_PRODUCT_TYPES = [
@@ -17,8 +17,26 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
         '2' => 'Subscription product'
     ];
 
+    /** @var WC_Order order */
+    public $order;
+    public $testmode;
+    public $receiver_email;
+    public $vendor_id;
+    public $itns_url;
+    public $itns_secret_key;
+    public $itns_prefix;
+
     public function __construct()
     {
+        // Includes
+        if (!is_admin()) {
+            include_once('includes/class-wc-affilicon-payment-gateway-checkout-form.php');
+            include_once('includes/class-wc-affilicon-payment-gateway-response.php');
+            include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
+            include_once('includes/api-client/Api.php');
+            include_once('includes/api-client/Cart.php');
+        }
+
         // define additional product attributes for woocommerce product
         if (!defined('extraProductFields')) {
             define('extraProductFields', [
@@ -39,16 +57,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
                 ]
             ]);
         }
-
-        // Includes
-        if (!is_admin()) {
-            include_once('includes/class-wc-affilicon-payment-gateway-checkout-form.php');
-            include_once('includes/class-wc-affilicon-payment-gateway-response.php');
-            include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
-            include_once('includes/api-client/Api.php');
-            include_once('includes/api-client/Cart.php');
-        }
-
 
         $this->id = 'affilicon_payment';
         $this->method_title = __('Affilicon Payment', 'woocommerce-affilicon-payment-gateway');
@@ -113,13 +121,15 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
         $itnsHandler->checkResponse($query);
     }
 
-
+    /**
+     * @param int $orderId
+     * @return array|WP_Error
+     */
     public function process_payment($orderId)
     {
-        //header('Content-type: application/json'); // todo kann weg?
 
-        // handler checkout form 3 / multiple products, simple product or subscription
         $this->order = wc_get_order($orderId);
+        /** @var WC_Affilicon_Payment_Gateway_Checkout_Form $checkoutForm */
         $checkoutForm = new WC_Affilicon_Payment_Gateway_Checkout_Form($this, $this->order);
 
         try {
@@ -139,7 +149,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 
         return array(
             'result' => 'success',
-            'redirect' => $checkoutForm->getCheckoutFormUrl()//@todo testmodus berücksichtigen
+            'redirect' => $checkoutForm->getUrl()//@todo testmodus berücksichtigen
         );
 
 
@@ -147,7 +157,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 
     public function getTransactionUrl($order)
     {
-
         return parent::get_transaction_url($order);
     }
 
