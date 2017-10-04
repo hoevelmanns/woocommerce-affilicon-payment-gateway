@@ -34,8 +34,6 @@ class AffiliconCart extends AffiliconApi
       'vendor' => $this->gateway->vendor_id // todo dynamically
     ]);
 
-    var_dump($cart);
-
     if (!$cart) {
       // todo exception
     }

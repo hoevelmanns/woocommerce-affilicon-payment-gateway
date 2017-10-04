@@ -24,10 +24,12 @@ class AffiliconApi
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
 
-    define('ROUTES', [
-      'auth' => '/auth/anonymous/token',
-      'refresh' => '/auth/refresh'
-    ]);
+    if (!defined('ROUTES')) {
+      define('ROUTES', [
+        'auth' => '/auth/anonymous/token',
+        'refresh' => '/auth/refresh'
+      ]);
+    }
 
   }
 

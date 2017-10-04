@@ -22,7 +22,7 @@ class WC_Affilicon_Payment_Gateway_Request
   /** @var  WC_Order $order */
   private $order;
 
-  public function __construct($gateway, $order)
+  public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
 
     $this->order = $order;
@@ -30,11 +30,11 @@ class WC_Affilicon_Payment_Gateway_Request
 
   }
 
-  public function getAffiliconProductIdFromMetaData(WC_Product $product)
+  public function getMetaDataByKey(WC_Product $product, $key)
   {
     foreach ($product->get_meta_data() as $meta) {
-      if ($meta->key === 'affilicon_product_id') {
-        return (int) $meta->value;
+      if ($meta->key === $key) {
+        return $meta->value;
       }
     }
     return false;
@@ -45,7 +45,6 @@ class WC_Affilicon_Payment_Gateway_Request
    */
   public function prepareCheckoutForm()
   {
-
     /** @var AffiliconCart $cart */
     $cart = (new AffiliconCart($this->gateway))->create();
 
@@ -54,18 +53,19 @@ class WC_Affilicon_Payment_Gateway_Request
 
     /** @var WC_Order_Item $item */
     foreach ($cartItems as $item) {
+
       /** @var WC_Product $product */
       $product = $item->get_product();
-      $affiliconProductId = $this->getAffiliconProductIdFromMetaData($product);
+      $affiliconProductId = (int) $this->getMetaDataByKey($product, 'affilicon_product_id');
 
       if (!$affiliconProductId) {
-        // no affilicon product id was found, so continue
         continue;
       }
+
       $cart->add($affiliconProductId);
     }
 
-
+    // todo build checkout form url
     var_dump($cart);
 
   }
@@ -93,12 +93,12 @@ class WC_Affilicon_Payment_Gateway_Request
    * @param $order
    * @return string
    */
-  public function legacyFormUrl($order)
+  public function legacyFormUrl(WC_Order $order)
   {
     $orderFormUrl = self::ORDERFORM_URL; // todo option
 
     $vendorId = $this->gateway->vendor_id;
-    $customer = new WC_Customer($order->id);
+    $customer = new WC_Customer($order->get_id());
     $orderData = $order->get_items();
     $productData = reset($orderData);
     $settings = $this->gateway->settings;
