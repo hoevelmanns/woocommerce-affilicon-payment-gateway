@@ -125,7 +125,7 @@ class WC_Affilicon_Payment_Gateway_Request
     $jsonArgs = json_encode($args, true);
     $encryptedArgs = $this->crypt($jsonArgs);
 
-    $requestOrderformUrl = "$orderFormUrl?prefill=$encryptedArgs&custom=" . $order->id . "|" . $order->order_key;
+    $requestOrderformUrl = "$orderFormUrl?prefill=$encryptedArgs&custom=" . $order->get_id() . "|" . $order->order_key;
 
     //var_dump($product->is_type('job_package'));
     //var_dump($product->get_type());
