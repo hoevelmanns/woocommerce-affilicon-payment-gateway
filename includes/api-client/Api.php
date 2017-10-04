@@ -24,10 +24,12 @@ class AffiliconApi
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
 
-    if (!defined('ROUTES')) {
-      define('ROUTES', [
+    if (!defined('AFFILICON_ROUTES')) {
+      define('AFFILICON_ROUTES', [
         'auth' => '/auth/anonymous/token',
-        'refresh' => '/auth/refresh'
+        'carts' => '/carts',
+        'refresh' => '/auth/refresh',
+        'cartItemsProducts' => '/cart-items/products'
       ]);
     }
 
@@ -68,7 +70,7 @@ class AffiliconApi
   {
 
     try{
-      $response = $this->post(ROUTES['auth']);
+      $response = $this->post(AFFILICON_ROUTES['auth']);
     }catch (Exception $e) {
       return new WP_Error('affilicon_payment_error_authentication_failed', $e->getMessage(), array( 'status' => $e->getCode() ));
     }

@@ -30,7 +30,7 @@ class AffiliconCart extends AffiliconApi
   public function create()
   {
 
-    $cart = $this->post('/carts', [
+    $cart = $this->post(AFFILICON_ROUTES['carts'], [
       'vendor' => $this->gateway->vendor_id // todo dynamically
     ]);
 
@@ -52,10 +52,8 @@ class AffiliconCart extends AffiliconApi
   public function add($productId)
   {
 
-    $route = '/cart-items/products';
-
     // todo error handling
-    $cartItem = $this->post($route, [
+    $cartItem = $this->post(AFFILICON_ROUTES['cartItemsProducts'], [
       'cart_id' => $this->cart->id,
       'product_id' => $productId
     ]);
