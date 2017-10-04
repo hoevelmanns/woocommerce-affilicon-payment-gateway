@@ -12,7 +12,7 @@ class AffiliconCart extends AffiliconApi
 {
 
   public $gateway;
-  private $cart;
+  public $cart;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway)
   {
@@ -42,6 +42,16 @@ class AffiliconCart extends AffiliconApi
 
     return $this;
 
+  }
+
+  public function getId()
+  {
+      return $this->cart->id;
+  }
+
+  public function getToken()
+  {
+      return $this->token;
   }
 
   /**
