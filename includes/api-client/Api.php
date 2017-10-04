@@ -45,14 +45,19 @@ class AffiliconApi
 
     $response = wp_remote_post($url, [
         'method' => 'POST',
-        'headers' => [
-          'Authorization' => 'Bearer ' . $this->token
-        ],
+        'headers' => $this->headers(),
         'body' => $args
     ]);
 
     return json_decode(wp_remote_retrieve_body($response), true);
 
+  }
+
+  private function headers()
+  {
+      return [
+          'Authorization' => 'Bearer ' . $this->token
+      ];
   }
 
   /**

@@ -143,9 +143,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
               border:0 !important;
               margin: 0!important;
           }
-          #payment_method_affilicon_payment {
-              display: inline-block !important;
-          }
       </style>
       <fieldset>
           <p class="form-row form-row-wide">

@@ -49,7 +49,7 @@ class AffiliconCart extends AffiliconApi
    * @param int $productId
    * @return $this
    */
-  public function add(int $productId)
+  public function add($productId)
   {
 
     $route = '/cart-items/products';
