@@ -10,76 +10,82 @@
 
 
 if (!defined('ABSPATH')) {
-    exit;
+  exit;
 }
 
 class AffiliconApi
 {
 
-    public $token;
-    public $gateway;
+  public $token;
+  public $gateway;
 
-    const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
+  const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
 
-    public function __construct(WC_Affilicon_Payment_Gateway $gateway)
-    {
+  public function __construct(WC_Affilicon_Payment_Gateway $gateway)
+  {
 
-        if (!defined('AFFILICON_ROUTES')) {
-            define('AFFILICON_ROUTES', [
-                'auth' => '/auth/anonymous/token',
-                'refreshToken' => '/auth/refresh',
-                'carts' => '/carts',
-                'cartItemsProducts' => '/cart-items/products'
-            ]);
-        }
-
+    if (!defined('AFFILICON_ROUTES')) {
+      define('AFFILICON_ROUTES', [
+        'auth' => '/auth/anonymous/token',
+        'refreshToken' => '/auth/refresh',
+        'carts' => '/carts',
+        'cartItemsProducts' => '/cart-items/products'
+      ]);
     }
 
-    /**
-     * @param $route
-     * @param array $args
-     * @return array|mixed|object
-     */
-    public function post($route, array $args = [])
-    {
+  }
 
-        $url = self::ENDPOINT . $route;
+  /**
+   * @param $route
+   * @param array $args
+   * @return array|mixed|object
+   */
+  public function post($route, array $args = [])
+  {
 
-        $response = wp_remote_post($url, [
-            'method' => 'POST',
-            'headers' => $this->headers(),
-            'body' => $args
-        ]);
+    $url = self::ENDPOINT . $route;
 
-        return json_decode(wp_remote_retrieve_body($response), true);
+    $response = wp_remote_post($url, [
+      'method' => 'POST',
+      'headers' => $this->headers(),
+      'body' => $args
+    ]);
 
+    return json_decode(wp_remote_retrieve_body($response), true);
+
+  }
+
+  private function headers()
+  {
+    return [
+      'Authorization' => 'Bearer ' . $this->token
+    ];
+  }
+
+  /**
+   * authenticate to api
+   * @return mixed|WP_Error
+   */
+  public function authenticate()
+  {
+
+    try {
+      $response = $this->post(AFFILICON_ROUTES['auth']);
+    } catch (Exception $e) {
+      return new WP_Error('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }
 
-    private function headers()
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->token
-        ];
+    if (!$response || !$response['token']) {
+      return new WP_Error('affilicon_payment_error_authentication_failed', 'token invalid');
     }
 
-    /**
-     * authenticate to api
-     * @return mixed|WP_Error
-     */
-    public function authenticate()
-    {
+    return $this->token = $response['token'];
 
-        try {
-            $response = $this->post(AFFILICON_ROUTES['auth']);
-        } catch (Exception $e) {
-            return new WP_Error('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
-        }
+  }
 
-        if (!$response || !$response['token']) {
-            return new WP_Error('affilicon_payment_error_authentication_failed', 'token invalid');
-        }
-
-        return $this->token = $response['token'];
-    }
+  public function getToken()
+  {
+    return $this->token;
+  }
 
 }

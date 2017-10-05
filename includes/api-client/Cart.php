@@ -49,11 +49,6 @@ class AffiliconCart extends AffiliconApi
       return $this->cart->id;
   }
 
-  public function getToken()
-  {
-      return $this->token;
-  }
-
   /**
    * add product to cart
    * @param int $productId
