@@ -13,8 +13,8 @@ namespace AffiliconApi;
 class AffiliconCart extends AffiliconApi
 {
 
-  public $clientId;
-  public $cart;
+  private $clientId;
+  private $items;
 
   public function __construct()
   {
@@ -23,15 +23,33 @@ class AffiliconCart extends AffiliconApi
 
   }
 
+  /**
+   * set the Client ID, previously called Vendor ID
+   * @param $id
+   * @return $this
+   */
   public function setClientId($id)
   {
       $this->clientId = $id;
       return $this;
   }
 
+  /**
+   * get the Client ID, previously called Vendor ID
+   * @return mixed
+   */
   public function getClientId()
   {
       return $this->clientId;
+  }
+
+  /**
+   * get the cart items
+   * @return mixed
+   */
+  public function getItems()
+  {
+    return $this->items;
   }
 
   /**
@@ -64,7 +82,7 @@ class AffiliconCart extends AffiliconApi
      * @param AffiliconProduct $product
      * @return $this
      */
-  public function add(AffiliconProduct $product)
+  public function addItem(AffiliconProduct $product)
   {
 
     // todo error handling
@@ -74,22 +92,10 @@ class AffiliconCart extends AffiliconApi
       'count' => $product->getQuantity()
     ]);
 
-    $this->cart->cart_items[] = $cartItem['data'];
+    $this->items[] = $cartItem['data'];
+
     return $this;
 
   }
 
 }
-
-/**
-private function productWithMetaData(WC_Order_Item $item)
-{
-    $product = $item->get_product();
-
-    foreach ($product->get_meta_data() as $meta) {
-        if (preg_match(self::META_PREFIX,$meta->key)) {
-            $product[$meta->key] = $meta->value;
-        }
-    }
-    return $product;
-}**/

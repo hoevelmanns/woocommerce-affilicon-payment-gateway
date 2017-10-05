@@ -17,7 +17,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /** @var  WC_Order $order */
   private $order;
 
-  /** @var  AffiliconCart */
+  /** @var  \AffiliconApi\AffiliconCart */
   public $cart;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
@@ -28,7 +28,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   }
 
-  public function getMetaDataByKey(WC_Product $product, $key)
+  public function getMetaDataValue(WC_Product $product, $key)
   {
     foreach ($product->get_meta_data() as $meta) {
       if ($meta->key === $key) {
@@ -58,12 +58,13 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     /** @var WC_Product $product */
       $product = $item->get_product();
 
-      $affiliconProductId = $this->getMetaDataByKey($product, 'affilicon_product_id');
+      $affiliconProductId = $this->getMetaDataValue($product, 'affilicon_product_id');
 
+      /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
       $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
-          ->create($affiliconProductId, $item->get_quantity());
+          ->set($affiliconProductId, $item->get_quantity());
 
-      $cart->add($affiliconProduct);
+      $cart->addItem($affiliconProduct);
 
     }
 

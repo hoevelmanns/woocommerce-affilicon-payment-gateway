@@ -32,7 +32,7 @@ class AffiliconProduct extends AffiliconApi implements ProductInterface
         return $this->id;
     }
 
-    public function create($productId, $quantity)
+    public function set($productId, $quantity)
     {
         $this->id = $productId;
         $this->quantity = $quantity;

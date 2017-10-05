@@ -25,5 +25,5 @@ interface ProductInterface
      * @param $quantity
      * @return mixed
      */
-    public function create($id, $quantity);
+    public function set($id, $quantity);
 }

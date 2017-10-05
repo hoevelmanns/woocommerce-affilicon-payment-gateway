@@ -41,6 +41,7 @@ class AffiliconApi
 
     $url = self::ENDPOINT . $route;
 
+    // todo replace wp_remote_post with native post method or Guzzle
     $response = wp_remote_post($url, [
       'method' => 'POST',
       'headers' => $this->headers(),
@@ -65,7 +66,7 @@ class AffiliconApi
 
   /**
    * authenticate to api
-   * @return mixed|WP_Error
+   * @return mixed|\ErrorException
    */
   public function authenticate()
   {
@@ -76,12 +77,12 @@ class AffiliconApi
 
     try {
       $response = $this->post(AFFILICON_ROUTES['auth']);
-    } catch (Exception $e) {
-      return new WP_Error('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
+    } catch (\Exception $e) {
+      return new \ErrorException('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }
 
     if (!$response || !$response['token']) {
-      return new WP_Error('affilicon_payment_error_authentication_failed', 'token invalid');
+      return new \ErrorException('affilicon_payment_error_authentication_failed', 'token invalid');
     }
 
     return $this->token = $response['token'];
