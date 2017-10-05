@@ -18,11 +18,13 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   private $order;
 
   /** @var  \AffiliconApi\AffiliconCart */
-  public $cart;
+  private $affiliconCart;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
 
+    /** @var \AffiliconApi\AffiliconApi api */
+    $this->affiliconCart = new \AffiliconApi\AffiliconCart();
     $this->order = $order;
     $this->gateway = $gateway;
 
@@ -44,8 +46,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   public function buildCart()
   {
 
-    /** @var \AffiliconApi\AffiliconCart $cart */
-    $cart = (new \AffiliconApi\AffiliconCart())
+    $this->affiliconCart
         ->setCountryId('de') // todo get from woocommerce
         ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
         ->setClientId($this->gateway->vendor_id)
@@ -66,11 +67,9 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
           ->set($affiliconProductId, $item->get_quantity());
 
-      $cart->addItem($affiliconProduct);
+      $this->affiliconCart->addItem($affiliconProduct);
 
     }
-
-    $this->cart = $cart;
 
   }
 
@@ -117,20 +116,20 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   public function buildLegacyWidgetFormUrl()
   {
     $prefill = $this->getAffiliconArgs($this->order);
-    $clientId = $this->cart->getClientId();
+    $clientId = $this->affiliconCart->getClientId();
 
     // todo: countryID = "de" or "de_DE"?
     $countryId = $this->getRegionCode($this->order->data['shipping']['country']); // todo check if needed "getRegionCode" or format = "de"
-    $userLanguage = get_locale();
+    $userLanguage = $this->affiliconCart->getUserLanguage();
 
     // todo: language
 
     $params = [
       "$clientId/redirect",
-      "cartId/{$this->cart->getId()}",
+      "cartId/{$this->affiliconCart->getId()}",
       "countryId/$countryId",
-      "token/{$this->cart->getToken()}",
-      //"language/$userLanguage", // todo core -> use case language
+      "token/{$this->affiliconCart->getToken()}",
+      "language/$userLanguage", // todo core -> use case language
       //"prefill/$prefill" // todo core -> use case prefill
     ]; // todo testmode
 
