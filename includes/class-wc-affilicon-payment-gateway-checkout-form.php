@@ -116,7 +116,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   public function buildLegacyWidgetFormUrl()
   {
     $prefill = $this->getAffiliconArgs($this->order);
-    $clientId = $this->gateway->vendor_id;
+    $clientId = $this->cart->getClientId();
 
     // todo: countryID = "de" or "de_DE"?
     $countryId = $this->getRegionCode($this->order->data['shipping']['country']); // todo check if needed "getRegionCode" or format = "de"
