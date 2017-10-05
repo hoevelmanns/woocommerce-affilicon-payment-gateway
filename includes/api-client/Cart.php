@@ -15,6 +15,8 @@ class AffiliconCart extends AffiliconApi
 
   private $clientId;
   private $items;
+  private $id;
+  private $status;
 
   public function __construct()
   {
@@ -44,15 +46,6 @@ class AffiliconCart extends AffiliconApi
   }
 
   /**
-   * get the cart items
-   * @return mixed
-   */
-  public function getItems()
-  {
-    return $this->items;
-  }
-
-  /**
    * create new cart
    * @return object
    */
@@ -67,15 +60,22 @@ class AffiliconCart extends AffiliconApi
       // todo exception
     }
 
-    $this->cart = (object) $cart['data'];
+    $data = (object) $cart['data'];
+    $this->id = $data->id;
+    $this->status = $data->status;
 
     return $this;
 
   }
 
+  public function getStatus()
+  {
+    return $this->status;
+  }
+
   public function getId()
   {
-      return $this->cart->id;
+      return $this->id;
   }
 
     /**
@@ -96,6 +96,15 @@ class AffiliconCart extends AffiliconApi
 
     return $this;
 
+  }
+
+  /**
+   * get the cart items
+   * @return mixed
+   */
+  public function getItems()
+  {
+    return $this->items;
   }
 
 }

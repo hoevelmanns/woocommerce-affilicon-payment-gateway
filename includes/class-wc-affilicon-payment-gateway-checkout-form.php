@@ -50,10 +50,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         ->create();
 
     $order = $this->order;
-    $cartItems = $order->get_items();
+    $items = $order->get_items();
 
     /** @var WC_Order_Item $item */
-    foreach ($cartItems as $item) {
+    foreach ($items as $item) {
 
     /** @var WC_Product $product */
       $product = $item->get_product();
