@@ -23,7 +23,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
 
-    /** @var \AffiliconApi\AffiliconApi api */
     $this->affiliconCart = new \AffiliconApi\AffiliconCart();
     $this->order = $order;
     $this->gateway = $gateway;
