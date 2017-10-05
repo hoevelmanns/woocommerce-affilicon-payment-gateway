@@ -12,7 +12,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   const META_PREFIX = "affilicon";
 
   public $gateway;
-  private $checkoutFormUrl = "";
+  private $checkoutFormUrl;
 
   /** @var  WC_Order $order */
   private $order;
@@ -74,7 +74,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     }
 
   }
-
 
   /**
    * build form parameter for legacy checkout form (Versions 2-3)
