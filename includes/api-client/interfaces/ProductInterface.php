@@ -6,24 +6,31 @@
  * Date: 05.10.17
  * Time: 11:12
  */
+
 namespace AffiliconApi\Interfaces;
 
 interface ProductInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getId();
+  /**
+   * @return mixed
+   */
+  public function getId();
 
-    /**
-     * @return integer
-     */
-    public function getQuantity();
+  /**
+   * @param $id
+   * @return mixed
+   */
+  public function setId($id);
 
-    /**
-     * @param $id
-     * @param $quantity
-     * @return mixed
-     */
-    public function set($id, $quantity);
+  /**
+   * @param $quantity
+   * @return mixed
+   */
+  public function setQuantity($quantity);
+
+  /**
+   * @return integer
+   */
+  public function getQuantity();
+
 }

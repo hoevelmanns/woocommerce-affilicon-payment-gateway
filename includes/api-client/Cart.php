@@ -37,7 +37,7 @@ class AffiliconCart extends AffiliconApi
     ]);
 
     if (!$cart) {
-      // todo exception
+      // todo exception handling
     }
 
     $data = (object) $cart['data'];

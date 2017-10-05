@@ -14,28 +14,46 @@ use AffiliconApi\Interfaces\ProductInterface;
 class AffiliconProduct extends AffiliconApi implements ProductInterface
 {
 
-    private $id;
-    private $quantity;
+  private $id;
+  private $quantity;
 
-    public function __construct()
-    {
-        parent::__construct();
-        parent::authenticate();
-    }
+  public function __construct()
+  {
+    parent::__construct();
+    parent::authenticate();
+  }
 
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
+  public function getQuantity()
+  {
+    return $this->quantity;
+  }
 
-    public function getId() {
-        return $this->id;
-    }
+  /**
+   * @param $quantity
+   * @return $this
+   */
+  public function setQuantity($quantity)
+  {
+    $this->quantity = $quantity;
+    return $this;
+  }
 
-    public function set($productId, $quantity)
-    {
-        $this->id = $productId;
-        $this->quantity = $quantity;
-        return $this;
-    }
+  /**
+   * @param $id
+   * @return $this
+   */
+  public function setId($id)
+  {
+    $this->id = $id;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
+
 }

@@ -49,6 +49,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         ->setCountryId('de') // todo get from woocommerce
         ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
         ->setClientId($this->gateway->vendor_id)
+        // todo affilicon ->setShippingAddress()
+        // todo affilicon ->setCustomer()
         ->create();
 
     $order = $this->order;
@@ -64,7 +66,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
       /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
       $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
-          ->set($affiliconProductId, $item->get_quantity());
+          ->setId($affiliconProductId)
+          ->setQuantity($item->get_quantity());
 
       $this->affiliconCart->addItem($affiliconProduct);
 
