@@ -9,6 +9,7 @@
 class WC_Affilicon_Payment_Gateway_Checkout_Form
 {
   const ORDERFORM_URL_LEGACY = "https://secure.affilibank.de";
+  const META_PREFIX = "affilicon";
 
   public $gateway;
   private $checkoutFormUrl = "";
@@ -42,8 +43,11 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function buildCart()
   {
-    /** @var AffiliconCart $cart */
-    $cart = (new AffiliconCart($this->gateway))->create();
+
+    /** @var \AffiliconApi\AffiliconCart $cart */
+    $cart = (new \AffiliconApi\AffiliconCart())
+        ->setClientId($this->gateway->vendor_id)
+        ->create();
 
     $order = $this->order;
     $cartItems = $order->get_items();
@@ -51,15 +55,16 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     /** @var WC_Order_Item $item */
     foreach ($cartItems as $item) {
 
-      /** @var WC_Product $product */
+    /** @var WC_Product $product */
       $product = $item->get_product();
-      $affiliconProductId = (int)$this->getMetaDataByKey($product, 'affilicon_product_id');
 
-      if (!$affiliconProductId) {
-        continue;
-      }
+      $affiliconProductId = $this->getMetaDataByKey($product, 'affilicon_product_id');
 
-      $cart->add($affiliconProductId);
+      $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
+          ->create($affiliconProductId, $item->get_quantity());
+
+      $cart->add($affiliconProduct);
+
     }
 
     // todo build checkout form url

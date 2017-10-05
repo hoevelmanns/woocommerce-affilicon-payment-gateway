@@ -8,20 +8,16 @@
  * @date        02.10.17
  */
 
-
-if (!defined('ABSPATH')) {
-  exit;
-}
+namespace AffiliconApi;
 
 class AffiliconApi
 {
 
-  public $token;
-  public $gateway;
+  private $token;
 
   const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
 
-  public function __construct(WC_Affilicon_Payment_Gateway $gateway)
+  public function __construct()
   {
 
     if (!defined('AFFILICON_ROUTES')) {
@@ -62,12 +58,21 @@ class AffiliconApi
     ];
   }
 
+  private function isAuthenticated()
+  {
+    return !is_null($this->token);
+  }
+
   /**
    * authenticate to api
    * @return mixed|WP_Error
    */
   public function authenticate()
   {
+
+    if ($this->isAuthenticated()) {
+      return $this->getToken();
+    }
 
     try {
       $response = $this->post(AFFILICON_ROUTES['auth']);

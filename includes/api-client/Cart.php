@@ -8,19 +8,30 @@
  * @date        02.10.17
  */
 
+namespace AffiliconApi;
+
 class AffiliconCart extends AffiliconApi
 {
 
-  public $gateway;
+  public $clientId;
   public $cart;
 
-  public function __construct(WC_Affilicon_Payment_Gateway $gateway)
+  public function __construct()
   {
-
-    $this->gateway = $gateway;
-    parent::__construct($gateway);
+    parent::__construct();
     parent::authenticate();
 
+  }
+
+  public function setClientId($id)
+  {
+      $this->clientId = $id;
+      return $this;
+  }
+
+  public function getClientId()
+  {
+      return $this->clientId;
   }
 
   /**
@@ -31,7 +42,7 @@ class AffiliconCart extends AffiliconApi
   {
 
     $cart = $this->post(AFFILICON_ROUTES['carts'], [
-      'vendor' => $this->gateway->vendor_id // todo dynamically
+      'vendor' => $this->clientId
     ]);
 
     if (!$cart) {
@@ -49,18 +60,18 @@ class AffiliconCart extends AffiliconApi
       return $this->cart->id;
   }
 
-  /**
-   * add product to cart
-   * @param int $productId
-   * @return $this
-   */
-  public function add($productId)
+    /**
+     * @param AffiliconProduct $product
+     * @return $this
+     */
+  public function add(AffiliconProduct $product)
   {
 
     // todo error handling
     $cartItem = $this->post(AFFILICON_ROUTES['cartItemsProducts'], [
-      'cart_id' => $this->cart->id,
-      'product_id' => $productId
+      'cart_id' => $this->getId(),
+      'product_id' => $product->getId(),
+      'count' => $product->getQuantity()
     ]);
 
     $this->cart->cart_items[] = $cartItem['data'];
@@ -69,3 +80,16 @@ class AffiliconCart extends AffiliconApi
   }
 
 }
+
+/**
+private function productWithMetaData(WC_Order_Item $item)
+{
+    $product = $item->get_product();
+
+    foreach ($product->get_meta_data() as $meta) {
+        if (preg_match(self::META_PREFIX,$meta->key)) {
+            $product[$meta->key] = $meta->value;
+        }
+    }
+    return $product;
+}**/
