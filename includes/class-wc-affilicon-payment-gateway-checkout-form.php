@@ -68,7 +68,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
     }
 
-    // todo build checkout form url
     $this->cart = $cart;
 
   }
