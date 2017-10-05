@@ -46,6 +46,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
     /** @var \AffiliconApi\AffiliconCart $cart */
     $cart = (new \AffiliconApi\AffiliconCart())
+        ->setCountryId('de') // todo get from woocommerce
+        ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
         ->setClientId($this->gateway->vendor_id)
         ->create();
 

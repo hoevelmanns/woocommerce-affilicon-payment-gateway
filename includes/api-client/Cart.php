@@ -17,6 +17,7 @@ class AffiliconCart extends AffiliconApi
   private $id;
   private $status;
 
+
   public function __construct()
   {
     parent::__construct();

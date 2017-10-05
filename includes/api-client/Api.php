@@ -15,6 +15,8 @@ class AffiliconApi
 
   private $token;
   private $clientId;
+  private $countryId;
+  private $userLanguage;
 
   const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
 
@@ -115,4 +117,39 @@ class AffiliconApi
     return $this->clientId;
   }
 
+  /**
+   * @return mixed
+   */
+  public function getCountryId()
+  {
+    return $this->countryId;
+  }
+
+  /**
+   * @param $countryId
+   * @return $this
+   */
+  public function setCountryId($countryId)
+  {
+    $this->countryId = $countryId;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getUserLanguage()
+  {
+    return $this->userLanguage;
+  }
+
+  /**
+   * @param $userLanguage
+   * @return $this
+   */
+  public function setUserLanguage($userLanguage)
+  {
+    $this->userLanguage = $userLanguage;
+    return $this;
+  }
 }
