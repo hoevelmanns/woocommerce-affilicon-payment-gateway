@@ -14,6 +14,7 @@ class AffiliconApi
 {
 
   private $token;
+  private $clientId;
 
   const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
 
@@ -92,6 +93,26 @@ class AffiliconApi
   public function getToken()
   {
     return $this->token;
+  }
+
+  /**
+   * set the Client ID, previously called Vendor ID
+   * @param $id
+   * @return $this
+   */
+  public function setClientId($id)
+  {
+    $this->clientId = $id;
+    return $this;
+  }
+
+  /**
+   * get the Client ID, previously called Vendor ID
+   * @return mixed
+   */
+  public function getClientId()
+  {
+    return $this->clientId;
   }
 
 }

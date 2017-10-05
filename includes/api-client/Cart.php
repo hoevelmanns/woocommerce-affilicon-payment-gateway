@@ -13,7 +13,6 @@ namespace AffiliconApi;
 class AffiliconCart extends AffiliconApi
 {
 
-  private $clientId;
   private $items;
   private $id;
   private $status;
@@ -26,26 +25,6 @@ class AffiliconCart extends AffiliconApi
   }
 
   /**
-   * set the Client ID, previously called Vendor ID
-   * @param $id
-   * @return $this
-   */
-  public function setClientId($id)
-  {
-      $this->clientId = $id;
-      return $this;
-  }
-
-  /**
-   * get the Client ID, previously called Vendor ID
-   * @return mixed
-   */
-  public function getClientId()
-  {
-      return $this->clientId;
-  }
-
-  /**
    * create new cart
    * @return object
    */
@@ -53,7 +32,7 @@ class AffiliconCart extends AffiliconApi
   {
 
     $cart = $this->post(AFFILICON_ROUTES['carts'], [
-      'vendor' => $this->clientId
+      'vendor' => $this->getClientId()
     ]);
 
     if (!$cart) {
