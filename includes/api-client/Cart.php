@@ -22,7 +22,6 @@ class AffiliconCart extends AffiliconApi
   {
     parent::__construct();
     parent::authenticate();
-
   }
 
   /**
@@ -31,8 +30,7 @@ class AffiliconCart extends AffiliconApi
    */
   public function create()
   {
-
-    $cart = $this->post(AFFILICON_ROUTES['carts'], [
+    $cart = $this->post(AFFILICON_API['routes']['carts'], [
       'vendor' => $this->getClientId()
     ]);
 
@@ -40,42 +38,46 @@ class AffiliconCart extends AffiliconApi
       // todo exception handling
     }
 
-    $data = (object) $cart['data'];
+    $data = (object)$cart['data'];
     $this->id = $data->id;
     $this->status = $data->status;
 
     return $this;
-
   }
 
+  /**
+   * @return mixed
+   */
   public function getStatus()
   {
     return $this->status;
   }
 
+  /**
+   * @return mixed
+   */
   public function getId()
   {
-      return $this->id;
+    return $this->id;
   }
 
-    /**
-     * @param AffiliconProduct $product
-     * @return $this
-     */
+  /**
+   * @param AffiliconProduct $product
+   * @return $this
+   */
   public function addItem(AffiliconProduct $product)
   {
-
     // todo error handling
-    $cartItem = $this->post(AFFILICON_ROUTES['cartItemsProducts'], [
+    $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
       'cart_id' => $this->getId(),
       'product_id' => $product->getId(),
       'count' => $product->getQuantity()
     ]);
 
-    $this->items[] = $cartItem['data'];
+    $product->setApiId($cartItem['data']['id']);
+    $this->items[] = $product;
 
     return $this;
-
   }
 
   /**

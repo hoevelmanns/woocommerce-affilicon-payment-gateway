@@ -16,6 +16,7 @@ class AffiliconProduct extends AffiliconApi implements ProductInterface
 
   private $id;
   private $quantity;
+  private $apiId;
 
   public function __construct()
   {
@@ -54,6 +55,24 @@ class AffiliconProduct extends AffiliconApi implements ProductInterface
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * @param $apiId
+   * @return $this
+   */
+  public function setApiId($apiId)
+  {
+    $this->apiId = $apiId;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getApiId()
+  {
+    return $this->apiId;
   }
 
 }

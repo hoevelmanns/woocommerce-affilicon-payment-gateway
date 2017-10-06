@@ -8,9 +8,6 @@
  */
 class WC_Affilicon_Payment_Gateway_Checkout_Form
 {
-  const ORDERFORM_URL_LEGACY = "https://secure.affilibank.de";
-  const META_PREFIX = "affilicon";
-
   public $gateway;
   private $checkoutFormUrl;
 
@@ -22,11 +19,9 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
-
     $this->affiliconCart = new \AffiliconApi\AffiliconCart();
     $this->order = $order;
     $this->gateway = $gateway;
-
   }
 
   public function getMetaDataValue(WC_Product $product, $key)
@@ -58,10 +53,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
     /** @var WC_Order_Item $item */
     foreach ($items as $item) {
-
     /** @var WC_Product $product */
       $product = $item->get_product();
-
       $affiliconProductId = $this->getMetaDataValue($product, 'affilicon_product_id');
 
       /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
@@ -70,16 +63,14 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
           ->setQuantity($item->get_quantity());
 
       $this->affiliconCart->addItem($affiliconProduct);
-
     }
-
   }
 
   /**
    * build form parameter for legacy checkout form (Versions 2-3)
    * todo need refactoring
    *
-   * @return string
+   * @return string|void
    */
   public function buildLegacyFormUrl()
   {
@@ -134,7 +125,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       //"prefill/$prefill" // todo core -> use case prefill
     ]; // todo testmode
 
-    $this->checkoutFormUrl = self::ORDERFORM_URL_LEGACY . "/" . join('/', $params);
+    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params);
 
     var_dump($prefill);
   }
@@ -147,8 +138,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function legacyFormUrl(WC_Order $order)
   {
-    $orderFormUrl = self::ORDERFORM_URL_LEGACY; // todo option
-
     $vendorId = $this->gateway->vendor_id;
     $customer = new WC_Customer($order->get_id());
     $orderData = $order->get_items();
@@ -171,7 +160,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
     $affiliconProductId = $product->get_attribute('Affilicon-Produkt-ID'); // todo: Attribute code-technisch erweitern
 
-    $orderFormUrl = "$orderFormUrl/$vendorId/$productTypeParam/product/$affiliconProductId/type/$paymentType/orderform_version/$orderFormTheme";
+    $orderFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY."/$vendorId/$productTypeParam/product/$affiliconProductId/type/$paymentType/orderform_version/$orderFormTheme";
 
     $encryptedArgs = $this->getAffiliconArgs($order);
 

@@ -18,6 +18,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+define('AFFILICON_CHECKOUT_FORM_URL_LEGACY', 'https://secure.affilibank.de');
+define('AFFILICON_CHECKOUT_FORM_URL', 'https://secure.affilicon.net');
+
 
 $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 if(in_array('woocommerce/woocommerce.php', $active_plugins)){

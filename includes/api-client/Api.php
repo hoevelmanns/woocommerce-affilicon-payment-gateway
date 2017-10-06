@@ -12,26 +12,26 @@ namespace AffiliconApi;
 
 class AffiliconApi
 {
-
   private $token;
   private $clientId;
   private $countryId;
   private $userLanguage;
 
-  const ENDPOINT = "https://service.affilicon.net/api"; // todo in options?
-
   public function __construct()
   {
-
-    if (!defined('AFFILICON_ROUTES')) {
-      define('AFFILICON_ROUTES', [
-        'auth' => '/auth/anonymous/token',
-        'refreshToken' => '/auth/refresh',
-        'carts' => '/carts',
-        'cartItemsProducts' => '/cart-items/products'
+    if (!defined('AFFILICON_API')) {
+      define('AFFILICON_API', [
+        'routes' => [
+          'auth' => '/auth/anonymous/token',
+          'refreshToken' => '/auth/refresh',
+          'carts' => '/carts',
+          'cartItemsProducts' => '/cart-items/products'
+        ],
+        'endpoints' => [
+          'production' => 'https://service.affilicon.net/api'
+        ]
       ]);
     }
-
   }
 
   /**
@@ -41,8 +41,7 @@ class AffiliconApi
    */
   public function post($route, array $args = [])
   {
-
-    $url = self::ENDPOINT . $route;
+    $url = AFFILICON_API['endpoints']['production'] . $route;
 
     // todo replace wp_remote_post with native post method or Guzzle
     $response = wp_remote_post($url, [
@@ -52,7 +51,6 @@ class AffiliconApi
     ]);
 
     return json_decode(wp_remote_retrieve_body($response), true);
-
   }
 
   private function headers()
@@ -73,13 +71,12 @@ class AffiliconApi
    */
   public function authenticate()
   {
-
     if ($this->isAuthenticated()) {
       return $this->getToken();
     }
 
     try {
-      $response = $this->post(AFFILICON_ROUTES['auth']);
+      $response = $this->post(AFFILICON_API['routes']['auth']);
     } catch (\Exception $e) {
       return new \ErrorException('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }
@@ -89,7 +86,6 @@ class AffiliconApi
     }
 
     return $this->token = $response['token'];
-
   }
 
   public function getToken()

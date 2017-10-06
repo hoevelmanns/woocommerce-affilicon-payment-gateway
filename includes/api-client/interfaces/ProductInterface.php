@@ -33,4 +33,16 @@ interface ProductInterface
    */
   public function getQuantity();
 
+  /**
+   * @param $apiId
+   * @return mixed
+   */
+  public function setApiId($apiId);
+
+  /**
+   * @return mixed
+   */
+  public function getApiId();
+
+
 }
