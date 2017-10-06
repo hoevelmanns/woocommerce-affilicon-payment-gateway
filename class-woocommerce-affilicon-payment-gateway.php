@@ -17,7 +17,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
   const CHECKOUT_FORM_VERSIONS = [
     '4' => 'Checkout form 4',
     '3' => 'Modern (flat design / Responsive)',
-    '2' => 'Classic (conventional theme' // todo i18n
+    '2' => 'Classic (conventional theme)' // todo i18n
   ];
 
   const AFFILICON_PRODUCT_TYPES = [

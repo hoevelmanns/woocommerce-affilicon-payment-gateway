@@ -26,9 +26,6 @@ class AffiliconApi
           'refreshToken' => '/auth/refresh',
           'carts' => '/carts',
           'cartItemsProducts' => '/cart-items/products'
-        ],
-        'endpoints' => [
-          'production' => 'https://service.affilicon.net/api'
         ]
       ]);
     }
@@ -41,7 +38,7 @@ class AffiliconApi
    */
   public function post($route, array $args = [])
   {
-    $url = AFFILICON_API['endpoints']['production'] . $route;
+    $url = AFFILICON_SERVICE_URL . $route;
 
     // todo replace wp_remote_post with native post method or Guzzle
     $response = wp_remote_post($url, [

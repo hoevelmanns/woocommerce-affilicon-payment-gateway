@@ -122,10 +122,9 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       "countryId/$countryId",
       "token/{$this->affiliconCart->getToken()}",
       "language/$userLanguage", // todo core -> use case language
-      //"prefill/$prefill" // todo core -> use case prefill
     ]; // todo testmode
 
-    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params);
+    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params)."?prefill=$prefill";
 
     var_dump($prefill);
   }

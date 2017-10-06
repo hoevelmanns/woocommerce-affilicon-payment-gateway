@@ -18,8 +18,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-define('AFFILICON_CHECKOUT_FORM_URL_LEGACY', 'https://secure.affilibank.de');
+define('AFFILICON_CHECKOUT_FORM_URL_LEGACY', 'https://secure.affilibank.app');
 define('AFFILICON_CHECKOUT_FORM_URL', 'https://secure.affilicon.net');
+define('AFFILICON_SERVICE_URL', 'https://secure.affilicon.app');
 
 
 $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
