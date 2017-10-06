@@ -50,7 +50,9 @@ class AffiliconApi
       'body' => $args
     ]);
 
-    return json_decode(wp_remote_retrieve_body($response), true);
+    $responseBody = json_decode(wp_remote_retrieve_body($response), true);
+    $responseBody['data'] = (object) $responseBody['data'];
+    return (object) $responseBody;
   }
 
   private function headers()
@@ -81,11 +83,11 @@ class AffiliconApi
       return new \ErrorException('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }
 
-    if (!$response || !$response['token']) {
+    if (!$response || !$response->token) {
       return new \ErrorException('affilicon_payment_error_authentication_failed', 'token invalid');
     }
 
-    return $this->token = $response['token'];
+    return $this->token = $response->token;
   }
 
   public function getToken()

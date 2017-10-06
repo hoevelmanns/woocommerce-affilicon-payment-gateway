@@ -38,9 +38,8 @@ class AffiliconCart extends AffiliconApi
       // todo exception handling
     }
 
-    $data = (object)$cart['data'];
-    $this->id = $data->id;
-    $this->status = $data->status;
+    $this->id = $cart->data->id;
+    $this->status = $cart->data->status;
 
     return $this;
   }
@@ -74,7 +73,7 @@ class AffiliconCart extends AffiliconApi
       'count' => $product->getQuantity()
     ]);
 
-    $product->setApiId($cartItem['data']['id']);
+    $product->setApiId($cartItem->data->id);
     $this->items[] = $product;
 
     return $this;
