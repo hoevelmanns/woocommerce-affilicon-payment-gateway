@@ -12,11 +12,9 @@ namespace AffiliconApi;
 
 class AffiliconCart extends AffiliconApi
 {
-
   private $items;
   private $id;
   private $status;
-
 
   public function __construct()
   {
@@ -87,5 +85,4 @@ class AffiliconCart extends AffiliconApi
   {
     return $this->items;
   }
-
 }
