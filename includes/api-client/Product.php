@@ -1,10 +1,12 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: marcelle
- * Date: 05.10.17
- * Time: 11:11
+ * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
+ *
+ * @file        Cart.php
+ * @author      Marcelle Hövelmanns
+ * @site        http://www.artsolution.de
+ * @date        05.10.17
  */
 
 namespace AffiliconApi;
@@ -13,7 +15,6 @@ use AffiliconApi\Interfaces\ProductInterface;
 
 class AffiliconProduct extends AffiliconApi implements ProductInterface
 {
-
   private $id;
   private $quantity;
   private $apiId;
@@ -74,5 +75,4 @@ class AffiliconProduct extends AffiliconApi implements ProductInterface
   {
     return $this->apiId;
   }
-
 }
