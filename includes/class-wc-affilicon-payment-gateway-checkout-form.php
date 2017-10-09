@@ -31,13 +31,13 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   }
 
   /**
-   * @param WC_Product $product
+   * @param $item
    * @param $key
    * @return bool
    */
-  public function getMetaDataValue(WC_Product $product, $key)
+  public function getMetaDataValue($item, $key)
   {
-    foreach ($product->get_meta_data() as $meta) {
+    foreach ($item->get_meta_data() as $meta) {
       if ($meta->key === $key) {
         return $meta->value;
       }
@@ -50,17 +50,15 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function buildCart()
   {
-    // todo check if meta cart id exist in order. If so, then get cart from api
+    $order = $this->order;
 
     $this->affiliconCart
-        ->setCountryId('de') // todo get from woocommerce
-        ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
-        ->setClientId($this->gateway->vendor_id)
-        // todo affilicon ->setShippingAddress()
-        // todo affilicon ->setCustomer()
-        ->create();
-
-    $order = $this->order;
+      ->setCountryId('de') // todo get from woocommerce
+      ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
+      ->setClientId($this->gateway->vendor_id)
+      // todo affilicon ->setShippingAddress()
+      // todo affilicon ->setCustomer()
+      ->create();
 
     $order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
 

@@ -47,6 +47,25 @@ class Api
       'body' => $args
     ]);
 
+
+    return $this->responseObject($response);
+  }
+
+  public function get($route)
+  {
+    $url = AFFILICON_SERVICE_URL . $route;
+
+    // todo replace wp_remote_get with native get method or Guzzle
+    $response = wp_remote_get($url, [
+      'method' => 'GET',
+      'headers' => $this->headers()
+    ]);
+
+    return $this->responseObject($response);
+  }
+
+  private function responseObject($response)
+  {
     $responseBody = json_decode(wp_remote_retrieve_body($response), true);
     $responseBody['data'] = (object) $responseBody['data'];
     return (object) $responseBody;
