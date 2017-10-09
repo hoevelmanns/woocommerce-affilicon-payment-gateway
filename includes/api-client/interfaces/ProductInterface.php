@@ -7,7 +7,7 @@
  * Time: 11:12
  */
 
-namespace AffiliconApi\Interfaces;
+namespace Affilicon;
 
 interface ProductInterface
 {

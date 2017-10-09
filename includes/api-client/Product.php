@@ -9,11 +9,9 @@
  * @date        05.10.17
  */
 
-namespace AffiliconApi;
+namespace Affilicon;
 
-use AffiliconApi\Interfaces\ProductInterface;
-
-class AffiliconProduct extends AffiliconApi implements ProductInterface
+class Product extends Api implements ProductInterface
 {
   private $id;
   private $quantity;

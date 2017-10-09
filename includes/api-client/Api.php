@@ -8,9 +8,9 @@
  * @date        02.10.17
  */
 
-namespace AffiliconApi;
+namespace Affilicon;
 
-class AffiliconApi
+class Api
 {
   private $token;
   private $clientId;

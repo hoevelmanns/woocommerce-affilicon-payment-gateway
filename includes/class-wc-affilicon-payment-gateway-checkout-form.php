@@ -20,12 +20,12 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /** @var  WC_Order $order */
   private $order;
 
-  /** @var  \AffiliconApi\AffiliconCart */
+  /** @var \Affilicon\Cart  */
   private $affiliconCart;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
-    $this->affiliconCart = new \AffiliconApi\AffiliconCart();
+    $this->affiliconCart = new \Affilicon\Cart();
     $this->order = $order;
     $this->gateway = $gateway;
   }
@@ -80,8 +80,9 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       }
 
       // todo error handling
-      /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
-      $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
+
+      /** @var \Affilicon\Product $affiliconProduct */
+      $affiliconProduct = (new \Affilicon\Product())
           ->setId($affiliconProductId)
           ->setQuantity($item->get_quantity());
 

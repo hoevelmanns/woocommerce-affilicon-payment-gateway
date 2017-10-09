@@ -8,9 +8,9 @@
  * @date        02.10.17
  */
 
-namespace AffiliconApi;
+namespace Affilicon;
 
-class AffiliconCart extends AffiliconApi
+class Cart extends Api
 {
   private $items;
   private $id;
@@ -59,10 +59,10 @@ class AffiliconCart extends AffiliconApi
   }
 
   /**
-   * @param AffiliconProduct $product
+   * @param Product $product
    * @return $this
    */
-  public function addItem(AffiliconProduct $product)
+  public function addItem(Product $product)
   {
     // todo error handling
     $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
