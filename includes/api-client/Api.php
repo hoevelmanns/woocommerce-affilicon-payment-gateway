@@ -37,7 +37,7 @@ class Api
    * @param array $args
    * @return array|mixed|object
    */
-  public function send($route, array $args = [])
+  public function post($route, array $args = [])
   {
     $url = AFFILICON_SERVICE_URL . $route;
 
@@ -52,11 +52,20 @@ class Api
   }
 
   /**
+   * @param $route
+   * @param array $args
+   */
+  public function put($route, array $args = [])
+  {
+    // todo put request method
+  }
+
+  /**
    * get request
    * @param $route
    * @return object
    */
-  public function retrieve($route)
+  public function get($route)
   {
     $url = AFFILICON_SERVICE_URL . $route;
 
@@ -99,7 +108,7 @@ class Api
     }
 
     try {
-      $response = $this->send(AFFILICON_API['routes']['auth']);
+      $response = $this->post(AFFILICON_API['routes']['auth']);
     } catch (\Exception $e) {
       return new \ErrorException('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }

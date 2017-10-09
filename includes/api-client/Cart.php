@@ -28,7 +28,7 @@ class Cart extends Api
    */
   public function create()
   {
-    $cart = $this->send(AFFILICON_API['routes']['carts'], [
+    $cart = $this->post(AFFILICON_API['routes']['carts'], [
       'vendor' => $this->getClientId()
     ]);
 
@@ -65,7 +65,7 @@ class Cart extends Api
   public function addItem(Product $product)
   {
     // todo error handling
-    $cartItem = $this->send(AFFILICON_API['routes']['cartItemsProducts'], [
+    $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
       'cart_id' => $this->getId(),
       'product_id' => $product->getId(),
       'count' => $product->getQuantity()
