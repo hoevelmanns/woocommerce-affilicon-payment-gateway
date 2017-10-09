@@ -48,7 +48,7 @@ class Api
       'body' => $args
     ]);
 
-    return $this->responseObject($response);
+    return $this->responseBody($response);
   }
 
   /**
@@ -75,16 +75,25 @@ class Api
       'headers' => $this->headers()
     ]);
 
-    return $this->responseObject($response);
+    return $this->responseBody($response);
   }
 
-  private function responseObject($response)
+  /**
+   * Returns the request body
+   * @param $response
+   * @return object
+   */
+  private function responseBody($response)
   {
     $responseBody = json_decode(wp_remote_retrieve_body($response), true);
     $responseBody['data'] = (object) $responseBody['data'];
     return (object) $responseBody;
   }
 
+  /**
+   * Adds the request headers
+   * @return array
+   */
   private function headers()
   {
     return [
@@ -92,6 +101,9 @@ class Api
     ];
   }
 
+  /**
+   * @return bool
+   */
   private function isAuthenticated()
   {
     return !is_null($this->token);
