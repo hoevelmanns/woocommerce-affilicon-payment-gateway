@@ -1,13 +1,19 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: marcelle
+ * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
+ *
+ * @file        Cart.php
+ * @author      Marcelle Hövelmanns
+ * @site        http://www.artsolution.de
  * Date: 04.10.17
  * Time: 12:32
  */
+
 class WC_Affilicon_Payment_Gateway_Checkout_Form
 {
+
+  /** @var WC_Affilicon_Payment_Gateway $gateway */
   public $gateway;
   private $checkoutFormUrl;
 
@@ -24,6 +30,11 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     $this->gateway = $gateway;
   }
 
+  /**
+   * @param WC_Product $product
+   * @param $key
+   * @return bool
+   */
   public function getMetaDataValue(WC_Product $product, $key)
   {
     foreach ($product->get_meta_data() as $meta) {
@@ -35,11 +46,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   }
 
   /**
-   * get anonymous token and create new cart
+   * Creates a new cart and passes the Woocommerce cart items.
    */
   public function buildCart()
   {
-
     $this->affiliconCart
         ->setCountryId('de') // todo get from woocommerce
         ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
@@ -49,13 +59,25 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         ->create();
 
     $order = $this->order;
+
+    $order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
+    $order->save();
+
     $items = $order->get_items();
 
     /** @var WC_Order_Item $item */
     foreach ($items as $item) {
-    /** @var WC_Product $product */
+
+      $item->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
+      $item->save();
+
+      /** @var WC_Product $product */
       $product = $item->get_product();
       $affiliconProductId = $this->getMetaDataValue($product, 'affilicon_product_id');
+
+      if (!$affiliconProductId) {
+        continue;
+      }
 
       /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
       $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
@@ -77,6 +99,9 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     $this->legacyFormUrl($this->order);
   }
 
+  /**
+   * @return mixed
+   */
   public function getUrl()
   {
     return $this->checkoutFormUrl;
@@ -90,6 +115,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   }
 
+  /**
+   * @param $code
+   * @return mixed
+   */
   public function getRegionCode($code)
   {
     $code = strtolower($code);
@@ -124,13 +153,13 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       "language/$userLanguage", // todo core -> use case language
     ]; // todo testmode
 
-    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params)."?prefill=$prefill";
+    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params);
 
     var_dump($prefill);
   }
 
   /**
-   * generate url for legacy checkout form with considering the prefill parameter
+   * Generate url for legacy checkout form with considering the prefill parameter
    * supported checkout forms 2 - 3 (without cart widget implementation)
    * @param $order
    * @return string
@@ -173,7 +202,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     $this->checkoutFormUrl = $requestOrderformUrl;
   }
 
-
+  /**
+   * @param $data
+   * @return string
+   */
   private function crypt($data)
   {
     $cryptPass = $this->gateway->itns_secret_key;
@@ -181,6 +213,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     return urlencode(openssl_encrypt($data, $cryptMethod, $cryptPass));
   }
 
+  /**
+   * @param $order
+   * @return string
+   */
   public function getAffiliconArgs($order)
   {
     $args = [
