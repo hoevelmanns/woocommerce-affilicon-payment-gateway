@@ -50,6 +50,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function buildCart()
   {
+    // todo check if meta cart id exist in order. If so, then get cart from api
+
     $this->affiliconCart
         ->setCountryId('de') // todo get from woocommerce
         ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
@@ -61,7 +63,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     $order = $this->order;
 
     $order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
-    $order->save();
 
     $items = $order->get_items();
 
@@ -69,7 +70,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     foreach ($items as $item) {
 
       $item->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
-      $item->save();
 
       /** @var WC_Product $product */
       $product = $item->get_product();
@@ -79,13 +79,20 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         continue;
       }
 
+      // todo error handling
       /** @var \AffiliconApi\AffiliconProduct $affiliconProduct */
       $affiliconProduct = (new \AffiliconApi\AffiliconProduct())
           ->setId($affiliconProductId)
           ->setQuantity($item->get_quantity());
 
       $this->affiliconCart->addItem($affiliconProduct);
+
+      // todo: check if affilicon_item_id exist in item. If not so, then create new meta "affilicon_item_id"
+      $item->add_meta_data('affilicon_item_id', $affiliconProduct->getApiId());
+      $item->save();
     }
+
+    $order->save();
   }
 
   /**
