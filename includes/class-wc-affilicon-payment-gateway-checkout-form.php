@@ -7,7 +7,6 @@
  * @author      Marcelle Hövelmanns
  * @site        http://www.artsolution.de
  * Date: 04.10.17
- * Time: 12:32
  */
 
 class WC_Affilicon_Payment_Gateway_Checkout_Form
@@ -45,20 +44,47 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     return false;
   }
 
+  public function address($type)
+  {
+    //$test = call_user_func($this, "{$type}_billing_company");
+    return [
+      'billing_addr_company' => $this->order->billing_company,
+      'billing_addr_firstname' => $this->order->billing_first_name,
+      'billing_addr_lastname' => $this->order->billing_last_name,
+      'billing_addr_street' => $this->order->billing_address_1,
+      'billing_addr_street2' => $this->order->billing_address_2,
+      'billing_addr_city' => $this->order->billing_city,
+      'billing_addr_zip' => $this->order->billing_postcode,
+      'billing_addr_country' => $this->order->billing_country,
+    ];
+  }
+
+  public function billingAddress()
+  {
+    return $this->address('billing');
+  }
+
+  public function shippingAddress()
+  {
+    return $this->address('shipping');
+  }
+
   /**
    * Creates a new cart and passes the Woocommerce cart items.
    */
   public function buildCart()
   {
+
     $this->affiliconCart
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
       ->setClientId($this->gateway->vendor_id)
-      // todo affilicon ->setShippingAddress() // prefill!
-      // todo affilicon ->setCustomer()
       ->create();
 
     $this->order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
+
+    /** @var \Affilicon\Collection $affiliconCartItems */
+    $affiliconCartItems = new \Affilicon\Collection();
 
     /** @var WC_Order_Item $item */
     foreach ($this->order->get_items() as $item) {
@@ -71,20 +97,21 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         continue;
       }
 
-      // todo error handling
-
-      /** @var \Affilicon\Product $affiliconProduct */
-      $affiliconProduct = (new \Affilicon\Product())
+      /** @var \Affilicon\CartItem $affiliconCartItem */
+      $affiliconCartItem = (new \Affilicon\CartItem())
           ->setId($affiliconProductId)
           ->setQuantity($item->get_quantity());
 
-      $this->affiliconCart->addItem($affiliconProduct);
+      if (!$affiliconCartItem) {
+        continue;
+      }
 
-      // todo: check if affilicon_item_id exist in item. If not so, then create new meta "affilicon_item_id"
-      $item->add_meta_data('affilicon_item_id', $affiliconProduct->getApiId());
+      $affiliconCartItems->addItem($affiliconCartItem);
+      $item->add_meta_data('affilicon_item_id', $affiliconCartItem->getApiId());
       $item->save();
     }
 
+    $this->affiliconCart->addItems($affiliconCartItems);
     $this->order->save();
   }
 

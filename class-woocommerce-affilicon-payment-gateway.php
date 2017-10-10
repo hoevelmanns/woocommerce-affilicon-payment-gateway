@@ -36,7 +36,10 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       include_once('includes/api-client/interfaces/ProductInterface.php');
       include_once('includes/api-client/ApiClient.php');
       include_once('includes/api-client/Cart.php');
-      include_once('includes/api-client/Product.php');
+      include_once('includes/api-client/CartItem.php');
+      include_once('includes/api-client/Collection.php');
+      include_once('includes/api-client/Exceptions/KeyHasUseException.php');
+      include_once('includes/api-client/Exceptions/KeyInvalidException.php');
     }
 
     // define additional product attributes for woocommerce product
@@ -44,14 +47,14 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       define('extraProductFields', [
         'affilicon_product_id' => [
           'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
-          'label' => __('affilicon Product-ID', 'woocommerce-affilicon-payment-gateway'),
+          'label' => __('affilicon CartItem-ID', 'woocommerce-affilicon-payment-gateway'),
           'type' => 'text',
           'class' => 'short',
           'wrapper_class' => 'form-field'
         ],
         'affilicon_product_type' => [
           'placeholder' => __('Please select the type of your affilicon product', 'woocommerce-affilicon-payment-gateway'),
-          'label' => __('affilicon Product-Type', 'woocommerce-affilicon-payment-gateway'),
+          'label' => __('affilicon CartItem-Type', 'woocommerce-affilicon-payment-gateway'),
           'type' => 'select',
           'class' => 'select short',
           'wrapper_class' => 'form-field',
@@ -147,7 +150,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       return new WP_Error('affilicon_payment_error_prepare_checkout_form', $e->getMessage(), array('status' => $e->getCode()));
     }
 
-    //return; // todo remove
     return array(
       'result' => 'success',
       'redirect' => $checkoutForm->getUrl()//@todo testmodus berücksichtigen

@@ -3,7 +3,7 @@
 /**
  * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
  *
- * @file        Cart.php
+ * @file        CartItem.php
  * @author      Marcelle Hövelmanns
  * @site        http://www.artsolution.de
  * @date        05.10.17
@@ -11,7 +11,7 @@
 
 namespace Affilicon;
 
-class Product extends ApiClient implements ProductInterface
+class CartItem extends ApiClient implements ProductInterface
 {
   private $id;
   private $quantity;

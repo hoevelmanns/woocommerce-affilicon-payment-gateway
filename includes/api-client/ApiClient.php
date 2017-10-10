@@ -109,7 +109,7 @@ class ApiClient
   }
 
   /**
-   * Returns the request body
+   * Return the request body
    * @param $response
    * @return object
    */
@@ -121,7 +121,7 @@ class ApiClient
   }
 
   /**
-   * Adds the request headers
+   * Add the request headers
    * @return array
    */
   private function headers()
