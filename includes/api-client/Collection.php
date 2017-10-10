@@ -132,7 +132,7 @@ class Collection extends ApiClient implements \Iterator
   public function rewind()
   {
     if ($this->intIndex < 1) {
-      return false;
+      return null;
     }
 
     --$this->intIndex;
@@ -162,7 +162,7 @@ class Collection extends ApiClient implements \Iterator
   public function next()
   {
     if (!isset($this->items[$this->intIndex + 1])) {
-      return false;
+      return null;
     }
 
     ++$this->intIndex;

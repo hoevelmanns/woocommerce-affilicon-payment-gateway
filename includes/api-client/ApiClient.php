@@ -147,7 +147,6 @@ class ApiClient
    */
   public function authenticate()
   {
-
     if ($this->isAuthenticated()) {
       return $this->getToken();
     }
