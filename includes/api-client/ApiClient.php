@@ -10,19 +10,24 @@
 
 namespace Affilicon;
 
-class Api
+class ApiClient
 {
   private $token;
   private $clientId;
   private $countryId;
   private $userLanguage;
+  private $username;
+  private $password;
 
   public function __construct()
   {
     if (!defined('AFFILICON_API')) {
       define('AFFILICON_API', [
         'routes' => [
-          'auth' => '/auth/anonymous/token',
+          'auth' => [
+            'anonymous' => '/auth/anonymous/token',
+            'member' => '/auth/member/token',
+          ],
           'refreshToken' => '/auth/refresh',
           'carts' => '/carts',
           'cartItemsProducts' => '/cart-items/products'
@@ -30,6 +35,31 @@ class Api
       ]);
     }
   }
+
+  /**
+   * @param $username
+   */
+  public function setUserName($username)
+  {
+    $this->userName = $username;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getUsername()
+  {
+    return $this->username;
+  }
+
+  /**
+   * @param $password
+   */
+  public function setPassword($password)
+  {
+    $this->password = $password;
+  }
+
 
   /**
    * post request
@@ -97,7 +127,9 @@ class Api
   private function headers()
   {
     return [
-      'Authorization' => 'Bearer ' . $this->token
+      'Authorization' => 'Bearer ' . $this->token,
+      'username' => $this->username,
+      'password' => $this->password
     ];
   }
 
@@ -111,16 +143,19 @@ class Api
 
   /**
    * authenticate to api
-   * @return mixed|\ErrorException
+   * @return \ErrorException
    */
   public function authenticate()
   {
+
     if ($this->isAuthenticated()) {
       return $this->getToken();
     }
 
+    $member = isset($this->username) && isset($this->password);
+
     try {
-      $response = $this->post(AFFILICON_API['routes']['auth']);
+      $response = $this->post(AFFILICON_API['routes']['auth'][$member ? 'member' : 'anonymous']);
     } catch (\Exception $e) {
       return new \ErrorException('affilicon_payment_error_authentication_failed', $e->getMessage(), array('status' => $e->getCode()));
     }
@@ -192,4 +227,6 @@ class Api
     $this->userLanguage = $userLanguage;
     return $this;
   }
+
+
 }

@@ -11,7 +11,7 @@
 
 namespace Affilicon;
 
-class Product extends Api implements ProductInterface
+class Product extends ApiClient implements ProductInterface
 {
   private $id;
   private $quantity;

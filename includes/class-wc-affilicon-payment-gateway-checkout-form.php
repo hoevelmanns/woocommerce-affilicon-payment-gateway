@@ -50,28 +50,22 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function buildCart()
   {
-    $order = $this->order;
-
     $this->affiliconCart
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
       ->setClientId($this->gateway->vendor_id)
-      // todo affilicon ->setShippingAddress()
+      // todo affilicon ->setShippingAddress() // prefill!
       // todo affilicon ->setCustomer()
       ->create();
 
-    $order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
-
-    $items = $order->get_items();
+    $this->order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
 
     /** @var WC_Order_Item $item */
-    foreach ($items as $item) {
+    foreach ($this->order->get_items() as $item) {
 
       $item->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
 
-      /** @var WC_Product $product */
-      $product = $item->get_product();
-      $affiliconProductId = $this->getMetaDataValue($product, 'affilicon_product_id');
+      $affiliconProductId = $this->getMetaDataValue($item->get_product(), 'affilicon_product_id');
 
       if (!$affiliconProductId) {
         continue;
@@ -91,7 +85,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       $item->save();
     }
 
-    $order->save();
+    $this->order->save();
   }
 
   /**

@@ -10,7 +10,7 @@
 
 namespace Affilicon;
 
-class Cart extends Api
+class Cart extends ApiClient
 {
   private $items;
   private $id;

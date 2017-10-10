@@ -34,7 +34,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
 
       include_once('includes/api-client/interfaces/ProductInterface.php');
-      include_once('includes/api-client/Api.php');
+      include_once('includes/api-client/ApiClient.php');
       include_once('includes/api-client/Cart.php');
       include_once('includes/api-client/Product.php');
     }
@@ -129,7 +129,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
    */
   public function process_payment($orderId)
   {
-
     $this->order = wc_get_order($orderId);
     /** @var WC_Affilicon_Payment_Gateway_Checkout_Form $checkoutForm */
     $checkoutForm = new WC_Affilicon_Payment_Gateway_Checkout_Form($this, $this->order);
@@ -153,7 +152,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       'result' => 'success',
       'redirect' => $checkoutForm->getUrl()//@todo testmodus berücksichtigen
     );
-
 
   }
 
