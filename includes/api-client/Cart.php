@@ -12,8 +12,8 @@ namespace Affilicon;
 
 class Cart extends ApiClient
 {
-  /** @var  Collection $items */
-  private $items;
+  /** @var  Collection $cartItems */
+  private $lineItems;
   private $id;
   private $status;
 
@@ -21,7 +21,7 @@ class Cart extends ApiClient
   {
     parent::__construct();
     parent::authenticate();
-    $this->items = new Collection();
+    $this->lineItems = new Collection();
   }
 
   /**
@@ -66,15 +66,14 @@ class Cart extends ApiClient
    */
   public function addItem(CartItem $item)
   {
-    // todo error handling
     $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
-      'cart_id' => $this->getId(),
+      'cart_id' => $item->getId(),
       'product_id' => $item->getId(),
       'count' => $item->getQuantity()
     ]);
 
     $item->setApiId($cartItem->data->id);
-    $this->items->addItem($item);
+    $this->lineItems->addItem($item);
 
     return $this;
   }
@@ -99,6 +98,6 @@ class Cart extends ApiClient
    */
   public function getItems()
   {
-    return $this->items;
+    return $this->lineItems;
   }
 }

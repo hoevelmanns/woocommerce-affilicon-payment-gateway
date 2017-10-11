@@ -46,16 +46,17 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   public function address($type)
   {
+    // todo address 
     //$test = call_user_func($this, "{$type}_billing_company");
     return [
-      'billing_addr_company' => $this->order->billing_company,
-      'billing_addr_firstname' => $this->order->billing_first_name,
-      'billing_addr_lastname' => $this->order->billing_last_name,
-      'billing_addr_street' => $this->order->billing_address_1,
-      'billing_addr_street2' => $this->order->billing_address_2,
-      'billing_addr_city' => $this->order->billing_city,
-      'billing_addr_zip' => $this->order->billing_postcode,
-      'billing_addr_country' => $this->order->billing_country,
+      $type.'_addr_company' => $this->order->{$type.'_company'},
+      $type.'_addr_firstname' => $this->order->{$type.'_first_name'},
+      $type.'_addr_lastname' => $this->order{$type.'_last_name'},
+      $type.'_addr_street' => $this->order{$type.'_address_1'},
+      $type.'_addr_street2' => $this->order{$type.'_address_2'},
+      $type.'_addr_city' => $this->order{$type.'_city'},
+      $type.'_addr_zip' => $this->order{$type.'_postcode'},
+      $type.'_addr_country' => $this->order{$type.'_country'},
     ];
   }
 
@@ -83,35 +84,35 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
     $this->order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
 
-    /** @var \Affilicon\Collection $affiliconCartItems */
-    $affiliconCartItems = new \Affilicon\Collection();
+    /** @var \Affilicon\Collection $lineItems */
+    $lineItems = new \Affilicon\Collection();
 
-    /** @var WC_Order_Item $item */
-    foreach ($this->order->get_items() as $item) {
+    /** @var WC_Order_Item $wcLineItem */
+    foreach ($this->order->get_items() as $wcLineItem) {
 
-      $item->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
+      $wcLineItem->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
 
-      $affiliconProductId = $this->getMetaDataValue($item->get_product(), 'affilicon_product_id');
+      $affiliconProductId = $this->getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
       if (!$affiliconProductId) {
         continue;
       }
 
-      /** @var \Affilicon\CartItem $affiliconCartItem */
-      $affiliconCartItem = (new \Affilicon\CartItem())
+      /** @var \Affilicon\CartItem $lineItem */
+      $lineItem = (new \Affilicon\CartItem())
           ->setId($affiliconProductId)
-          ->setQuantity($item->get_quantity());
+          ->setQuantity($wcLineItem->get_quantity());
 
-      if (!$affiliconCartItem) {
+      if (!$lineItem) {
         continue;
       }
 
-      $affiliconCartItems->addItem($affiliconCartItem);
-      $item->add_meta_data('affilicon_item_id', $affiliconCartItem->getApiId());
-      $item->save();
+      $lineItems->addItem($lineItem);
+      $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
+      $wcLineItem->save();
     }
 
-    $this->affiliconCart->addItems($affiliconCartItems);
+    $this->affiliconCart->addItems($lineItems);
     $this->order->save();
   }
 
@@ -256,19 +257,19 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       ]),
 
       //'custom' => $order->id . '|' . $order->order_key, // @todo wird in prefillAction Orderform nicht berücksichtigt
-      'basic_addr_firstname' => $order->billing_first_name,
-      'basic_addr_lastname' => $order->billing_last_name,
-      'basic_addr_email' => $order->billing_email,
-      'basic_addr_phone' => $order->billing_phone,
+     /* 'basic_addr_firstname' => $order{$type}_first_name,
+      'basic_addr_lastname' => $order{$type}_last_name,
+      'basic_addr_email' => $order{$type}_email,
+      'basic_addr_phone' => $order{$type}_phone,
 
-      'billing_addr_company' => $order->billing_company,
-      'billing_addr_firstname' => $order->billing_first_name,
-      'billing_addr_lastname' => $order->billing_last_name,
-      'billing_addr_street' => $order->billing_address_1,
-      'billing_addr_street2' => $order->billing_address_2,
-      'billing_addr_city' => $order->billing_city,
-      'billing_addr_zip' => $order->billing_postcode,
-      'billing_addr_country' => $order->billing_country,
+      'billing_addr_company' => $order{$type}_company,
+      'billing_addr_firstname' => $order{$type}_first_name,
+      'billing_addr_lastname' => $order{$type}_last_name,
+      'billing_addr_street' => $order{$type}_address_1,
+      'billing_addr_street2' => $order{$type}_address_2,
+      'billing_addr_city' => $order{$type}_city,
+      'billing_addr_zip' => $order{$type}_postcode,
+      'billing_addr_country' => $order{$type}_country,*/
       //todo Hash generieren und von ITNS-Response zurückliefern lassen und checken!
     ];
 

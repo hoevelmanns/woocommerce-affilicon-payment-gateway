@@ -12,7 +12,6 @@ namespace Affilicon;
 
 class Collection extends ApiClient implements \Iterator
 {
-
   /**
    * Current index
    * @var int
@@ -21,10 +20,6 @@ class Collection extends ApiClient implements \Iterator
 
   /** @var array  */
   private $items = [];
-
-  public function __construct()
-  {
-  }
 
   /**
    * @param $obj
