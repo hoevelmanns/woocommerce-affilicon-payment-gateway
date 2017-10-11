@@ -112,7 +112,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       $wcLineItem->save();
     }
 
-    $this->affiliconCart->addItems($lineItems);
+    $this->affiliconCart->addLineItems($lineItems);
     $this->order->save();
   }
 

@@ -64,7 +64,7 @@ class Cart extends ApiClient
    * @param CartItem $item
    * @return $this
    */
-  public function addItem(CartItem $item)
+  public function addLineItem(CartItem $item)
   {
     $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
       'cart_id' => $item->getId(),
@@ -81,14 +81,14 @@ class Cart extends ApiClient
   /**
    * @param Collection $items
    */
-  public function addItems(Collection $items)
+  public function addLineItems(Collection $items)
   {
     while($items->next()) {
       if (!$items->current() instanceof CartItem) {
         continue;
       }
 
-      $this->addItem($items->current());
+      $this->addLineItem($items->current());
     }
   }
 
