@@ -20,7 +20,6 @@ class Cart extends ApiClient
   public function __construct()
   {
     parent::__construct();
-    parent::authenticate();
     $this->lineItems = new Collection();
   }
 
@@ -67,7 +66,7 @@ class Cart extends ApiClient
   public function addLineItem(CartItem $item)
   {
     $cartItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
-      'cart_id' => $item->getId(),
+      'cart_id' => $this->getId(),
       'product_id' => $item->getId(),
       'count' => $item->getQuantity()
     ]);

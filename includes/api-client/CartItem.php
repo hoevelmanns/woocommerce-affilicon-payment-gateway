@@ -20,7 +20,6 @@ class CartItem extends ApiClient implements ProductInterface
   public function __construct()
   {
     parent::__construct();
-    parent::authenticate();
   }
 
   public function getQuantity()

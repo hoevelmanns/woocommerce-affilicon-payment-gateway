@@ -46,18 +46,21 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   public function address($type)
   {
-    // todo address 
-    //$test = call_user_func($this, "{$type}_billing_company");
     return [
       $type.'_addr_company' => $this->order->{$type.'_company'},
       $type.'_addr_firstname' => $this->order->{$type.'_first_name'},
-      $type.'_addr_lastname' => $this->order{$type.'_last_name'},
-      $type.'_addr_street' => $this->order{$type.'_address_1'},
-      $type.'_addr_street2' => $this->order{$type.'_address_2'},
-      $type.'_addr_city' => $this->order{$type.'_city'},
-      $type.'_addr_zip' => $this->order{$type.'_postcode'},
-      $type.'_addr_country' => $this->order{$type.'_country'},
+      $type.'_addr_lastname' => $this->order->{$type.'_last_name'},
+      $type.'_addr_street' => $this->order->{$type.'_address_1'},
+      $type.'_addr_street2' => $this->order->{$type.'_address_2'},
+      $type.'_addr_city' => $this->order->{$type.'_city'},
+      $type.'_addr_zip' => $this->order->{$type.'_postcode'},
+      $type.'_addr_country' => $this->order->{$type.'_country'},
     ];
+  }
+
+  public function basicAddress()
+  {
+    return $this->address('basic');
   }
 
   public function billingAddress()
@@ -90,26 +93,25 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     /** @var WC_Order_Item $wcLineItem */
     foreach ($this->order->get_items() as $wcLineItem) {
 
-      $wcLineItem->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
-
       $affiliconProductId = $this->getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
-      if (!$affiliconProductId) {
-        continue;
-      }
+      if ($affiliconProductId) {
 
-      /** @var \Affilicon\CartItem $lineItem */
-      $lineItem = (new \Affilicon\CartItem())
+        $wcLineItem->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
+        /** @var \Affilicon\CartItem $lineItem */
+        $lineItem = (new \Affilicon\CartItem())
           ->setId($affiliconProductId)
           ->setQuantity($wcLineItem->get_quantity());
 
-      if (!$lineItem) {
-        continue;
-      }
+        if ($lineItem) {
 
-      $lineItems->addItem($lineItem);
-      $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
-      $wcLineItem->save();
+          $lineItems->addItem($lineItem);
+          $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
+          $wcLineItem->save();
+
+        }
+
+      }
     }
 
     $this->affiliconCart->addLineItems($lineItems);
@@ -249,29 +251,18 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   {
     $args = [
       'currency' => get_woocommerce_currency(),
-
-      // todo: order_id und order_key in itns-response berücksichtigen !!!!!!!!!!!!!!!!!!!!!!!!!!
       'custom' => json_encode([
         'order_id' => $order->id,
         'order_key' => $order->order_key,
       ]),
-
-      //'custom' => $order->id . '|' . $order->order_key, // @todo wird in prefillAction Orderform nicht berücksichtigt
-     /* 'basic_addr_firstname' => $order{$type}_first_name,
-      'basic_addr_lastname' => $order{$type}_last_name,
-      'basic_addr_email' => $order{$type}_email,
-      'basic_addr_phone' => $order{$type}_phone,
-
-      'billing_addr_company' => $order{$type}_company,
-      'billing_addr_firstname' => $order{$type}_first_name,
-      'billing_addr_lastname' => $order{$type}_last_name,
-      'billing_addr_street' => $order{$type}_address_1,
-      'billing_addr_street2' => $order{$type}_address_2,
-      'billing_addr_city' => $order{$type}_city,
-      'billing_addr_zip' => $order{$type}_postcode,
-      'billing_addr_country' => $order{$type}_country,*/
-      //todo Hash generieren und von ITNS-Response zurückliefern lassen und checken!
     ];
+
+    $args = array_merge(
+      $args,
+      $this->shippingAddress(),
+      $this->billingAddress(),
+      $this->basicAddress()
+    );
 
     if ($this->gateway->testmode) {
       $args['testmode'] = 'true';

@@ -34,6 +34,8 @@ class ApiClient
         ]
       ]);
     }
+
+    $this->authenticate();
   }
 
   /**
@@ -59,7 +61,6 @@ class ApiClient
   {
     $this->password = $password;
   }
-
 
   /**
    * post request
