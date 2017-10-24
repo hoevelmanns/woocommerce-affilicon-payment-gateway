@@ -1,0 +1,13 @@
+{
+    "name": "affilicon/api-client",
+    "authors": [
+        {
+            "name": "Marcelle Hövelmanns",
+            "email": "marcelle.hoevelmanns@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "apigen/apigen": "^4.1"
+    }
+}
