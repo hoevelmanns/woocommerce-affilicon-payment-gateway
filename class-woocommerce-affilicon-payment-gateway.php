@@ -33,13 +33,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       include_once('includes/class-wc-affilicon-payment-gateway-response.php');
       include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
 
-      include_once('includes/api-client/interfaces/ProductInterface.php');
-      include_once('includes/api-client/ApiClient.php');
-      include_once('includes/api-client/Cart.php');
-      include_once('includes/api-client/CartItem.php');
-      include_once('includes/api-client/Collection.php');
-      include_once('includes/api-client/Exceptions/KeyHasUseException.php');
-      include_once('includes/api-client/Exceptions/KeyInvalidException.php');
+      include_once('includes/api-client/Client.php');
     }
 
     // define additional product attributes for woocommerce product
@@ -121,7 +115,6 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     if ($wp->request !== 'affilicon/payment') {
       return;
     }
-
     $itnsHandler = new WC_Affilicon_Payment_Gateway_ITNS_Handler($this);
     $itnsHandler->checkResponse($query);
   }

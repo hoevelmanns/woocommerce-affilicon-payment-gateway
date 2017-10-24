@@ -78,7 +78,6 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
    */
   public function buildCart()
   {
-
     $this->affiliconCart
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
@@ -97,9 +96,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
       if ($affiliconProductId) {
 
-        $wcLineItem->add_meta_data('afilicon_cart_id', $this->affiliconCart->getId());
-        /** @var \Affilicon\CartItem $lineItem */
-        $lineItem = (new \Affilicon\CartItem())
+        /** @var \Affilicon\LineItem $lineItem */
+        $lineItem = (new \Affilicon\LineItem())
           ->setId($affiliconProductId)
           ->setQuantity($wcLineItem->get_quantity());
 
