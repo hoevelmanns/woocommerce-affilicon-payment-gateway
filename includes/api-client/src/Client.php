@@ -11,15 +11,7 @@
 
 namespace Affilicon;
 
-require 'config/routes.php';
-require 'Collection.php';
-require 'interfaces/ProductInterface.php';
-require 'exceptions/KeyHasUseException.php';
-require 'exceptions/KeyInvalidException.php';
-require 'models/Model.php';
-require 'models/Cart.php';
-require 'models/Product.php';
-require 'models/LineItem.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /**
  * Class ApiClient

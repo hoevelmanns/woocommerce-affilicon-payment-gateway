@@ -9,5 +9,9 @@
     "require": {},
     "require-dev": {
         "apigen/apigen": "^4.1"
+    },
+
+    "autoload": {
+        "psr-4": {"Affilicon\\": "src/"}
     }
 }
