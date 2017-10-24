@@ -33,7 +33,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       include_once('includes/class-wc-affilicon-payment-gateway-response.php');
       include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
 
-      include_once('includes/api-client/Client.php');
+      include_once('includes/api-client/src/Client.php');
     }
 
     // define additional product attributes for woocommerce product
