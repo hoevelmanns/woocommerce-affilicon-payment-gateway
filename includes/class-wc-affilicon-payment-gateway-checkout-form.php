@@ -19,12 +19,18 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /** @var  WC_Order $order */
   private $order;
 
-  /** @var \Affilicon\Cart  */
-  private $affiliconCart;
+  /** @var WC_Affilicon_Payment_Gateway_API_Client_Wrapper */
+  private $affiliconClient;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
-    $this->affiliconCart = new \Affilicon\Cart();
+    $this->affiliconClient = (new WC_Affilicon_Payment_Gateway_API_Client_Wrapper());
+    $this->affiliconClient
+      ->setCountryId('de') // todo get from woocommerce
+      ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
+      ->setClientId($gateway->vendor_id)
+      ->init();
+
     $this->order = $order;
     $this->gateway = $gateway;
   }
@@ -75,16 +81,17 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   /**
    * Creates a new cart and passes the Woocommerce cart items.
+   *
+   * @return \Affilicon\Cart
    */
   public function buildCart()
   {
-    $this->affiliconCart
-      ->setCountryId('de') // todo get from woocommerce
-      ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
-      ->setClientId($this->gateway->vendor_id)
-      ->create();
+    /** @var \Affilicon\Cart $affiliconCart */
+    $affiliconCart = new \Affilicon\Cart();
+    $affiliconCart->create();
 
-    $this->order->add_meta_data('affilicon_cart_id', $this->affiliconCart->getId());
+
+    $this->order->add_meta_data('affilicon_cart_id', $affiliconCart->getId());
 
     /** @var \Affilicon\Collection $lineItems */
     $lineItems = new \Affilicon\Collection();
@@ -104,7 +111,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
         if ($lineItem) {
 
           $lineItems->addItem($lineItem);
-          $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
+          // todo $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
           $wcLineItem->save();
 
         }
@@ -112,8 +119,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       }
     }
 
-    $this->affiliconCart->addLineItems($lineItems);
+    $affiliconCart->addLineItems($lineItems);
     $this->order->save();
+
+    return $affiliconCart;
   }
 
   /**
@@ -162,22 +171,25 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
     return $mapper[$code];
   }
 
-  public function buildLegacyWidgetFormUrl()
+  /**
+   * @param \Affilicon\Cart $cart
+   */
+  public function buildLegacyWidgetFormUrl($cart)
   {
     $prefill = $this->getAffiliconArgs($this->order);
-    $clientId = $this->affiliconCart->getClientId();
+    $clientId = $this->affiliconClient->getClientId();
 
     // todo: countryID = "de" or "de_DE"?
     $countryId = $this->getRegionCode($this->order->data['shipping']['country']); // todo check if needed "getRegionCode" or format = "de"
-    $userLanguage = $this->affiliconCart->getUserLanguage();
+    $userLanguage = $this->affiliconClient->getUserLanguage();
 
     // todo: language
 
     $params = [
       "$clientId/redirect",
-      "cartId/{$this->affiliconCart->getId()}",
+      "cartId/{$cart->getId()}",
       "countryId/$countryId",
-      "token/{$this->affiliconCart->getToken()}",
+      "token/{$this->affiliconClient->getToken()}",
       "language/$userLanguage", // todo core -> use case language
     ]; // todo testmode
 

@@ -6,10 +6,10 @@
             "email": "marcelle.hoevelmanns@gmail.com"
         }
     ],
-    "require": {},
-    "require-dev": {
-        "apigen/apigen": "^4.1"
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
     },
+    "require-dev": {},
 
     "autoload": {
         "psr-4": {"Affilicon\\": "src/"}

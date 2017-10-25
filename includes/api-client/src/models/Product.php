@@ -11,7 +11,7 @@
 namespace Affilicon;
 
 
-class Product extends Model
+class Product extends AbstractModel
 {
 
   /**
@@ -21,7 +21,6 @@ class Product extends Model
 
   public function __construct()
   {
-    parent::__construct();
     $this->resource = AFFILICON_API['routes']['products'];
   }
 

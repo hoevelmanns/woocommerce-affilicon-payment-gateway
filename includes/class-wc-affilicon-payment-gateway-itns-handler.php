@@ -6,7 +6,6 @@
  * Time: 22:41
  */
 
-
 if (!defined('ABSPATH')) {
     exit;
 }

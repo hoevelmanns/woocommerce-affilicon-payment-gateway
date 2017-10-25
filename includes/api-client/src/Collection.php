@@ -10,7 +10,7 @@
 
 namespace Affilicon;
 
-class Collection extends Client implements \Iterator
+class Collection implements \Iterator
 {
   /**
    * Current index

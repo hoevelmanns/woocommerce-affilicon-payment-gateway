@@ -17,20 +17,19 @@ namespace Affilicon;
  *
  * @property integer $id
  * @property integer $quantity
- * @property integer $apiId;
+ * @property string $apiId;
  * @property string $name;
  * @property string $description;
  * @property integer $price
  */
 
-class LineItem extends Model
+class LineItem extends AbstractModel
 {
 
   protected $resource;
 
   public function __construct()
   {
-    parent::__construct();
     $this->resource = AFFILICON_API['routes']['cartItemsProducts'];
   }
 

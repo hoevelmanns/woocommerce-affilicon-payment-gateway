@@ -19,15 +19,17 @@ namespace Affilicon;
  *
  */
 
-class Cart extends Model
+class Cart
 {
-  /** @var  Collection $lineItems */
+  /** @var Collection $lineItems */
   private $lineItems;
   protected $resource;
+  /** @var Client $client */
+  protected $client;
 
   public function __construct()
   {
-    parent::__construct();
+    $this->client = Client::getInstance();
     $this->lineItems = new Collection();
     $this->resource = AFFILICON_API['routes']['carts'];
   }
@@ -38,9 +40,10 @@ class Cart extends Model
    */
   public function create()
   {
-    $cart = $this->post($this->resource, [
-      'vendor' => $this->getClientId()
-    ]);
+    $cart = Request::getInstance()->post($this->resource,
+      ['vendor' => $this->client->getClientId()],
+      $this->client->headers()
+    );
 
     if (!$cart) {
       // todo exception handling
@@ -74,11 +77,11 @@ class Cart extends Model
    */
   public function addLineItem(LineItem $item)
   {
-    $lineItem = $this->post(AFFILICON_API['routes']['cartItemsProducts'], [
+    $lineItem = Request::getInstance()->post(AFFILICON_API['routes']['cartItemsProducts'], [
       'cart_id' => $this->getId(),
       'product_id' => $item->getId(),
       'count' => $item->getQuantity()
-    ]);
+    ], $this->client->headers());
 
     $item->setApiId($lineItem->data->id);
     $this->lineItems->addItem($item);
@@ -108,4 +111,5 @@ class Cart extends Model
   {
     return $this->lineItems;
   }
+
 }

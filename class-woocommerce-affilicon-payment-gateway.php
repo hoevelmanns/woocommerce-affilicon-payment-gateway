@@ -29,21 +29,10 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
   {
     // Includes
     if (!is_admin()) {
+      include_once('includes/class-wc-affilicon-payment-gateway-api-client-wrapper.php');
       include_once('includes/class-wc-affilicon-payment-gateway-checkout-form.php');
       include_once('includes/class-wc-affilicon-payment-gateway-response.php');
       include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
-
-
-      include_once 'includes/api-client/src/config/routes.php';
-      include_once('includes/api-client/src/Client.php');
-      include_once 'includes/api-client/src/Collection.php';
-      include_once 'includes/api-client/src/interfaces/ProductInterface.php';
-      include_once 'includes/api-client/src/exceptions/KeyHasUseException.php';
-      include_once 'includes/api-client/src/exceptions/KeyInvalidException.php';
-      include_once 'includes/api-client/src/models/Model.php';
-      include_once 'includes/api-client/src/models/Cart.php';
-      include_once 'includes/api-client/src/models/Product.php';
-      include_once 'includes/api-client/src/models/LineItem.php';
     }
 
     // define additional product attributes for woocommerce product
@@ -145,8 +134,8 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
         $checkoutForm->buildLegacyFormUrl();
       } else {
         // checkout form 3 with widget
-        $checkoutForm->buildCart();
-        $checkoutForm->buildLegacyWidgetFormUrl();
+        $cart = $checkoutForm->buildCart();
+        $checkoutForm->buildLegacyWidgetFormUrl($cart);
       } // todo use case for checkout form 4
 
     } catch (Exception $e) {
