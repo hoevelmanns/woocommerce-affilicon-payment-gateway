@@ -1,0 +1,4 @@
+/vendor/
+apigen.yml
+composer.lock
+.idea
