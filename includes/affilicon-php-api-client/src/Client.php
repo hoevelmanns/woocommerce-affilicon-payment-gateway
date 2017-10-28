@@ -11,9 +11,9 @@
 
 namespace Artsolution\AffiliconApiClient;
 
-use Artsolution\AffiliconApiClient\Exceptions\AuthenticationFailed;
 use Artsolution\AffiliconApiClient\Interfaces\ClientInterface;
 use Artsolution\AffiliconApiClient\Services\HttpService;
+use Artsolution\AffiliconApiClient\Traits\Authentication;
 use Artsolution\AffiliconApiClient\Traits\Environment;
 use Artsolution\AffiliconApiClient\Traits\Singleton;
 
@@ -26,9 +26,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 class Client implements ClientInterface
 {
-  protected $token;
-  protected $username;
-  protected $password;
   public $clientId;
   public $countryId;
   public $userLanguage;
@@ -38,6 +35,7 @@ class Client implements ClientInterface
 
   use Singleton;
   use Environment;
+  use Authentication;
 
 
   public function init()
@@ -47,66 +45,6 @@ class Client implements ClientInterface
     $this->HttpService->init($this->getEnvironmentConfigByKey('service_url'));
     $this->authenticate();
     return $this;
-  }
-
-  public function isAuthenticated()
-  {
-    return !is_null($this->token);
-  }
-  
-  public function authenticate()
-  {
-    if ($this->isAuthenticated()) {
-      return $this->getToken();
-    }
-
-    $member = isset($this->username) && isset($this->password);
-
-    try {
-      $authType = $member ? 'member' : 'anonymous';
-
-      $data = $this->HttpService
-        ->post(API['routes']['auth'][$authType])
-        ->getData();
-
-    } catch (\Exception $e) {
-      throw new AuthenticationFailed($e->getMessage(), $e->getCode());
-    }
-
-    if (!$data || !$data->token) {
-      throw new AuthenticationFailed('token invalid', 403);
-    }
-
-    $this->HttpService
-      ->setHeaders([
-        'Authorization' => 'Bearer ' . $data->token,
-        'username' => $this->username,
-        'password' => $this->password
-      ]);
-
-    return $this->token = $data->token;
-  }
-
-  public function setUserName($username)
-  {
-    $this->username = $username;
-    return $this;
-  }
-
-  public function getUsername()
-  {
-    return $this->username;
-  }
-
-  public function setPassword($password)
-  {
-    $this->password = $password;
-    return $this;
-  }
-
-  public function getToken()
-  {
-    return $this->token;
   }
 
   public function setClientId($id)

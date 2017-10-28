@@ -26,41 +26,6 @@ interface ClientInterface
    */
   public function init();
 
-
-  public function setUserName($username);
-
-  /**
-   * Gets the username
-   * @return string
-   */
-  public function getUsername();
-
-  /**
-   * Sets the password, only expected if you use the api as member or employee
-   * @param string $password
-   * @return $this
-   */
-  public function setPassword($password);
-
-  /**
-   * Authenticate to api
-   * @return string
-   * @throws AuthenticationFailed
-   */
-  public function authenticate();
-
-  /**
-   * Checks if client is authenticated
-   * @return bool
-   */
-  public function isAuthenticated();
-
-  /**
-   * Gets the token
-   * @return string
-   */
-  public function getToken();
-
   /**
    * Sets the Client ID, previously called Vendor ID
    * @param string $id
