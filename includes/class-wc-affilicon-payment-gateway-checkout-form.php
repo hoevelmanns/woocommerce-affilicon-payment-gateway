@@ -19,12 +19,12 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /** @var  WC_Order $order */
   private $order;
 
-  /** @var WC_Affilicon_Payment_Gateway_API_Client_Wrapper */
+  /** @var \Affilicon\ApiClient\Client */
   private $affiliconClient;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
-    $this->affiliconClient = (new WC_Affilicon_Payment_Gateway_API_Client_Wrapper());
+    $this->affiliconClient = \Affilicon\ApiClient\Client::getInstance();
     $this->affiliconClient
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
@@ -82,19 +82,17 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /**
    * Creates a new cart and passes the Woocommerce cart items.
    *
-   * @return \Affilicon\Cart
+   * @return Affilicon\ApiClient\Models\Cart
    */
   public function buildCart()
   {
-    /** @var \Affilicon\Cart $affiliconCart */
-    $affiliconCart = new \Affilicon\Cart();
-    $affiliconCart->create();
-
+    /** @var \Affilicon\ApiClient\Models\Cart $affiliconCart */
+    $affiliconCart = (new \Affilicon\ApiClient\Models\Cart())->create();
 
     $this->order->add_meta_data('affilicon_cart_id', $affiliconCart->getId());
 
-    /** @var \Affilicon\Collection $lineItems */
-    $lineItems = new \Affilicon\Collection();
+    /** @var \Affilicon\ApiClient\Models\Collection $lineItems */
+    $lineItems = new \Affilicon\ApiClient\Models\Collection();
 
     /** @var WC_Order_Item $wcLineItem */
     foreach ($this->order->get_items() as $wcLineItem) {
@@ -103,8 +101,8 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
       if ($affiliconProductId) {
 
-        /** @var \Affilicon\LineItem $lineItem */
-        $lineItem = (new \Affilicon\LineItem())
+        /** @var \Affilicon\ApiClient\Models\LineItem $lineItem */
+        $lineItem = (new \Affilicon\ApiClient\Models\LineItem())
           ->setId($affiliconProductId)
           ->setQuantity($wcLineItem->get_quantity());
 
@@ -172,7 +170,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   }
 
   /**
-   * @param \Affilicon\Cart $cart
+   * @param Affilicon\ApiClient\Cart $cart
    */
   public function buildLegacyWidgetFormUrl($cart)
   {

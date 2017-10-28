@@ -46,7 +46,7 @@ class Client implements ClientInterface
    */
   public function setEnv($environment = null)
   {
-    $this->environment = $environment ? $environment: 'production';
+    $this->environment = !is_null($environment) ? $environment : 'production';
     return $this;
   }
 
