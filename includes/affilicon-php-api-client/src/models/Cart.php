@@ -11,7 +11,7 @@
 namespace Artsolution\AffiliconApiClient\Models;
 
 use Artsolution\AffiliconApiClient\Abstracts\AbstractModel;
-use Affilicon\ApiClient\Client;
+use Artsolution\AffiliconApiClient\Client;
 use Artsolution\AffiliconApiClient\Exceptions\CartCreationFailed;
 use Artsolution\AffiliconApiClient\Services\HttpService;
 

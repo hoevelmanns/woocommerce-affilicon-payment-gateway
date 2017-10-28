@@ -37,7 +37,6 @@ class Client implements ClientInterface
   use Environment;
   use Authentication;
 
-
   public function init()
   {
     $this->setEnvironment();
@@ -79,6 +78,5 @@ class Client implements ClientInterface
     $this->userLanguage = $userLanguage;
     return $this;
   }
-
 
 }
