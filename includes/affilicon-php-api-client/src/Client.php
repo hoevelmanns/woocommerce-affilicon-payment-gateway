@@ -9,12 +9,13 @@
  * @date        02.10.17
  */
 
-namespace Affilicon\ApiClient;
+namespace Artsolution\AffiliconApiClient;
 
-use Affilicon\ApiClient\Exceptions\AuthenticationFailed;
-use Affilicon\ApiClient\Interfaces\ClientInterface;
-use Affilicon\ApiClient\Services\HttpService;
-use Affilicon\ApiClient\Traits\Singleton;
+use Artsolution\AffiliconApiClient\Exceptions\AuthenticationFailed;
+use Artsolution\AffiliconApiClient\Interfaces\ClientInterface;
+use Artsolution\AffiliconApiClient\Services\HttpService;
+use Artsolution\AffiliconApiClient\Traits\Environment;
+use Artsolution\AffiliconApiClient\Traits\Singleton;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -28,7 +29,6 @@ class Client implements ClientInterface
   protected $token;
   protected $username;
   protected $password;
-  protected $environment;
   public $clientId;
   public $countryId;
   public $userLanguage;
@@ -37,42 +37,14 @@ class Client implements ClientInterface
   protected $HttpService;
 
   use Singleton;
+  use Environment;
 
-  /**
-   * Sets the environment, default 'production'
-   * @param string $environment
-   * @return $this
-   *
-   */
-  public function setEnv($environment = null)
-  {
-    $this->environment = !is_null($environment) ? $environment : 'production';
-    return $this;
-  }
-
-  /**
-   * Gets the environment
-   * @return object
-   */
-  public function getEnvName()
-  {
-    return $this->environment;
-  }
-
-  /**
-   * @param $key
-   * @return object
-   */
-  public function getEnvConfigByKey($key)
-  {
-    return CONFIG['environment'][$this->environment][$key];
-  }
 
   public function init()
   {
-    $this->setEnv();
+    $this->setEnvironment();
     $this->HttpService = HttpService::getInstance();
-    $this->HttpService->init($this->getEnvConfigByKey('service_url'));
+    $this->HttpService->init($this->getEnvironmentConfigByKey('service_url'));
     $this->authenticate();
     return $this;
   }

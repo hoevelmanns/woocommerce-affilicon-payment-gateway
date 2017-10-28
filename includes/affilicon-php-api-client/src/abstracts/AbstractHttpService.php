@@ -8,11 +8,11 @@
  * @date        25.10.17
  */
 
-namespace Affilicon\ApiClient\Abstracts;
+namespace Artsolution\AffiliconApiClient\Abstracts;
 
 
-use Affilicon\ApiClient\Interfaces\HttpServiceInterface;
-use Affilicon\ApiClient\Traits\Singleton;
+use Artsolution\AffiliconApiClient\Interfaces\HttpServiceInterface;
+use Artsolution\AffiliconApiClient\Traits\Singleton;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
@@ -24,7 +24,7 @@ use GuzzleHttp\Psr7\Response;
 abstract class AbstractHttpService implements HttpServiceInterface
 {
   /** @var  \GuzzleHttp\Client */
-  protected $httpClient;
+  protected $HttpClient;
   protected $endpoint;
   /** @var  Response $response */
   protected $response;
@@ -37,7 +37,7 @@ abstract class AbstractHttpService implements HttpServiceInterface
   public function init($endpoint)
   {
     $this->endpoint = $endpoint;
-    $this->httpClient = new Client();
+    $this->HttpClient = new Client();
   }
 
   /**
@@ -77,7 +77,7 @@ abstract class AbstractHttpService implements HttpServiceInterface
   {
     $url = $this->endpoint . $route;
 
-    $this->response = $this->httpClient->request('POST', $url, [
+    $this->response = $this->HttpClient->request('POST', $url, [
       'headers' => $this->getHeaders(),
       'json' => $body
     ]);

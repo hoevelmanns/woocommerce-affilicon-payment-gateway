@@ -6,7 +6,7 @@
  * Time: 14:30
  */
 
-namespace Affilicon\ApiClient\Exceptions;
+namespace Artsolution\AffiliconApiClient\Exceptions;
 
 
 class KeyHasUseException extends ClientExceptions

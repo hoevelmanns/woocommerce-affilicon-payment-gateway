@@ -8,12 +8,12 @@
  * @date        02.10.17
  */
 
-namespace Affilicon\ApiClient\Models;
+namespace Artsolution\AffiliconApiClient\Models;
 
-use Affilicon\ApiClient\Abstracts\AbstractModel;
+use Artsolution\AffiliconApiClient\Abstracts\AbstractModel;
 use Affilicon\ApiClient\Client;
-use Affilicon\ApiClient\Exceptions\CartCreationFailed;
-use Affilicon\ApiClient\Services\HttpService;
+use Artsolution\AffiliconApiClient\Exceptions\CartCreationFailed;
+use Artsolution\AffiliconApiClient\Services\HttpService;
 
 /**
  * Class Cart

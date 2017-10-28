@@ -1,11 +1,13 @@
 {
-    "name": "affilicon/api-client",
+    "name": "artsolution/affilicon-api-client",
     "authors": [
         {
             "name": "Marcelle Hövelmanns",
             "email": "marcelle.hoevelmanns@gmail.com"
         }
     ],
+    "license": "(LGPL-2.1 or GPL-3.0+)",
+    "version": "0.1",
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },
@@ -15,14 +17,14 @@
 
     "autoload": {
         "psr-4": {
-          "Affilicon\\ApiClient\\Traits\\": "src/traits/",
-          "Affilicon\\ApiClient\\Services\\": "src/services/",
-          "Affilicon\\ApiClient\\Abstracts\\": "src/abstracts/",
-          "Affilicon\\ApiClient\\Interfaces\\": "src/interfaces/",
-          "Affilicon\\ApiClient\\Exceptions\\": "src/exceptions/",
-          "Affilicon\\ApiClient\\Configurations\\": "src/config/",
-          "Affilicon\\ApiClient\\Models\\": "src/models/",
-          "Affilicon\\ApiClient\\": "src/"
+          "Artsolution\\AffiliconApiClient\\Traits\\": "src/traits/",
+          "Artsolution\\AffiliconApiClient\\Services\\": "src/services/",
+          "Artsolution\\AffiliconApiClient\\Abstracts\\": "src/abstracts/",
+          "Artsolution\\AffiliconApiClient\\Interfaces\\": "src/interfaces/",
+          "Artsolution\\AffiliconApiClient\\Exceptions\\": "src/exceptions/",
+          "Artsolution\\AffiliconApiClient\\Configurations\\": "src/config/",
+          "Artsolution\\AffiliconApiClient\\Models\\": "src/models/",
+          "Artsolution\\AffiliconApiClient\\": "src/"
         }
     }
 }

@@ -6,7 +6,7 @@
  * Time: 14:17
  */
 
-namespace Affilicon\ApiClient\Interfaces;
+namespace Artsolution\AffiliconApiClient\Interfaces;
 
 
 interface ModelInterface

@@ -9,6 +9,7 @@
  */
 
 include_once 'affilicon-php-api-client/src/config/routes.php';
+include_once 'affilicon-php-api-client/src/config/config.php';
 include_once 'affilicon-php-api-client/src/interfaces/ClientInterface.php';
 
 //todo HttpService for woocommerce

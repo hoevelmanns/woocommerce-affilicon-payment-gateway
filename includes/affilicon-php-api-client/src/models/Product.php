@@ -8,10 +8,10 @@
  * @date        23.10.17
  */
 
-namespace Affilicon\ApiClient\Models;
+namespace Artsolution\AffiliconApiClient\Models;
 
 
-use Affilicon\ApiClient\Abstracts\AbstractModel;
+use Artsolution\AffiliconApiClient\Abstracts\AbstractModel;
 
 class Product extends AbstractModel
 {

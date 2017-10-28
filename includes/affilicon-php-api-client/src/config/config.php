@@ -8,7 +8,7 @@
  * @date        26.10.17
  */
 
-namespace Affilicon\ApiClient\Configurations;
+namespace Artsolution\AffiliconApiClient\Configurations;
 
 if (!defined('CONFIG')) {
   define('CONFIG', [

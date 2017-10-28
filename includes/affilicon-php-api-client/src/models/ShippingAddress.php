@@ -8,11 +8,11 @@
  * @date        23.10.17
  */
 
-namespace Affilicon\ApiClient\Models;
+namespace Artsolution\AffiliconApiClient\Models;
 
 
-use Affilicon\ApiClient\Abstracts\AbstractAddress;
-use Affilicon\ApiClient\Interfaces\AddressInterface;
+use Artsolution\AffiliconApiClient\Abstracts\AbstractAddress;
+use Artsolution\AffiliconApiClient\Interfaces\AddressInterface;
 
 class ShippingAddress extends AbstractAddress implements AddressInterface
 {

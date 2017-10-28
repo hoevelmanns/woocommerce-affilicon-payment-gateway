@@ -8,9 +8,9 @@
  * @date        10.10.17
  */
 
-namespace Affilicon\ApiClient\Abstracts;
+namespace Artsolution\AffiliconApiClient\Abstracts;
 
-use Affilicon\ApiClient\Interfaces\AddressInterface;
+use Artsolution\AffiliconApiClient\Interfaces\AddressInterface;
 
 /**
  * Class Address

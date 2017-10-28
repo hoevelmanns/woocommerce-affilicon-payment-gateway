@@ -8,12 +8,12 @@
  * @date        22.10.17
  */
 
-namespace Affilicon\ApiClient\Abstracts;
+namespace Artsolution\AffiliconApiClient\Abstracts;
 
 
-use Affilicon\ApiClient\Client;
-use Affilicon\ApiClient\Interfaces\ModelInterface;
-use Affilicon\ApiClient\Services\HttpService;
+use Artsolution\AffiliconApiClient\Client;
+use Artsolution\AffiliconApiClient\Interfaces\ModelInterface;
+use Artsolution\AffiliconApiClient\Services\HttpService;
 
 abstract class AbstractModel implements ModelInterface
 {

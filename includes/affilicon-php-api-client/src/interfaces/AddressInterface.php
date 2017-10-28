@@ -8,7 +8,7 @@
  * @date        23.10.17
  */
 
-namespace Affilicon\ApiClient\Interfaces;
+namespace Artsolution\AffiliconApiClient\Interfaces;
 
 
 interface AddressInterface
