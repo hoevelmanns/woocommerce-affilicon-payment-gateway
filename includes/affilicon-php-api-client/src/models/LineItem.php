@@ -14,17 +14,17 @@ namespace AffiliconApiClient\Models;
 use AffiliconApiClient\Abstracts\AbstractModel;
 use AffiliconApiClient\Configurations\Config;
 use AffiliconApiClient\Interfaces\ModelInterface;
-use AffiliconApiClient\Services\HttpService;
 
 /**
  * Class CartItem
  * @package Affilicon
  *
  * @property integer $id
+ * @property string $cartId
  * @property integer $quantity
- * @property string $apiId;
- * @property string $name;
- * @property string $description;
+ * @property string $apiId
+ * @property string $name
+ * @property string $description
  * @property integer $price
  */
 
@@ -99,24 +99,27 @@ class LineItem extends AbstractModel implements ModelInterface
   }
 
   /**
-   * @param string $cartId
-   * @param array $item
+   * @param $cartId
    * @return $this
    */
-  public function create($cartId, $item)
+  public function setCartId($cartId)
   {
-    HttpService::post($this->resource, [
-      'cart_id' => $cartId,
-      'product_id' => $item['id'],
-      'count' => $item['quantity']
-    ]);
+    $this->cartId = $cartId;
+    return $this;
+  }
 
-    $data = HttpService::getData();
+  /**
+   * @return $this
+   */
+  public function store()
+  {
+    $data = $this->HttpService::post($this->resource, [
+      'cart_id' => $this->cartId,
+      'product_id' => $this->id,
+      'count' => $this->quantity
+    ])->getData();
 
-    $this
-      ->setQuantity($data->quantity)
-      ->setApiId($data->id)
-      ->setId($item['id']);
+    $this->setApiId($data->id);
 
     return $this;
   }

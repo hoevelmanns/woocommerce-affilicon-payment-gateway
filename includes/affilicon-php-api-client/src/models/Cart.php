@@ -51,7 +51,7 @@ class Cart extends AbstractModel
   {
     try {
 
-      $cart = HttpService::post($this->resource, [
+      $cart = $this->HttpService::post($this->resource, [
           'vendor' => $this->Client->getClientId()
       ])->getData();
 
@@ -90,10 +90,11 @@ class Cart extends AbstractModel
    */
   public function addLineItem($itemId, $quantity)
   {
-    $item = (new LineItem())->create($this->id, [
-      'id' => $itemId,
-      'quantity' => $quantity
-    ]);
+    $item = (new LineItem())
+      ->setCartId($this->id)
+      ->setId($itemId)
+      ->setQuantity($quantity)
+      ->store();
 
     $this->lineItems->addItem($item);
 
