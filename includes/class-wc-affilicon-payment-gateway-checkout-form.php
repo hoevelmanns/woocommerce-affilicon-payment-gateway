@@ -19,12 +19,12 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /** @var  WC_Order $order */
   private $order;
 
-  /** @var \Artsolution\AffiliconApiClient\Client */
+  /** @var \AffiliconApiClient\Client */
   private $affiliconClient;
 
   public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
   {
-    $this->affiliconClient = \Artsolution\AffiliconApiClient\Client::getInstance();
+    $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
     $this->affiliconClient
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
@@ -82,17 +82,13 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   /**
    * Creates a new cart and passes the Woocommerce cart items.
    *
-   * @return Artsolution\AffiliconApiClient\Models\Cart
+   * @return \AffiliconApiClient\Models\Cart
    */
   public function buildCart()
   {
-    /** @var \Artsolution\AffiliconApiClient\Models\Cart $affiliconCart */
-    $affiliconCart = (new \Artsolution\AffiliconApiClient\Models\Cart())->create();
+    $affiliconCart = (new \AffiliconApiClient\Models\Cart())->create();
 
     $this->order->add_meta_data('affilicon_cart_id', $affiliconCart->getId());
-
-    /** @var \Artsolution\AffiliconApiClient\Models\Collection $lineItems */
-    $lineItems = new \Artsolution\AffiliconApiClient\Models\Collection();
 
     /** @var WC_Order_Item $wcLineItem */
     foreach ($this->order->get_items() as $wcLineItem) {
@@ -100,24 +96,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       $affiliconProductId = $this->getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
       if ($affiliconProductId) {
-
-        /** @var \Artsolution\AffiliconApiClient\Models\LineItem $lineItem */
-        $lineItem = (new \Artsolution\AffiliconApiClient\Models\LineItem())
-          ->setId($affiliconProductId)
-          ->setQuantity($wcLineItem->get_quantity());
-
-        if ($lineItem) {
-
-          $lineItems->addItem($lineItem);
-          // todo $wcLineItem->add_meta_data('affilicon_item_id', $lineItem->getApiId());
-          $wcLineItem->save();
-
-        }
-
+        $affiliconCart->addLineItem($affiliconProductId, $wcLineItem->get_quantity());
       }
     }
 
-    $affiliconCart->addLineItems($lineItems);
     $this->order->save();
 
     return $affiliconCart;
@@ -170,7 +152,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   }
 
   /**
-   * @param Artsolution\AffiliconApiClient\Cart $cart
+   * @param \AffiliconApiClient\Models\Cart $cart
    */
   public function buildLegacyWidgetFormUrl($cart)
   {

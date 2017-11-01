@@ -8,10 +8,11 @@
  * @date        23.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Models;
+namespace AffiliconApiClient\Models;
 
 
-use Artsolution\AffiliconApiClient\Abstracts\AbstractModel;
+use AffiliconApiClient\Abstracts\AbstractModel;
+use AffiliconApiClient\Configurations\Config;
 
 class Product extends AbstractModel
 {
@@ -21,7 +22,7 @@ class Product extends AbstractModel
   public function __construct()
   {
     parent::__construct();
-    $this->resource = API['routes']['products'];
+    $this->resource = Config::get('routes.products');
   }
 
 }

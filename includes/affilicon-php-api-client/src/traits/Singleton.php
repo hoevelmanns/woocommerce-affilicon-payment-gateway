@@ -8,18 +8,22 @@
  * @date        27.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Traits;
+namespace AffiliconApiClient\Traits;
 
 
 use ReflectionClass;
 
+/**
+ * Trait Singleton
+ * @package AffiliconApiClient\Traits
+ */
 trait Singleton {
 
   protected static $instance;
 
   final public static function getInstance()
   {
-    if ( ! isset(self::$instance)) {
+    if (!isset(self::$instance)) {
       $class = new ReflectionClass(__CLASS__);
       self::$instance = $class->newInstanceArgs(func_get_args());
     }

@@ -8,58 +8,64 @@
  * @date        25.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Interfaces;
+namespace AffiliconApiClient\Interfaces;
 
 interface HttpServiceInterface
 {
 
   /**
+   * @param $endpoint
+   * @return mixed
+   */
+  public static function init($endpoint);
+
+  /**
    * @param string $route
    * @param array $body
-   * @return Response
+   * @return $this
    */
-  public function post($route, $body = []);
+  public static function post($route, $body = []);
 
   /**
    * @param string $route
    * @return object
    */
-  public function get($route);
-
-  /**
-   * @param string $route
-   * @param array $body
-   * @return object
-   */
-  public function put($route, $body = []);
-
-  /**
-   * @param string $route
-   * @param array $body
-   * @return object
-   */
-  public function delete($route, $body = []);
+  public static function get($route);
 
   /**
    * @param string $route
    * @param array $body
    * @return object
    */
-  public function patch($route, $body);
+  public static function put($route, $body = []);
+
+  /**
+   * @param string $route
+   * @param array $body
+   * @return object
+   */
+  public static function delete($route, $body = []);
+
+  /**
+   * @param string $route
+   * @param array $body
+   * @return object
+   */
+  public static function patch($route, $body);
 
   /**
    * @return array
    */
-  public function getData();
+  public static function getData();
 
   /**
    * @param array $headers
    */
-  public function setHeaders($headers);
+  public static function setHeaders($headers);
 
   /**
    * @return array
    */
-  public function getHeaders();
+  public static function getHeaders();
 
 }

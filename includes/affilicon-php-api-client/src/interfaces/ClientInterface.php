@@ -8,9 +8,7 @@
  * @date        24.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Interfaces;
-
-use Artsolution\AffiliconApiClient\Exceptions\AuthenticationFailed;
+namespace AffiliconApiClient\Interfaces;
 
 /**
  * Interface ClientInterface

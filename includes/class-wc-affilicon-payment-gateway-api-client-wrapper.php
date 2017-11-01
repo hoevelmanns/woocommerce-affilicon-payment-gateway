@@ -8,12 +8,16 @@
  * @date        24.10.17
  */
 
+require "affilicon-php-api-client/vendor/autoload.php";
+
+/*
 include_once 'affilicon-php-api-client/src/config/routes.php';
 include_once 'affilicon-php-api-client/src/config/config.php';
+
+/*
 include_once 'affilicon-php-api-client/src/interfaces/ClientInterface.php';
 
 //todo HttpService for woocommerce
-include_once 'affilicon-php-api-client/src/interfaces/HttpServiceInterface.php';
 include_once 'affilicon-php-api-client/src/interfaces/HttpServiceInterface.php';
 include_once 'affilicon-php-api-client/src/interfaces/ModelInterface.php';
 include_once 'affilicon-php-api-client/src/abstracts/AbstractHttpService.php';
@@ -35,3 +39,4 @@ include_once 'affilicon-php-api-client/src/abstracts/AbstractModel.php';
 include_once 'affilicon-php-api-client/src/models/Cart.php';
 include_once 'affilicon-php-api-client/src/models/Product.php';
 include_once 'affilicon-php-api-client/src/models/LineItem.php';
+*/

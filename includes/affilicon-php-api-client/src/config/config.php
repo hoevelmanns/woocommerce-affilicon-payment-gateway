@@ -8,18 +8,38 @@
  * @date        26.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Configurations;
+namespace AffiliconApiClient\Configurations;
 
-if (!defined('CONFIG')) {
-  define('CONFIG', [
-    'environment' => [
-      'production' => [
-        'service_url' => 'https://service.affilicon.net/api'
-      ]
+return [
+
+  /*
+   * ---------------------------------------------------------------------
+   * Environment Configuration
+   * ---------------------------------------------------------------------
+   */
+
+  'environment' => [
+
+    // Production
+    'production' => [
+      'service_url' => 'https://service.affilicon.net/api'
     ],
-    'error_log' => [
-    'path' => __DIR__ . '/logs/error.log'
+
+    // Development
+    'development' => [
+      'service_url' => 'https://service.affilicon.app/api'
+    ],
+
+    // Staging
+    'staging' => [
+      'service_url' => 'https://service-q.affilicon.net/api'
     ]
-  ]);
-}
+
+  ],
+
+  'error_log' => [
+    'path' => __DIR__ . '/logs/error.log'
+  ]
+
+];
 

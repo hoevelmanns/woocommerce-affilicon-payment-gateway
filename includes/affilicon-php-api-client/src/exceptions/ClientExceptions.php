@@ -8,7 +8,7 @@
  * @date        25.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Exceptions;
+namespace AffiliconApiClient\Exceptions;
 
 
 use Throwable;

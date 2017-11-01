@@ -8,12 +8,13 @@
  * @date        02.10.17
  */
 
-namespace Artsolution\AffiliconApiClient\Models;
+namespace AffiliconApiClient\Models;
 
-use Artsolution\AffiliconApiClient\Abstracts\AbstractModel;
-use Artsolution\AffiliconApiClient\Client;
-use Artsolution\AffiliconApiClient\Exceptions\CartCreationFailed;
-use Artsolution\AffiliconApiClient\Services\HttpService;
+use AffiliconApiClient\Abstracts\AbstractModel;
+use AffiliconApiClient\Client;
+use AffiliconApiClient\Configurations\Config;
+use AffiliconApiClient\Exceptions\CartCreationFailed;
+use AffiliconApiClient\Services\HttpService;
 
 /**
  * Class Cart
@@ -32,14 +33,12 @@ class Cart extends AbstractModel
 
   /** @var  Client */
   protected $Client;
-  /** @var  HttpService */
-  protected $HttpService;
 
   public function __construct()
   {
     parent::__construct();
     $this->lineItems = new Collection();
-    $this->resource = API['routes']['carts'];
+    $this->resource = Config::get("routes.carts");
   }
 
   /**
@@ -51,9 +50,10 @@ class Cart extends AbstractModel
   public function create()
   {
     try {
-      $cart = $this->HttpService
-        ->post($this->resource, ['vendor' => $this->Client->getClientId()])
-        ->getData();
+
+      $cart = HttpService::post($this->resource, [
+          'vendor' => $this->Client->getClientId()
+      ])->getData();
 
     } catch (\Exception $e) {
 
@@ -85,35 +85,19 @@ class Cart extends AbstractModel
 
   /**
    * @param LineItem
+   * @param $quantity
    * @return $this
    */
-  public function addLineItem(LineItem $item)
+  public function addLineItem($itemId, $quantity)
   {
-    $lineItem = $this->HttpService
-      ->post(API['routes']['cartItemsProducts'], [
-        'cart_id' => $this->getId(),
-        'product_id' => $item->getId(),
-        'count' => $item->getQuantity()
-    ])->getData();
+    $item = (new LineItem())->create($this->id, [
+      'id' => $itemId,
+      'quantity' => $quantity
+    ]);
 
-    $item->setApiId($lineItem->data->id);
     $this->lineItems->addItem($item);
 
     return $this;
-  }
-
-  /**
-   * @param Collection $items
-   */
-  public function addLineItems(Collection $items)
-  {
-    while($items->next()) {
-      if (!$items->current() instanceof LineItem) {
-        continue;
-      }
-
-      $this->addLineItem($items->current());
-    }
   }
 
   /**

@@ -1,30 +1,44 @@
 {
-    "name": "artsolution/affilicon-api-client",
-    "authors": [
-        {
-            "name": "Marcelle Hövelmanns",
-            "email": "marcelle.hoevelmanns@gmail.com"
-        }
-    ],
-    "license": "(LGPL-2.1 or GPL-3.0+)",
-    "version": "0.1",
-    "require": {
-        "guzzlehttp/guzzle": "^6.3"
-    },
-    "require-dev": {
-        "apigen/apigen": "^4.1"
-    },
-
-    "autoload": {
-        "psr-4": {
-          "Artsolution\\AffiliconApiClient\\Traits\\": "src/traits/",
-          "Artsolution\\AffiliconApiClient\\Services\\": "src/services/",
-          "Artsolution\\AffiliconApiClient\\Abstracts\\": "src/abstracts/",
-          "Artsolution\\AffiliconApiClient\\Interfaces\\": "src/interfaces/",
-          "Artsolution\\AffiliconApiClient\\Exceptions\\": "src/exceptions/",
-          "Artsolution\\AffiliconApiClient\\Configurations\\": "src/config/",
-          "Artsolution\\AffiliconApiClient\\Models\\": "src/models/",
-          "Artsolution\\AffiliconApiClient\\": "src/"
-        }
+  "name": "artsolution/affilicon-api-client",
+  "description": "The Affilicon PHP API Client",
+  "keywords": ["api", "affilicon", "art solution", "client"],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Marcelle Hövelmanns",
+      "email": "marcelle.hoevelmanns@artsolution.de"
     }
+  ],
+  "license": "MIT",
+  "support": {
+    "email": "marcelle.hoevelmanns@artsolution.de"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.4",
+    "apigen/apigen": "dev-master",
+    "roave/better-reflection": "dev-master#c87d856"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers/helpers.php"
+    ],
+    "psr-4": {
+      "AffiliconApiClient\\Traits\\": "src/traits/",
+      "AffiliconApiClient\\Services\\": "src/services/",
+      "AffiliconApiClient\\Abstracts\\": "src/abstracts/",
+      "AffiliconApiClient\\Interfaces\\": "src/interfaces/",
+      "AffiliconApiClient\\Exceptions\\": "src/exceptions/",
+      "AffiliconApiClient\\Configurations\\": "src/config/",
+      "AffiliconApiClient\\Models\\": "src/models/",
+      "AffiliconApiClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AffiliconApiClient\\Tests\\" : "src/tests"
+    }
+  }
 }

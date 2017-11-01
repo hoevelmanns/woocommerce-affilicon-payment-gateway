@@ -12,5 +12,5 @@
 ##### source: https://github.com/ApiGen/ApiGen
 #### Update Docs
 ```
-# vendor/bin/apigen generate -s src -d docs
+# vendor/bin/apigen generate src --destination docs
 ```
