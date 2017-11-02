@@ -27,6 +27,9 @@ class Client implements ClientInterface
   public $countryId;
   public $userLanguage;
 
+  /** @var  HttpService */
+  protected $HttpService;
+
   use Singleton;
   use Environment;
   use Authentication;
@@ -39,7 +42,7 @@ class Client implements ClientInterface
   {
     $this->setEnvironment();
 
-    HttpService::init($this->environment->service_url);
+    $this->HttpService = HttpService::init($this->environment->service_url);
 
     $this->authenticate();
 

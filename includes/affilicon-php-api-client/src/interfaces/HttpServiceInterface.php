@@ -24,48 +24,48 @@ interface HttpServiceInterface
    * @param array $body
    * @return $this
    */
-  public static function post($route, $body = []);
+  public function post($route, $body = []);
 
   /**
    * @param string $route
    * @return object
    */
-  public static function get($route);
-
-  /**
-   * @param string $route
-   * @param array $body
-   * @return object
-   */
-  public static function put($route, $body = []);
+  public function get($route);
 
   /**
    * @param string $route
    * @param array $body
    * @return object
    */
-  public static function delete($route, $body = []);
+  public function put($route, $body = []);
 
   /**
    * @param string $route
    * @param array $body
    * @return object
    */
-  public static function patch($route, $body);
+  public function delete($route, $body = []);
+
+  /**
+   * @param string $route
+   * @param array $body
+   * @return object
+   */
+  public function patch($route, $body);
 
   /**
    * @return array
    */
-  public static function getData();
+  public function getData();
 
   /**
    * @param array $headers
    */
-  public static function setHeaders($headers);
+  public function setHeaders($headers);
 
   /**
    * @return array
    */
-  public static function getHeaders();
+  public function getHeaders();
 
 }

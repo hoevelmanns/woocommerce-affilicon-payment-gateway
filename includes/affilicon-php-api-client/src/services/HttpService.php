@@ -22,8 +22,8 @@ class HttpService implements HttpServiceInterface
   protected static $HttpClient;
   protected static $endpoint;
   /** @var  Response $response */
-  protected static $response;
-  protected static $headers;
+  protected $response;
+  protected $headers;
 
   use Singleton;
 
@@ -44,25 +44,25 @@ class HttpService implements HttpServiceInterface
   /**
    * @param array $headers
    */
-  public static function setHeaders($headers)
+  public function setHeaders($headers)
   {
-    static::$headers = $headers;
+    $this->headers = $headers;
   }
 
   /**
    * @return mixed
    */
-  public static function getHeaders()
+  public function getHeaders()
   {
-    return static::$headers;
+    return $this->headers;
   }
 
   /**
    * @return object
    */
-  public static function getData()
+  public function getData()
   {
-    $responseBody = json_decode(static::$response->getBody(), true);
+    $responseBody = json_decode($this->response->getBody(), true);
 
     if (array_exists('data', $responseBody)) {
       $responseBody['data'] = (object) $responseBody['data'];
@@ -76,12 +76,12 @@ class HttpService implements HttpServiceInterface
    * @param array $body
    * @return $this
    */
-  public static function post($route, $body = [])
+  public function post($route, $body = [])
   {
     $url = static::$endpoint . $route;
 
-    static::$response = static::$HttpClient->request('POST', $url, [
-      'headers' => static::getHeaders(),
+    $this->response = static::$HttpClient->request('POST', $url, [
+      'headers' => $this->getHeaders(),
       'json' => $body
     ]);
 
@@ -92,27 +92,27 @@ class HttpService implements HttpServiceInterface
    * @param string $route
    * @return $this
    */
-  public static function get($route)
+  public function get($route)
   {
     $url = static::$endpoint . $route;
 
-    static::$response = static::$HttpClient->request('GET', $url, [
-      'headers' => static::getHeaders()
+    $this->response = static::$HttpClient->request('GET', $url, [
+      'headers' => $this->getHeaders()
     ]);
 
     return self::$instance;
   }
 
-  public static function put($route, $body = []){
+  public function put($route, $body = []){
     // todo Implement put method;
   }
 
-  public static function patch($route, $body)
+  public function patch($route, $body)
   {
     //todo Implement patch method
   }
 
-  public static function delete($route, $body = [])
+  public function delete($route, $body = [])
   {
     // todo Implement delete() method.
   }

@@ -36,7 +36,6 @@ class LineItem extends AbstractModel implements ModelInterface
   public function __construct()
   {
     parent::__construct();
-    $this->resource = Config::get('routes.cartItemsProducts');
   }
 
   /**
@@ -113,7 +112,7 @@ class LineItem extends AbstractModel implements ModelInterface
    */
   public function store()
   {
-    $data = $this->HttpService::post($this->resource, [
+    $data = $this->HttpService->post($this->resource, [
       'cart_id' => $this->cartId,
       'product_id' => $this->id,
       'count' => $this->quantity

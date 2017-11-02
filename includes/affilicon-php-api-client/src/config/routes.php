@@ -21,16 +21,20 @@ return $routes = [
   'routes' => [
 
     'auth' => [
+
       'anonymous' => '/auth/anonymous/token',
+
       'member' => '/auth/member/token',
+
+      'refresh' => '/auth/refresh',
+
     ],
 
-    'products' => '/products',
+    // Models
+    'Product' => '/products',
 
-    'refreshToken' => '/auth/refresh',
+    'Cart' => '/carts',
 
-    'carts' => '/carts',
-
-    'cartItemsProducts' => '/cart-items/products'
+    'LineItem' => '/cart-items/products'
   ]
 ];

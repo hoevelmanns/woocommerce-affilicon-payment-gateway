@@ -22,7 +22,6 @@ class Product extends AbstractModel
   public function __construct()
   {
     parent::__construct();
-    $this->resource = Config::get('routes.products');
   }
 
 }

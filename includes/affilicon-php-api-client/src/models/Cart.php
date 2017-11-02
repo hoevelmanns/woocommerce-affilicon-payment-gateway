@@ -38,7 +38,6 @@ class Cart extends AbstractModel
   {
     parent::__construct();
     $this->lineItems = new Collection();
-    $this->resource = Config::get("routes.carts");
   }
 
   /**
@@ -51,7 +50,7 @@ class Cart extends AbstractModel
   {
     try {
 
-      $cart = $this->HttpService::post($this->resource, [
+      $cart = $this->HttpService->post($this->resource, [
           'vendor' => $this->Client->getClientId()
       ])->getData();
 

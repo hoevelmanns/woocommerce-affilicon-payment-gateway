@@ -9,6 +9,9 @@
  * Date: 04.10.17
  */
 
+/**
+ * Class WC_Affilicon_Payment_Gateway_Checkout_Form
+ */
 class WC_Affilicon_Payment_Gateway_Checkout_Form
 {
 
@@ -96,8 +99,11 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       $affiliconProductId = $this->getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
       if ($affiliconProductId) {
+
         $affiliconCart->addLineItem($affiliconProductId, $wcLineItem->get_quantity());
+
       }
+
     }
 
     $this->order->save();
