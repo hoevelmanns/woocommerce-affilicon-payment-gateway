@@ -29,6 +29,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   {
     $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
     $this->affiliconClient
+      ->setEnvironment('staging')
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
       ->setClientId($gateway->vendor_id)
@@ -55,16 +56,18 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
 
   public function address($type)
   {
-    return [
-      $type.'_addr_company' => $this->order->{$type.'_company'},
-      $type.'_addr_firstname' => $this->order->{$type.'_first_name'},
-      $type.'_addr_lastname' => $this->order->{$type.'_last_name'},
-      $type.'_addr_street' => $this->order->{$type.'_address_1'},
-      $type.'_addr_street2' => $this->order->{$type.'_address_2'},
-      $type.'_addr_city' => $this->order->{$type.'_city'},
-      $type.'_addr_zip' => $this->order->{$type.'_postcode'},
-      $type.'_addr_country' => $this->order->{$type.'_country'},
+    $address = [
+      $type.'_addr_company' => call_user_func([ $this->order, "get_{$type}_company" ]),
+      $type.'_addr_firstname' => call_user_func([ $this->order, "get_{$type}_first_name" ]),
+      $type.'_addr_lastname' => call_user_func([ $this->order, "get_{$type}_last_name" ]),
+      $type.'_addr_street' => call_user_func([ $this->order, "get_{$type}_address_1" ]),
+      $type.'_addr_street2' => call_user_func([ $this->order, "get_{$type}_address_2" ]),
+      $type.'_addr_city' => call_user_func([ $this->order, "get_{$type}_city" ]),
+      $type.'_addr_zip' => call_user_func([ $this->order, "get_{$type}_postcode" ]),
+      $type.'_addr_country' => call_user_func([ $this->order, "get_{$type}_country" ]),
     ];
+
+    return $address;
   }
 
   public function basicAddress()
@@ -176,10 +179,10 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
       "cartId/{$cart->getId()}",
       "countryId/$countryId",
       "token/{$this->affiliconClient->getToken()}",
-      "language/$userLanguage", // todo core -> use case language
+      "language/$userLanguage" // todo core -> use case language
     ]; // todo testmode
 
-    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params);
+    $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params) . "?prefill=$prefill";
 
     var_dump($prefill);
   }
