@@ -11,110 +11,116 @@
 namespace AffiliconApiClient\Services;
 
 
-use AffiliconApiClient\Interfaces\HttpServiceInterface;
 use AffiliconApiClient\Traits\Singleton;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
-class HttpService implements HttpServiceInterface
+class HttpService
 {
-  /** @var Client */
-  protected static $HttpClient;
-  protected static $endpoint;
-  /** @var  Response $response */
-  protected $response;
-  protected $headers;
+    /** @var Client */
+    protected static $HttpClient;
+    protected static $endpoint;
+    /** @var  Response $response */
+    protected $response;
+    protected $headers;
+    protected $body;
+    protected $data;
 
-  use Singleton;
+    use Singleton;
 
-  /**
-   * @param $endpoint
-   * @return mixed
-   */
-  public static function init($endpoint)
-  {
-    self::getInstance();
+    /**
+     * @param $endpoint
+     * @return mixed
+     */
+    public static function init($endpoint)
+    {
+        self::getInstance();
 
-    static::$endpoint = $endpoint;
-    static::$HttpClient = new Client();
+        static::$endpoint = $endpoint;
+        static::$HttpClient = new Client();
 
-    return self::$instance;
-  }
-
-  /**
-   * @param array $headers
-   */
-  public function setHeaders($headers)
-  {
-    $this->headers = $headers;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getHeaders()
-  {
-    return $this->headers;
-  }
-
-  /**
-   * @return object
-   */
-  public function getData()
-  {
-    $responseBody = json_decode($this->response->getBody(), true);
-
-    if (array_exists('data', $responseBody)) {
-      $responseBody['data'] = (object) $responseBody['data'];
+        return self::$instance;
     }
 
-    return (object) $responseBody;
-  }
+    /**
+     * @param array $headers
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
+    }
 
-  /**
-   * @param string $route
-   * @param array $body
-   * @return $this
-   */
-  public function post($route, $body = [])
-  {
-    $url = static::$endpoint . $route;
+    /**
+     * @return mixed
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
 
-    $this->response = static::$HttpClient->request('POST', $url, [
-      'headers' => $this->getHeaders(),
-      'json' => $body
-    ]);
+    /**
+     * @return object
+     */
+    public function body()
+    {
+        $responseBody = json_decode($this->response->getBody(), true);
 
-    return self::$instance;
-  }
+        if (array_exists('data', $responseBody)) {
+            $responseBody['data'] = (object)$responseBody['data'];
+        }
 
-  /**
-   * @param string $route
-   * @return $this
-   */
-  public function get($route)
-  {
-    $url = static::$endpoint . $route;
+        return (object) $responseBody;
+    }
 
-    $this->response = static::$HttpClient->request('GET', $url, [
-      'headers' => $this->getHeaders()
-    ]);
+    public function data()
+    {
+        return $this->body()->data;
+    }
 
-    return self::$instance;
-  }
+    private function request($method, $route, $body = [])
+    {
+        $url = static::$endpoint . $route;
 
-  public function put($route, $body = []){
-    // todo Implement put method;
-  }
+        $this->response = static::$HttpClient->request($method, $url, [
+            'headers' => $this->getHeaders(),
+            'json' => $body
+        ]);
 
-  public function patch($route, $body)
-  {
-    //todo Implement patch method
-  }
+        return $this;
+    }
 
-  public function delete($route, $body = [])
-  {
-    // todo Implement delete() method.
-  }
+    /**
+     * @param string $route
+     * @param array $body
+     * @return $this
+     */
+    public function post($route, $body = [])
+    {
+        return $this->request('POST', $route, $body);
+    }
+
+    /**
+     * @param string $route
+     * @return $this
+     */
+    public function get($route)
+    {
+        return $this->request('POST', $route);
+    }
+
+    public function put($route, $body = [])
+    {
+        return $this->request('PUT', $route);
+    }
+
+    public function patch($route, $body)
+    {
+        return $this->request('PATCH', $route);
+    }
+
+    public function delete($route, $body = [])
+    {
+        return $this->request('DELETE', $route);
+    }
 
 }

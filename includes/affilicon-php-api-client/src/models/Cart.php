@@ -50,9 +50,9 @@ class Cart extends AbstractModel
   {
     try {
 
-      $cart = $this->HttpService->post($this->resource, [
-          'vendor' => $this->Client->getClientId()
-      ])->getData();
+      $cart = $this->HttpService
+          ->post($this->resource, ['vendor' => $this->Client->getClientId()])
+          ->data();
 
     } catch (\Exception $e) {
 
@@ -60,8 +60,8 @@ class Cart extends AbstractModel
 
     }
 
-    $this->id = $cart->data->id;
-    $this->status = $cart->data->status;
+    $this->id = $cart->id;
+    $this->status = $cart->status;
 
     return $this;
   }

@@ -139,7 +139,11 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       } // todo use case for checkout form 4
 
     } catch (Exception $e) {
-      return new WP_Error('affilicon_payment_error_prepare_checkout_form', $e->getMessage(), array('status' => $e->getCode()));
+        return [
+            'result' => 'failed',
+            'message' => $e->getMessage()
+        ];
+      //return new WP_Error('affilicon_payment_error_prepare_checkout_form', $e->getMessage(), $e->getCode());
     }
 
     return array(

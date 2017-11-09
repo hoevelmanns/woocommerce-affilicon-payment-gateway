@@ -29,7 +29,7 @@ class WC_Affilicon_Payment_Gateway_Checkout_Form
   {
     $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
     $this->affiliconClient
-      ->setEnvironment('staging')
+      ->setEnvironment('production')
       ->setCountryId('de') // todo get from woocommerce
       ->setUserLanguage('de_DE') // todo get from wordpress/woocommerce
       ->setClientId($gateway->vendor_id)
