@@ -12,34 +12,37 @@ namespace AffiliconApiClient\Configurations;
 
 return [
 
-  /*
-   * ---------------------------------------------------------------------
-   * Environment Configuration
-   * ---------------------------------------------------------------------
-   */
+    /*
+     * ---------------------------------------------------------------------
+     * Environment Configuration
+     * ---------------------------------------------------------------------
+     */
 
-  'environment' => [
+    'environment' => [
 
-    // Production
-    'production' => [
-      'service_url' => 'https://service.affilicon.net/api'
+        // Production
+        'production' => [
+            'service_url' => 'https://service.affilicon.net/api',
+            'secure_url' => 'https://secure.affilibank.net'
+        ],
+
+        // Development
+        'development' => [
+            'service_url' => 'https://service.affilicon.app/api',
+            'secure_url' => 'https://secure.affilibank.app'
+        ],
+
+        // Staging
+        'staging' => [
+            'service_url' => 'https://service-q.affilicon.net/api',
+            'secure_url' => 'https://secure-q.affilibank.net'
+        ]
+
     ],
 
-    // Development
-    'development' => [
-      'service_url' => 'https://service.affilicon.app/api'
-    ],
-
-    // Staging
-    'staging' => [
-      'service_url' => 'https://service-q.affilicon.net/api'
+    'error_log' => [
+        'path' => __DIR__ . '/logs/error.log'
     ]
-
-  ],
-
-  'error_log' => [
-    'path' => __DIR__ . '/logs/error.log'
-  ]
 
 ];
 

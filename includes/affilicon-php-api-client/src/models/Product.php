@@ -17,7 +17,7 @@ use AffiliconApiClient\Configurations\Config;
 class Product extends AbstractModel
 {
 
-  protected $resource;
+  protected $route;
 
   public function __construct()
   {

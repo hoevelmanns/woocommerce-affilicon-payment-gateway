@@ -29,221 +29,218 @@ use AffiliconApiClient\Interfaces\AddressInterface;
  * @property string $mobile
  * @property string $email
  */
-
 abstract class AbstractAddress extends AbstractModel implements AddressInterface
 {
-  protected $addressType;
+    /** @var array */
+    private $data;
 
-  const ADDRESS_TYPE_SHIPPING = 'shipping';
-  const ADDRESS_TYPE_BILLING = 'billing';
-  const ADDRESS_TYPE_BASIC = 'basic';
+    /**
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->data['company'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getAddressType()
-  {
-    return $this->addressType;
-  }
+    /**
+     * @param string $company
+     */
+    public function setCompany($company)
+    {
+        $this->data['company'] = $company;
+    }
 
-  /**
-   * @param string $addressType
-   */
-  public function setAddressType($addressType)
-  {
-    $this->addressType = $addressType;
-  }
+    /**
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->data['firstname'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getCompany()
-  {
-    return $this->company;
-  }
+    /**
+     * @param string $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->data['firstname'] = $firstname;
+    }
 
-  /**
-   * @param string $company
-   */
-  public function setCompany($company)
-  {
-    $this->company = $company;
-  }
+    /**
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->data['lastname'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getFirstname()
-  {
-    return $this->firstname;
-  }
+    /**
+     * @param string $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->data['lastname'] = $lastname;
+    }
 
-  /**
-   * @param string $firstname
-   */
-  public function setFirstname($firstname)
-  {
-    $this->firstname = $firstname;
-  }
+    /**
+     * @return string
+     */
+    public function getAddress1()
+    {
+        return $this->data['address_2'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getLastname()
-  {
-    return $this->lastname;
-  }
+    /**
+     * @param string $address_1
+     */
+    public function setAddress1($address_1)
+    {
+        $this->data['address_1'] = $address_1;
+    }
 
-  /**
-   * @param string $lastname
-   */
-  public function setLastname($lastname)
-  {
-    $this->lastname = $lastname;
-  }
+    /**
+     * @return string
+     */
+    public function getAddress2()
+    {
+        return $this->data['address_2'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getAddress1()
-  {
-    return $this->address_1;
-  }
+    /**
+     * @param string $address_2
+     */
+    public function setAddress2($address_2)
+    {
+        $this->data['address_2'] = $address_2;
+    }
 
-  /**
-   * @param string $address_1
-   */
-  public function setAddress1($address_1)
-  {
-    $this->address_1 = $address_1;
-  }
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->data['city'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getAddress2()
-  {
-    return $this->address_2;
-  }
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->data['city'] = $city;
+    }
 
-  /**
-   * @param string $address_2
-   */
-  public function setAddress2($address_2)
-  {
-    $this->address_2 = $address_2;
-  }
+    /**
+     * @return string
+     */
+    public function getPostcode()
+    {
+        return $this->data['postcode'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getCity()
-  {
-    return $this->city;
-  }
+    /**
+     * @param string $postcode
+     */
+    public function setPostcode($postcode)
+    {
+        $this->data['postcode'] = $postcode;
+    }
 
-  /**
-   * @param string $city
-   */
-  public function setCity($city)
-  {
-    $this->city = $city;
-  }
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->data['country'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getPostcode()
-  {
-    return $this->postcode;
-  }
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->data['country'] = $country;
+    }
 
-  /**
-   * @param string $postcode
-   */
-  public function setPostcode($postcode)
-  {
-    $this->postcode = $postcode;
-  }
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->data['phone'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getCountry()
-  {
-    return $this->country;
-  }
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->data['phone'] = $phone;
+    }
 
-  /**
-   * @param string $country
-   */
-  public function setCountry($country)
-  {
-    $this->country = $country;
-  }
+    /**
+     * @return string
+     */
+    public function getFax()
+    {
+        return $this->data['fax'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getPhone()
-  {
-    return $this->phone;
-  }
+    /**
+     * @param string $fax
+     */
+    public function setFax($fax)
+    {
+        $this->data['fax'] = $fax;
+    }
 
-  /**
-   * @param string $phone
-   */
-  public function setPhone($phone)
-  {
-    $this->phone = $phone;
-  }
+    /**
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->data['mobile'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getFax()
-  {
-    return $this->fax;
-  }
+    /**
+     * @param string $mobile
+     */
+    public function setMobile($mobile)
+    {
+        $this->data['mobile'] = $mobile;
+    }
 
-  /**
-   * @param string $fax
-   */
-  public function setFax($fax)
-  {
-    $this->fax = $fax;
-  }
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->data['email'];
+    }
 
-  /**
-   * @return string
-   */
-  public function getMobile()
-  {
-    return $this->mobile;
-  }
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->data['email'] = $email;
+    }
 
-  /**
-   * @param string $mobile
-   */
-  public function setMobile($mobile)
-  {
-    $this->mobile = $mobile;
-  }
+    /**
+     * @param array $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEmail()
-  {
-    return $this->email;
-  }
-
-  /**
-   * @param string $email
-   */
-  public function setEmail($email)
-  {
-    $this->email = $email;
-  }
-
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }

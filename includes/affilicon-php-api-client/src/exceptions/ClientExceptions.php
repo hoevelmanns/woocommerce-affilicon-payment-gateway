@@ -11,6 +11,7 @@
 namespace AffiliconApiClient\Exceptions;
 
 
+use AffiliconApiClient\Configurations\Config;
 use Throwable;
 
 class ClientExceptions extends \Exception
@@ -18,6 +19,6 @@ class ClientExceptions extends \Exception
   public function __construct($message = "", $code = 0, Throwable $previous = null)
   {
     parent::__construct($message, $code, $previous);
-    error_log($this->getTraceAsString(), 3, CONFIG['error_log']['path']);
+    error_log($this->getTraceAsString(), 3, Config::get('error_log.path'));
   }
 }

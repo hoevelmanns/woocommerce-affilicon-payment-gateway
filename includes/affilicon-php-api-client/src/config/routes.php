@@ -12,29 +12,38 @@ namespace AffiliconApiClient\Configurations;
 
 return $routes = [
 
-  /*
-   * ---------------------------------------------------------------------
-   * Routes Configurations
-   * ---------------------------------------------------------------------
-   */
+    /*
+     * ---------------------------------------------------------------------
+     * Routes Configurations
+     * ---------------------------------------------------------------------
+     */
 
-  'routes' => [
+    'routes' => [
 
-    'auth' => [
+        'auth' => [
 
-      'anonymous' => '/auth/anonymous/token',
+            'anonymous' => '/auth/anonymous/token',
 
-      'member' => '/auth/member/token',
+            'member' => '/auth/member/token',
 
-      'refresh' => '/auth/refresh',
+            'refresh' => '/auth/refresh',
 
-    ],
+        ],
 
-    // Models
-    'Product' => '/products',
+        // Models
 
-    'Cart' => '/carts',
+        'Order' => '/order',
 
-    'LineItem' => '/cart-items/products'
-  ]
+        'Product' => '/products',
+
+        'Cart' => '/carts',
+
+        'LineItem' => '/cart-items/products',
+
+        'ShippingAddress' => '/address/shipping', // todo define right route
+
+        'BillingAddress' => '/address/billing', // todo define right route
+
+        'BasicAddress' => '/address/basic' // todo define right route
+    ]
 ];

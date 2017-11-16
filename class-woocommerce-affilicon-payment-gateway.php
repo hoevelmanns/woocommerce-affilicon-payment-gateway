@@ -30,7 +30,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     // Includes
     if (!is_admin()) {
       include_once('includes/class-wc-affilicon-payment-gateway-api-client-wrapper.php');
-      include_once('includes/class-wc-affilicon-payment-gateway-checkout-form.php');
+      include_once('includes/class-wc-affilicon-payment-gateway-checkout-.php');
       include_once('includes/class-wc-affilicon-payment-gateway-response.php');
       include_once('includes/class-wc-affilicon-payment-gateway-itns-handler.php');
     }
@@ -125,17 +125,16 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
   public function process_payment($orderId)
   {
     $this->order = wc_get_order($orderId);
-    /** @var WC_Affilicon_Payment_Gateway_Checkout_Form $checkoutForm */
-    $checkoutForm = new WC_Affilicon_Payment_Gateway_Checkout_Form($this, $this->order);
+    /** @var WC_Affilicon_Payment_Gateway_Checkout $checkoutForm */
+    $checkout = new WC_Affilicon_Payment_Gateway_Checkout($this, $this->order);
 
     try {
       // until we support the legacy form, we need to check the version and call the legacy form preparer
       if (intval($this->get_option('affilicon_checkout_form_theme')) < 3) { // todo get selected checkout form
-        $checkoutForm->buildLegacyFormUrl();
+        $checkout->buildLegacyFormUrl();
       } else {
         // checkout form 3 with widget
-        $cart = $checkoutForm->buildCart();
-        $checkoutForm->buildLegacyWidgetFormUrl($cart);
+        $checkout->createOrder();
       } // todo use case for checkout form 4
 
     } catch (Exception $e) {
@@ -146,9 +145,10 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
       //return new WP_Error('affilicon_payment_error_prepare_checkout_form', $e->getMessage(), $e->getCode());
     }
 
+    $checkoutUrl = $checkout->getUrl();
     return array(
       'result' => 'success',
-      'redirect' => $checkoutForm->getUrl()//@todo testmodus berücksichtigen
+      'redirect' => $checkout->getUrl()//@todo testmodus berücksichtigen
     );
 
   }

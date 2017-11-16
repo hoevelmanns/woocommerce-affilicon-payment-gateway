@@ -13,7 +13,7 @@ namespace AffiliconApiClient\Models;
 use AffiliconApiClient\Exceptions\KeyHasUseException;
 use AffiliconApiClient\Exceptions\KeyInvalidException;
 
-class Collection implements \Iterator
+class Collection
 {
   /**
    * Current index
@@ -26,11 +26,11 @@ class Collection implements \Iterator
 
   /**
    * @param $obj
-   * @param null $key
+   * @param string $key
    * @throws KeyHasUseException
    */
   public function addItem($obj, $key = null) {
-    if ($key == null) {
+    if ($key === null) {
       $this->items[] = $obj;
     }
     else {
@@ -119,7 +119,7 @@ class Collection implements \Iterator
    */
   public function valid()
   {
-    return $this->valid();
+    return array_accessible($this->valid());
   }
 
 

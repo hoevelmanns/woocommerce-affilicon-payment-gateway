@@ -16,16 +16,6 @@ interface AddressInterface
   /**
    * @return string
    */
-  public function getAddressType();
-
-  /**
-   * @param string $addressType
-   */
-  public function setAddressType($addressType);
-
-  /**
-   * @return string
-   */
   public function getCompany();
 
   /**
