@@ -12,27 +12,62 @@ namespace AffiliconApiClient\Abstracts;
 
 
 use AffiliconApiClient\Client;
+use AffiliconApiClient\Exceptions\ConfigurationInvalid;
 use AffiliconApiClient\Interfaces\ModelInterface;
 use AffiliconApiClient\Models\Collection;
-use AffiliconApiClient\Traits\HasHTTPRequests;
+use AffiliconApiClient\Services\HttpService;
 
 abstract class AbstractModel implements ModelInterface
 {
     /** @var string */
     protected $route;
 
-    /** @var Client */
-    protected $client;
-
     /** @var Collection */
     protected $rows;
 
-    use HasHTTPRequests;
+    /** @var Client */
+    protected $client;
 
     public function __construct()
     {
         $this->client = Client::getInstance();
         $this->setRoute();
+    }
+
+    /**
+     * @param array $body
+     * @return HttpService
+     */
+    protected function post($body)
+    {
+        return $this->client
+            ->http()->post($this->route, $body);
+    }
+
+    protected function get()
+    {
+        return $this->client
+            ->http()->get($this->route);
+    }
+
+    /**
+     * Sets the resource for the model
+     * @return string
+     * @throws ConfigurationInvalid
+     */
+    protected function setRoute()
+    {
+        $class = explode("\\", get_class($this));
+
+        $route = $this->client
+            ->config()
+            ->get('routes.' . $class[count($class) - 1]);
+
+        if (!is_string($route)) {
+            throw new ConfigurationInvalid('Route must be a string');
+        }
+
+        $this->route = $route;
     }
 
     public function findById($id)
@@ -49,5 +84,4 @@ abstract class AbstractModel implements ModelInterface
     {
         // TODO: Implement all() method.
     }
-
 }

@@ -11,24 +11,27 @@
 
 namespace AffiliconApiClient;
 
-use AffiliconApiClient\Interfaces\ClientInterface;
+use AffiliconApiClient\Exceptions\ConfigurationInvalid;
+use AffiliconApiClient\Services\ConfigService;
 use AffiliconApiClient\Services\HttpService;
 use AffiliconApiClient\Services\AuthService;
-use AffiliconApiClient\Traits\Environment;
 use AffiliconApiClient\Traits\Singleton;
 
 /**
  * Class Client
  * @package AffiliconApiClient
  */
-class Client implements ClientInterface
+class Client
 {
     /** @var string */
     public $clientId;
+
     /** @var string */
     public $countryId;
+
     /** @var string */
     public $userLanguage;
+
     /** @var string */
     private $secretKey;
 
@@ -38,8 +41,17 @@ class Client implements ClientInterface
     /** @var  HttpService */
     protected $http;
 
+    /** @var  ConfigService */
+    protected $config;
+
+    /** @var array */
+    protected $options;
+
+    /** @var object */
+    protected $environment;
+
     use Singleton;
-    use Environment;
+
 
     /**
      * Initializes the Client
@@ -47,13 +59,37 @@ class Client implements ClientInterface
      */
     public function init()
     {
-        $this->setEnvironment();
+        if (!$this->environment) {
+            $this->setEnv('production');
+        }
 
         $this->http = new HttpService($this->environment->service_url);
 
         $this->auth = (new AuthService($this))
             ->anonymous()
             ->authenticate();
+
+        return $this;
+    }
+
+    /**
+     * Sets the environment, default 'production'
+     * @param string $env
+     * @return $this
+     * @throws ConfigurationInvalid
+     */
+    public function setEnv($env)
+    {
+        $this->config = new ConfigService();
+
+        $environment = $this->config
+            ->get("environment.$env");
+
+        if (!$environment) {
+            throw new ConfigurationInvalid("Configuration for given environment not found");
+        }
+
+        $this->environment = (object) $environment;
 
         return $this;
     }
@@ -66,6 +102,11 @@ class Client implements ClientInterface
     public function auth()
     {
         return $this->auth;
+    }
+
+    public function config()
+    {
+        return $this->config;
     }
 
     /**

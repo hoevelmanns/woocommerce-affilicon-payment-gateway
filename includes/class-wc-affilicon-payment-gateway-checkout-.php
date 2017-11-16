@@ -29,9 +29,11 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     public function __construct(WC_Affilicon_Payment_Gateway $gateway, WC_Order $order)
     {
+
         $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
+
         $this->affiliconClient
-            ->setEnvironment('production')
+            ->setEnv('production')
             ->setCountryId('de')// todo get from woocommerce
             ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
             ->setClientId($gateway->vendor_id)
@@ -96,10 +98,13 @@ class WC_Affilicon_Payment_Gateway_Checkout
     {
         $this->affiliconOrder = new \AffiliconApiClient\Models\Order();
 
+
         $this->affiliconOrder->addCustomData([
-            'order_id' => $this->order->get_id(),
-            'order_key' => $this->order->get_order_key(),
-            'itns_name' => 'woocommerce' // todo "core" should be checking the itns_name in ITNS.php newItns()
+            'hook' => [
+                'itns_name' => 'WOOCOMMERCE_GATEWAY',
+                // todo dynamically
+                'endpoint' => "https://testshop.artsolution.de/api" //todo "core" should be checking the itns_name in ITNS.php newItns()
+            ]
         ]);
 
         $this->addBillingData();

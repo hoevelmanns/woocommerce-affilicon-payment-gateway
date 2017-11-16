@@ -34,6 +34,12 @@ abstract class AbstractAddress extends AbstractModel implements AddressInterface
     /** @var array */
     private $data;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+    }
+
     /**
      * @return string
      */

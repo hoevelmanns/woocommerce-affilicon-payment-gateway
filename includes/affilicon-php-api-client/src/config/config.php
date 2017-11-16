@@ -40,6 +40,10 @@ return [
 
     ],
 
+    'address' => [
+        'email' => 'addr_email'
+    ],
+
     'error_log' => [
         'path' => __DIR__ . '/logs/error.log'
     ]
