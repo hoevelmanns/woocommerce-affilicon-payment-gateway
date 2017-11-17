@@ -17,7 +17,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     /** @var WC_Affilicon_Payment_Gateway $gateway */
     public $gateway;
-    private $checkoutFormUrl;
+    private $checkoutUrl;
 
     /** @var  WC_Order $order */
     private $order;
@@ -34,6 +34,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
         $this->affiliconClient
             ->setEnv('production')
+            ->setSecretKey($gateway->itns_secret_key)
             ->setCountryId('de')// todo get from woocommerce
             ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
             ->setClientId($gateway->vendor_id)
@@ -100,7 +101,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
 
         $this->affiliconOrder->addCustomData([
-            'hook' => [
+            'register_hook' => [
                 'itns_name' => 'WOOCOMMERCE_GATEWAY',
                 // todo dynamically
                 'endpoint' => "https://testshop.artsolution.de/api" //todo "core" should be checking the itns_name in ITNS.php newItns()
@@ -115,6 +116,19 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
         $this->buildCart();
 
+        $this->checkoutUrl = $this->getCheckoutUrl();
+
+    }
+
+    protected function getCheckoutUrl()
+    {
+        $this->generateCheckoutUrl();
+        return $this->checkoutUrl;
+    }
+
+    protected function generateCheckoutUrl()
+    {
+        $this->checkoutUrl = $this->affiliconOrder->generateCheckoutUrl();
     }
 
     /**
@@ -237,7 +251,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
             "language/$userLanguage" // todo core -> use case language
         ]; // todo testmode
 
-        $this->checkoutFormUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params) . "?prefill=$prefill";
+        $this->checkoutUrl = AFFILICON_CHECKOUT_FORM_URL_LEGACY . "/" . join('/', $params) . "?prefill=$prefill";
 
         var_dump($prefill);
     }
@@ -284,7 +298,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
         //die();
         // todo: logging: WC_Affilicon_Payment_Gateway::log( 'Generating payment form for order ' . $order->get_order_number() . '. Notify URL: ' . $this->notify_url );
 
-        $this->checkoutFormUrl = $requestOrderformUrl;
+        $this->checkoutUrl = $requestOrderformUrl;
     }
 
     /**

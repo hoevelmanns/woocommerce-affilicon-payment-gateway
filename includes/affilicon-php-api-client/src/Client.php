@@ -82,16 +82,24 @@ class Client
     {
         $this->config = new ConfigService();
 
-        $environment = $this->config
-            ->get("environment.$env");
+        $environment = $this->config->get("environment.$env");
 
-        if (!$environment) {
+        if (empty($environment)) {
             throw new ConfigurationInvalid("Configuration for given environment not found");
         }
 
         $this->environment = (object) $environment;
 
         return $this;
+    }
+
+    /**
+     * Gets the environment
+     * @return object
+     */
+    public function getEnv()
+    {
+        return $this->environment;
     }
 
     public function http()

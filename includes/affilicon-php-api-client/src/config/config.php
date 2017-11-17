@@ -23,7 +23,7 @@ return [
         // Production
         'production' => [
             'service_url' => 'https://service.affilicon.net/api',
-            'secure_url' => 'https://secure.affilibank.net'
+            'secure_url' => 'https://secure.affilibank.de'
         ],
 
         // Development
@@ -35,7 +35,7 @@ return [
         // Staging
         'staging' => [
             'service_url' => 'https://service-q.affilicon.net/api',
-            'secure_url' => 'https://secure-q.affilibank.net'
+            'secure_url' => 'https://secure-q.affilibank.de'
         ]
 
     ],
@@ -46,6 +46,10 @@ return [
 
     'error_log' => [
         'path' => __DIR__ . '/logs/error.log'
+    ],
+
+    'security' => [
+        'crypt_method' => 'blowfish'
     ]
 
 ];
