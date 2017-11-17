@@ -33,7 +33,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
         $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
 
         $this->affiliconClient
-            ->setEnv('production')
+            ->setEnv('development')
             ->setSecretKey($gateway->itns_secret_key)
             ->setCountryId('de')// todo get from woocommerce
             ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
