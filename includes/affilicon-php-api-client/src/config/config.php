@@ -63,7 +63,8 @@ return [
             'address_2' => 'billing_addr_street2',
             'city'      => 'billing_addr_city',
             'postcode'  => 'billing_addr_zip',
-            'country'   => 'billing_addr_country'
+            'country'   => 'billing_addr_country',
+            'email'     => 'billing_addr_email',
         ],
         'shipping' => [
             'company'   => 'shipping_addr_company',
@@ -73,7 +74,8 @@ return [
             'address_2' => 'shipping_addr_street2',
             'city'      => 'shipping_addr_city',
             'postcode'  => 'shipping_addr_zip',
-            'country'   => 'shipping_addr_country'
+            'country'   => 'shipping_addr_country',
+            'email'     => 'billing_addr_email',
         ]
     ],
 

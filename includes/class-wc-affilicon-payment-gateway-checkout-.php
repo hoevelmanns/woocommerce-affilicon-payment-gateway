@@ -78,7 +78,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     public function wcBasicAddress()
     {
-        return $this->address('basic');
+        return $this->address('billing');
     }
 
     public function wcBillingAddress()
