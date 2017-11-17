@@ -1,0 +1,3876 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+
+        <title>
+            Class PHPUnit\Framework\TestCase
+        </title>
+    </head>
+
+    <body>
+<div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="index.html">
+                                Overview
+                            </a>
+                        </li>
+
+                            <li>
+                                <a href="classes.html">Classes</a>
+                            </li>
+
+                            <li>
+                                <a href="interfaces.html">Interfaces</a>
+                            </li>
+
+                            <li>
+                                <a href="traits.html">Traits</a>
+                            </li>
+
+                            <li>
+                                <a href="functions.html">Functions</a>
+                            </li>
+
+                            <li>
+                                <a href="exceptions.html">Exceptions</a>
+                            </li>
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace" autofocus>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+            <div id="breadcrumbs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+<div class="pull-left type">
+    <span class="label label-success">Class</span>
+</div>
+
+<ol class="breadcrumb pull-left">
+        <li>
+            <a href="namespace-PHPUnit.html">PHPUnit</a>
+        </li>
+            <li class="backslash">\</li>
+        <li>
+            <a href="namespace-PHPUnit.Framework.html">Framework</a>
+        </li>
+
+        <li class="backslash">\</li>
+        <li class="active">TestCase</li>
+</ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+    <h1>TestCase</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                A TestCase defines the fixture to run multiple tests.
+
+To define a TestCase
+
+  1) Implement a subclass of PHPUnit\Framework\TestCase.
+  2) Define instance variables that store the state of the fixture.
+  3) Initialize the fixture state by overriding setUp().
+  4) Clean-up after a test by overriding tearDown().
+
+Each test runs in its own fixture so there can be no side effects
+among test runs.
+
+Here is an example:
+
+&lt;code&gt;
+&lt;?php
+class MathTest extends PHPUnit\Framework\TestCase
+{
+    public $value1;
+    public $value2;
+
+    protected function setUp()
+    {
+        $this-&gt;value1 = 2;
+        $this-&gt;value2 = 3;
+    }
+}
+?&gt;
+&lt;/code&gt;
+
+For each test implement a method which interacts with the fixture.
+Verify the expected results with assertions specified by calling
+assert with a boolean.
+
+&lt;code&gt;
+&lt;?php
+public function testPass()
+{
+    $this-&gt;assertTrue($this-&gt;value1 + $this-&gt;value2 == 5);
+}
+?&gt;
+&lt;/code&gt;
+            </div>
+        </div>
+
+        <dl class="tree">
+            <dd>
+                    extends
+                    <a href="class-PHPUnit.Framework.Assert.html">
+                        PHPUnit\Framework\Assert
+                    </a>
+
+                    implements
+                        <a href="interface-Countable.html">
+                            Countable
+                        </a>, 
+                        <a href="interface-PHPUnit.Framework.SelfDescribing.html">
+                            PHPUnit\Framework\SelfDescribing
+                        </a>, 
+                        <a href="interface-PHPUnit.Framework.Test.html">
+                            PHPUnit\Framework\Test
+                        </a>
+
+            </dd>
+        </dl>
+
+
+        <div>
+            <h2>Known subclasses</h2>
+            <a href="class-AffiliconApiClient.Tests.ClientTest.html">AffiliconApiClient\Tests\ClientTest</a>
+        </div>
+
+    <div class="info">
+        <strong>Abstract</strong><br>
+
+            <a href="source-class-PHPUnit.Framework.TestCase.html" class="open-source-code">Open source code</a>
+        <br>
+    </div>
+
+        <table class="summary table table-bordered table-responsive table-striped" id="methods">
+            <tr><th colspan="3">Methods Summary</th></tr>
+
+
+
+<tr id="___construct">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#___construct">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#342-350">__construct</a>( <span> string <span class="property-name">$name</span> = <span class="php-keyword1">NULL</span></span>, <span> array <span class="property-name">$data</span> = <span class="php-keyword1">array</span> ( )</span>, <span> string <span class="property-name">$dataName</span> = <span class="php-quote">''</span></span> )</code>
+
+            <div class="description">
+                Constructs a test case with the given name.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_toString">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_toString">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#357-368">toString</a>( )</code>
+
+            <div class="description">
+                Returns a string representation of the test case.
+
+
+
+
+
+
+
+
+                        <h2>Implementation of</h2>
+                        <div>
+                            <code>
+                                <a href="interface-PHPUnit.Framework.SelfDescribing.html#_toString">
+                                    PHPUnit\Framework\SelfDescribing::toString()
+                                </a>
+                            </code>
+                        </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_count">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_count">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#375-378">count</a>( )</code>
+
+            <div class="description">
+                Counts the number of test cases executed by run(TestResult result).
+
+
+
+
+
+
+
+
+                        <h2>Implementation of</h2>
+                        <div>
+                            <code>
+                                <a href="interface-Countable.html#_count">
+                                    Countable::count()
+                                </a>
+                            </code>
+                        </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getGroups">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getGroups">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#380-383">getGroups</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setGroups">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setGroups">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#388-391">setGroups</a>( <span> array <span class="property-name">$groups</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getAnnotations">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getAnnotations">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#398-404">getAnnotations</a>( )</code>
+
+            <div class="description">
+                Returns the annotations for this test.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getName">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getName">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#413-420">getName</a>( <span> bool <span class="property-name">$withDataSet</span> = <span class="php-keyword1">true</span></span> )</code>
+
+            <div class="description">
+                Gets the name of a TestCase.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getSize">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getSize">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#427-433">getSize</a>( )</code>
+
+            <div class="description">
+                Returns the size of the test.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_hasSize">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_hasSize">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#438-441">hasSize</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_isSmall">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_isSmall">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#446-449">isSmall</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_isMedium">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_isMedium">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#454-457">isMedium</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_isLarge">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_isLarge">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#462-465">isLarge</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getActualOutput">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getActualOutput">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#470-477">getActualOutput</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_hasOutput">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_hasOutput">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#482-493">hasOutput</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_doesNotPerformAssertions">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_doesNotPerformAssertions">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#498-501">doesNotPerformAssertions</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectOutputRegex">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectOutputRegex">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#508-517">expectOutputRegex</a>( <span> string <span class="property-name">$expectedRegex</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectOutputString">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectOutputString">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#522-531">expectOutputString</a>( <span> string <span class="property-name">$expectedString</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_hasExpectationOnOutput">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_hasExpectationOnOutput">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#536-539">hasExpectationOnOutput</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getExpectedException">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getExpectedException">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#544-547">getExpectedException</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getExpectedExceptionCode">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getExpectedExceptionCode">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#552-555">getExpectedExceptionCode</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getExpectedExceptionMessage">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getExpectedExceptionMessage">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#560-563">getExpectedExceptionMessage</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getExpectedExceptionMessageRegExp">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getExpectedExceptionMessageRegExp">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#568-571">getExpectedExceptionMessageRegExp</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectException">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectException">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#576-583">expectException</a>( <span> string <span class="property-name">$exception</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectExceptionCode">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectExceptionCode">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#590-597">expectExceptionCode</a>( <span> int|string <span class="property-name">$code</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectExceptionMessage">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectExceptionMessage">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#604-611">expectExceptionMessage</a>( <span> string <span class="property-name">$message</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectExceptionMessageRegExp">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectExceptionMessageRegExp">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#618-625">expectExceptionMessageRegExp</a>( <span> string <span class="property-name">$messageRegExp</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_expectExceptionObject">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_expectExceptionObject">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#632-637">expectExceptionObject</a>( <span> PHPUnit\Framework\Exception <span class="property-name">$exception</span> </span> )</code>
+
+            <div class="description">
+                Sets up an expectation for an exception to be raised by the code under test.
+
+Information for expected exception class, expected exception message, and
+expected exception code are retrieved from a given Exception object.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setRegisterMockObjectsFromTestArgumentsRecursively">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setRegisterMockObjectsFromTestArgumentsRecursively">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#642-649">setRegisterMockObjectsFromTestArgumentsRecursively</a>( <span> bool <span class="property-name">$flag</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setExpectedExceptionFromAnnotation">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setExpectedExceptionFromAnnotation">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#651-674">setExpectedExceptionFromAnnotation</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setUseErrorHandler">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setUseErrorHandler">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#679-682">setUseErrorHandler</a>( <span> bool <span class="property-name">$useErrorHandler</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setUseErrorHandlerFromAnnotation">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setUseErrorHandlerFromAnnotation">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#684-697">setUseErrorHandlerFromAnnotation</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_checkRequirements">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_checkRequirements">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#699-713">checkRequirements</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getStatus">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getStatus">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#720-723">getStatus</a>( )</code>
+
+            <div class="description">
+                Returns the status of this test.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_markAsRisky">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_markAsRisky">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#725-728">markAsRisky</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getStatusMessage">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getStatusMessage">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#735-738">getStatusMessage</a>( )</code>
+
+            <div class="description">
+                Returns the status message of this test.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_hasFailed">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_hasFailed">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#745-751">hasFailed</a>( )</code>
+
+            <div class="description">
+                Returns whether or not this test has failed.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_run">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_run">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#763-904">run</a>( <span> PHPUnit\Framework\TestResult <span class="property-name">$result</span> = <span class="php-keyword1">NULL</span></span> )</code>
+
+            <div class="description">
+                Runs the test case and collects the results in a TestResult object.
+
+If no TestResult object is passed a new one will be created.
+
+
+
+
+
+
+
+
+                        <h2>Implementation of</h2>
+                        <div>
+                            <code>
+                                <a href="interface-PHPUnit.Framework.Test.html#_run">
+                                    PHPUnit\Framework\Test::run()
+                                </a>
+                            </code>
+                        </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_runBare">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_runBare">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#909-1041">runBare</a>( )</code>
+
+            <div class="description">
+                Runs the bare test sequence.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_runTest">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_runTest">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1051-1157">runTest</a>( )</code>
+
+            <div class="description">
+                Override to run the test and assert its state.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_verifyMockObjects">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_verifyMockObjects">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1162-1193">verifyMockObjects</a>( )</code>
+
+            <div class="description">
+                Verifies the mock object expectations.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setName">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setName">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1200-1203">setName</a>( <span> string <span class="property-name">$name</span> </span> )</code>
+
+            <div class="description">
+                Sets the name of a TestCase.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setDependencies">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setDependencies">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1210-1213">setDependencies</a>( <span> array <span class="property-name">$dependencies</span> </span> )</code>
+
+            <div class="description">
+                Sets the dependencies of a TestCase.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_hasDependencies">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_hasDependencies">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1220-1223">hasDependencies</a>( )</code>
+
+            <div class="description">
+                Returns true if the tests has dependencies
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setDependencyInput">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setDependencyInput">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1230-1233">setDependencyInput</a>( <span> array <span class="property-name">$dependencyInput</span> </span> )</code>
+
+            <div class="description">
+                Sets
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setBeStrictAboutChangesToGlobalState">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setBeStrictAboutChangesToGlobalState">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1238-1241">setBeStrictAboutChangesToGlobalState</a>( <span> bool <span class="property-name">$beStrictAboutChangesToGlobalState</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setBackupGlobals">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setBackupGlobals">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1248-1253">setBackupGlobals</a>( <span> bool <span class="property-name">$backupGlobals</span> </span> )</code>
+
+            <div class="description">
+                Calling this method in setUp() has no effect!
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setBackupStaticAttributes">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setBackupStaticAttributes">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1260-1266">setBackupStaticAttributes</a>( <span> bool <span class="property-name">$backupStaticAttributes</span> </span> )</code>
+
+            <div class="description">
+                Calling this method in setUp() has no effect!
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setRunTestInSeparateProcess">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setRunTestInSeparateProcess">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1273-1282">setRunTestInSeparateProcess</a>( <span> bool <span class="property-name">$runTestInSeparateProcess</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setRunClassInSeparateProcess">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setRunClassInSeparateProcess">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1289-1298">setRunClassInSeparateProcess</a>( <span> bool <span class="property-name">$runClassInSeparateProcess</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setPreserveGlobalState">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setPreserveGlobalState">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1305-1312">setPreserveGlobalState</a>( <span> bool <span class="property-name">$preserveGlobalState</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setInIsolation">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setInIsolation">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1319-1326">setInIsolation</a>( <span> bool <span class="property-name">$inIsolation</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_isInIsolation">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_isInIsolation">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1331-1334">isInIsolation</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getResult">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getResult">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1339-1342">getResult</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setResult">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setResult">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1347-1350">setResult</a>( <span> mixed <span class="property-name">$result</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setOutputCallback">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setOutputCallback">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1357-1364">setOutputCallback</a>( <span> callable <span class="property-name">$callback</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getTestResultObject">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getTestResultObject">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1369-1372">getTestResultObject</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setTestResultObject">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setTestResultObject">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1377-1380">setTestResultObject</a>( <span> PHPUnit\Framework\TestResult <span class="property-name">$result</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_registerMockObject">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_registerMockObject">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1385-1388">registerMockObject</a>( <span> PHPUnit_Framework_MockObject_MockObject <span class="property-name">$mockObject</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_iniSet">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_iniSet">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1400-1419">iniSet</a>( <span> string <span class="property-name">$varName</span> </span>, <span> string <span class="property-name">$newValue</span> </span> )</code>
+
+            <div class="description">
+                This method is a wrapper for the ini_set() function that automatically
+resets the modified php.ini setting to its original value after the
+test is run.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setLocale">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setLocale">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1430-1467">setLocale</a>( )</code>
+
+            <div class="description">
+                This method is a wrapper for the setlocale() function that automatically
+resets the locale to its original value after the test is run.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getMockBuilder">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getMockBuilder">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1476-1479">getMockBuilder</a>( <span> string|string[] <span class="property-name">$className</span> </span> )</code>
+
+            <div class="description">
+                Returns a builder object to create mock objects using a fluent interface.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_createMock">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_createMock">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1490-1498">createMock</a>( <span> string <span class="property-name">$originalClassName</span> </span> )</code>
+
+            <div class="description">
+                Returns a test double for the specified class.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_createConfiguredMock">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_createConfiguredMock">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1510-1519">createConfiguredMock</a>( <span> string <span class="property-name">$originalClassName</span> </span>, <span> array <span class="property-name">$configuration</span> </span> )</code>
+
+            <div class="description">
+                Returns a configured test double for the specified class.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_createPartialMock">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_createPartialMock">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1531-1540">createPartialMock</a>( <span> string <span class="property-name">$originalClassName</span> </span>, <span> array <span class="property-name">$methods</span> </span> )</code>
+
+            <div class="description">
+                Returns a partial test double for the specified class.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_createTestProxy">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_createTestProxy">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1552-1558">createTestProxy</a>( <span> string <span class="property-name">$originalClassName</span> </span>, <span> array <span class="property-name">$constructorArguments</span> = <span class="php-keyword1">array</span> ( )</span> )</code>
+
+            <div class="description">
+                Returns a test proxy for the specified class.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getMockClass">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getMockClass">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1576-1590">getMockClass</a>( <span> string <span class="property-name">$originalClassName</span> </span>, <span> array <span class="property-name">$methods</span> = <span class="php-keyword1">array</span> ( )</span>, <span> array <span class="property-name">$arguments</span> = <span class="php-keyword1">array</span> ( )</span>, <span> string <span class="property-name">$mockClassName</span> = <span class="php-quote">''</span></span>, <span> bool <span class="property-name">$callOriginalConstructor</span> = <span class="php-keyword1">false</span></span>, <span> bool <span class="property-name">$callOriginalClone</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callAutoload</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$cloneArguments</span> = <span class="php-keyword1">false</span></span> )</code>
+
+            <div class="description">
+                Mocks the specified class and returns the name of the mocked class.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getMockForAbstractClass">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getMockForAbstractClass">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1610-1626">getMockForAbstractClass</a>( <span> string <span class="property-name">$originalClassName</span> </span>, <span> array <span class="property-name">$arguments</span> = <span class="php-keyword1">array</span> ( )</span>, <span> string <span class="property-name">$mockClassName</span> = <span class="php-quote">''</span></span>, <span> bool <span class="property-name">$callOriginalConstructor</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callOriginalClone</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callAutoload</span> = <span class="php-keyword1">true</span></span>, <span> array <span class="property-name">$mockedMethods</span> = <span class="php-keyword1">array</span> ( )</span>, <span> bool <span class="property-name">$cloneArguments</span> = <span class="php-keyword1">false</span></span> )</code>
+
+            <div class="description">
+                Returns a mock object for the specified abstract class with all abstract
+methods of the class mocked. Concrete methods are not mocked by default.
+
+To mock concrete methods, use the 7th parameter ($mockedMethods).
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getMockFromWsdl">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getMockFromWsdl">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1640-1670">getMockFromWsdl</a>( <span> string <span class="property-name">$wsdlFile</span> </span>, <span> string <span class="property-name">$originalClassName</span> = <span class="php-quote">''</span></span>, <span> string <span class="property-name">$mockClassName</span> = <span class="php-quote">''</span></span>, <span> array <span class="property-name">$methods</span> = <span class="php-keyword1">array</span> ( )</span>, <span> bool <span class="property-name">$callOriginalConstructor</span> = <span class="php-keyword1">true</span></span>, <span> array <span class="property-name">$options</span> = <span class="php-keyword1">array</span> ( )</span> )</code>
+
+            <div class="description">
+                Returns a mock object based on the given WSDL file.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getMockForTrait">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getMockForTrait">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1690-1706">getMockForTrait</a>( <span> string <span class="property-name">$traitName</span> </span>, <span> array <span class="property-name">$arguments</span> = <span class="php-keyword1">array</span> ( )</span>, <span> string <span class="property-name">$mockClassName</span> = <span class="php-quote">''</span></span>, <span> bool <span class="property-name">$callOriginalConstructor</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callOriginalClone</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callAutoload</span> = <span class="php-keyword1">true</span></span>, <span> array <span class="property-name">$mockedMethods</span> = <span class="php-keyword1">array</span> ( )</span>, <span> bool <span class="property-name">$cloneArguments</span> = <span class="php-keyword1">false</span></span> )</code>
+
+            <div class="description">
+                Returns a mock object for the specified trait with all abstract methods
+of the trait mocked. Concrete methods to mock can be specified with the
+`$mockedMethods` parameter.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getObjectForTrait">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getObjectForTrait">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1722-1732">getObjectForTrait</a>( <span> string <span class="property-name">$traitName</span> </span>, <span> array <span class="property-name">$arguments</span> = <span class="php-keyword1">array</span> ( )</span>, <span> string <span class="property-name">$traitClassName</span> = <span class="php-quote">''</span></span>, <span> bool <span class="property-name">$callOriginalConstructor</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callOriginalClone</span> = <span class="php-keyword1">true</span></span>, <span> bool <span class="property-name">$callAutoload</span> = <span class="php-keyword1">true</span></span> )</code>
+
+            <div class="description">
+                Returns an object for the specified trait.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_prophesize">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_prophesize">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1741-1744">prophesize</a>( <span> string|null <span class="property-name">$classOrInterface</span> = <span class="php-keyword1">NULL</span></span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_addToAssertionCount">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_addToAssertionCount">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1751-1754">addToAssertionCount</a>( <span> int <span class="property-name">$count</span> </span> )</code>
+
+            <div class="description">
+                Adds a value to the assertion counter.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getNumAssertions">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getNumAssertions">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1761-1764">getNumAssertions</a>( )</code>
+
+            <div class="description">
+                Returns the number of assertions performed by this test.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_any">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_any">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1772-1775">any</a>( )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed
+zero or more times.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_never">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_never">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1782-1785">never</a>( )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is never executed.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_atLeast">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_atLeast">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1795-1800">atLeast</a>( <span> int <span class="property-name">$requiredInvocations</span> </span> )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed
+at least N times.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_atLeastOnce">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_atLeastOnce">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1807-1810">atLeastOnce</a>( )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed at least once.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_once">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_once">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1817-1820">once</a>( )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed exactly once.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_exactly">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_exactly">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1830-1833">exactly</a>( <span> int <span class="property-name">$count</span> </span> )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed
+exactly $count times.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_atMost">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_atMost">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1843-1848">atMost</a>( <span> int <span class="property-name">$allowedInvocations</span> </span> )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed
+at most N times.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_at">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_at">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1858-1861">at</a>( <span> int <span class="property-name">$index</span> </span> )</code>
+
+            <div class="description">
+                Returns a matcher that matches when the method is executed
+at the given index.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_returnValue">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_returnValue">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1868-1871">returnValue</a>( <span> mixed <span class="property-name">$value</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_returnValueMap">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_returnValueMap">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1878-1881">returnValueMap</a>( <span> array <span class="property-name">$valueMap</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_returnArgument">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_returnArgument">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1888-1893">returnArgument</a>( <span> int <span class="property-name">$argumentIndex</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_returnCallback">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_returnCallback">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1900-1903">returnCallback</a>( <span> mixed <span class="property-name">$callback</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_returnSelf">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_returnSelf">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1912-1915">returnSelf</a>( )</code>
+
+            <div class="description">
+                Returns the current object.
+
+This method is useful when mocking a fluent interface.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_throwException">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_throwException">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1922-1925">throwException</a>( <span> <a href="interface-Throwable.html">Throwable</a> <span class="property-name">$exception</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_onConsecutiveCalls">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_onConsecutiveCalls">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1932-1937">onConsecutiveCalls</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_usesDataProvider">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_usesDataProvider">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1942-1945">usesDataProvider</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_dataDescription">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_dataDescription">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1950-1953">dataDescription</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_registerComparator">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_registerComparator">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1955-1960">registerComparator</a>( <span> SebastianBergmann\Comparator\Comparator <span class="property-name">$comparator</span> </span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getDataSetAsString">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getDataSetAsString">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1969-1988">getDataSetAsString</a>( <span> bool <span class="property-name">$includeData</span> = <span class="php-keyword1">true</span></span> )</code>
+
+            <div class="description">
+                Gets the data set description of a TestCase.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getProvidedData">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getProvidedData">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#1995-1998">getProvidedData</a>( )</code>
+
+            <div class="description">
+                Gets the data set of a TestCase.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_createResult">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_createResult">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2005-2008">createResult</a>( )</code>
+
+            <div class="description">
+                Creates a default TestResult object.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_handleDependencies">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_handleDependencies">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2010-2090">handleDependencies</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setUpBeforeClass">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setUpBeforeClass">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2095-2097">setUpBeforeClass</a>( )</code>
+
+            <div class="description">
+                This method is called before the first test of this test class is run.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_setUp">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_setUp">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2103-2105">setUp</a>( )</code>
+
+            <div class="description">
+                Sets up the fixture, for example, open a network connection.
+
+This method is called before a test is executed.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_assertPreConditions">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_assertPreConditions">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2113-2115">assertPreConditions</a>( )</code>
+
+            <div class="description">
+                Performs assertions shared by all tests of a test case.
+
+This method is called before the execution of a test starts
+and after setUp() is called.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_assertPostConditions">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_assertPostConditions">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2123-2125">assertPostConditions</a>( )</code>
+
+            <div class="description">
+                Performs assertions shared by all tests of a test case.
+
+This method is called before the execution of a test ends
+and before tearDown() is called.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_tearDown">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_tearDown">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2131-2133">tearDown</a>( )</code>
+
+            <div class="description">
+                Tears down the fixture, for example, close a network connection.
+
+This method is called after a test is executed.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_tearDownAfterClass">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_tearDownAfterClass">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2138-2140">tearDownAfterClass</a>( )</code>
+
+            <div class="description">
+                This method is called after the last test of this test class is run.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_onNotSuccessfulTest">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_onNotSuccessfulTest">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2149-2152">onNotSuccessfulTest</a>( <span> <a href="interface-Throwable.html">Throwable</a> <span class="property-name">$t</span> </span> )</code>
+
+            <div class="description">
+                This method is called when a test method did not execute successfully.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_prepareTemplate">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 protected 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_prepareTemplate">#</a>
+            <code><a href="source-class-PHPUnit.Framework.TestCase.html#2159-2161">prepareTemplate</a>( <span> Text_Template <span class="property-name">$template</span> </span> )</code>
+
+            <div class="description">
+                Performs custom preparations on the process isolation template.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+        </table>
+
+        <table class="summary table table-bordered table-responsive table-striped">
+            <tr>
+                <th>
+                    Methods inherited from <a href="class-PHPUnit.Framework.Assert.html#methods">PHPUnit\Framework\Assert</a>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertArrayHasKey">assertArrayHasKey()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertArraySubset">assertArraySubset()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertArrayNotHasKey">assertArrayNotHasKey()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertContains">assertContains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeContains">assertAttributeContains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotContains">assertNotContains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotContains">assertAttributeNotContains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertContainsOnly">assertContainsOnly()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertContainsOnlyInstancesOf">assertContainsOnlyInstancesOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeContainsOnly">assertAttributeContainsOnly()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotContainsOnly">assertNotContainsOnly()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotContainsOnly">assertAttributeNotContainsOnly()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertCount">assertCount()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeCount">assertAttributeCount()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotCount">assertNotCount()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotCount">assertAttributeNotCount()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertEquals">assertEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeEquals">assertAttributeEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotEquals">assertNotEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotEquals">assertAttributeNotEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertEmpty">assertEmpty()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeEmpty">assertAttributeEmpty()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotEmpty">assertNotEmpty()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotEmpty">assertAttributeNotEmpty()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertGreaterThan">assertGreaterThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeGreaterThan">assertAttributeGreaterThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertGreaterThanOrEqual">assertGreaterThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeGreaterThanOrEqual">assertAttributeGreaterThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertLessThan">assertLessThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeLessThan">assertAttributeLessThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertLessThanOrEqual">assertLessThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeLessThanOrEqual">assertAttributeLessThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileEquals">assertFileEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileNotEquals">assertFileNotEquals()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringEqualsFile">assertStringEqualsFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringNotEqualsFile">assertStringNotEqualsFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertIsReadable">assertIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotIsReadable">assertNotIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertIsWritable">assertIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotIsWritable">assertNotIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryExists">assertDirectoryExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryNotExists">assertDirectoryNotExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryIsReadable">assertDirectoryIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryNotIsReadable">assertDirectoryNotIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryIsWritable">assertDirectoryIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertDirectoryNotIsWritable">assertDirectoryNotIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileExists">assertFileExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileNotExists">assertFileNotExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileIsReadable">assertFileIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileNotIsReadable">assertFileNotIsReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileIsWritable">assertFileIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFileNotIsWritable">assertFileNotIsWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertTrue">assertTrue()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotTrue">assertNotTrue()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFalse">assertFalse()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotFalse">assertNotFalse()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNull">assertNull()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotNull">assertNotNull()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertFinite">assertFinite()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertInfinite">assertInfinite()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNan">assertNan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertClassHasAttribute">assertClassHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertClassNotHasAttribute">assertClassNotHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertClassHasStaticAttribute">assertClassHasStaticAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertClassNotHasStaticAttribute">assertClassNotHasStaticAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertObjectHasAttribute">assertObjectHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertObjectNotHasAttribute">assertObjectNotHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertSame">assertSame()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeSame">assertAttributeSame()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotSame">assertNotSame()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotSame">assertAttributeNotSame()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertInstanceOf">assertInstanceOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeInstanceOf">assertAttributeInstanceOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotInstanceOf">assertNotInstanceOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotInstanceOf">assertAttributeNotInstanceOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertInternalType">assertInternalType()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeInternalType">assertAttributeInternalType()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotInternalType">assertNotInternalType()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertAttributeNotInternalType">assertAttributeNotInternalType()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertRegExp">assertRegExp()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotRegExp">assertNotRegExp()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertSameSize">assertSameSize()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertNotSameSize">assertNotSameSize()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringMatchesFormat">assertStringMatchesFormat()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringNotMatchesFormat">assertStringNotMatchesFormat()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringMatchesFormatFile">assertStringMatchesFormatFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringNotMatchesFormatFile">assertStringNotMatchesFormatFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringStartsWith">assertStringStartsWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringStartsNotWith">assertStringStartsNotWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringEndsWith">assertStringEndsWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertStringEndsNotWith">assertStringEndsNotWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlFileEqualsXmlFile">assertXmlFileEqualsXmlFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlFileNotEqualsXmlFile">assertXmlFileNotEqualsXmlFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlStringEqualsXmlFile">assertXmlStringEqualsXmlFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlStringNotEqualsXmlFile">assertXmlStringNotEqualsXmlFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlStringEqualsXmlString">assertXmlStringEqualsXmlString()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertXmlStringNotEqualsXmlString">assertXmlStringNotEqualsXmlString()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertEqualXMLStructure">assertEqualXMLStructure()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertThat">assertThat()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJson">assertJson()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonStringEqualsJsonString">assertJsonStringEqualsJsonString()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonStringNotEqualsJsonString">assertJsonStringNotEqualsJsonString()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonStringEqualsJsonFile">assertJsonStringEqualsJsonFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonStringNotEqualsJsonFile">assertJsonStringNotEqualsJsonFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonFileEqualsJsonFile">assertJsonFileEqualsJsonFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_assertJsonFileNotEqualsJsonFile">assertJsonFileNotEqualsJsonFile()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_logicalAnd">logicalAnd()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_logicalOr">logicalOr()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_logicalNot">logicalNot()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_logicalXor">logicalXor()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_anything">anything()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isTrue">isTrue()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_callback">callback()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isFalse">isFalse()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isJson">isJson()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isNull">isNull()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isFinite">isFinite()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isInfinite">isInfinite()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isNan">isNan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_attribute">attribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_contains">contains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_containsOnly">containsOnly()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_containsOnlyInstancesOf">containsOnlyInstancesOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_arrayHasKey">arrayHasKey()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_equalTo">equalTo()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_attributeEqualTo">attributeEqualTo()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isEmpty">isEmpty()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isWritable">isWritable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isReadable">isReadable()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_directoryExists">directoryExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_fileExists">fileExists()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_greaterThan">greaterThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_greaterThanOrEqual">greaterThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_classHasAttribute">classHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_classHasStaticAttribute">classHasStaticAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_objectHasAttribute">objectHasAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_identicalTo">identicalTo()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isInstanceOf">isInstanceOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_isType">isType()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_lessThan">lessThan()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_lessThanOrEqual">lessThanOrEqual()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_matchesRegularExpression">matchesRegularExpression()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_matches">matches()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_stringStartsWith">stringStartsWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_stringContains">stringContains()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_stringEndsWith">stringEndsWith()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_countOf">countOf()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_fail">fail()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_readAttribute">readAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_getStaticAttribute">getStaticAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_getObjectAttribute">getObjectAttribute()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_markTestIncomplete">markTestIncomplete()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_markTestSkipped">markTestSkipped()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_getCount">getCount()</a></code>, 
+                        <code><a href="class-PHPUnit.Framework.Assert.html#_resetCount">resetCount()</a></code>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+        <table class="summary table table-bordered table-responsive table-striped" id="properties">
+            <tr><th colspan="3">Properties Summary</th></tr>
+<tr id="$backupGlobals">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            bool
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#110" class="property-name">$backupGlobals</a>
+        </code>
+        <div class="description">
+            Enable or disable the backup and restoration of the $GLOBALS array.
+
+Overwrite this attribute in a child class of TestCase.
+Setting this attribute in setUp() has no effect!
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$backupGlobals" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">NULL</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="$backupGlobalsBlacklist">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            array
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#115" class="property-name">$backupGlobalsBlacklist</a>
+        </code>
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$backupGlobalsBlacklist" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">array</span> (
+)</code>
+        </div>
+    </td>
+</tr>
+<tr id="$backupStaticAttributes">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            bool
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#124" class="property-name">$backupStaticAttributes</a>
+        </code>
+        <div class="description">
+            Enable or disable the backup and restoration of static attributes.
+
+Overwrite this attribute in a child class of TestCase.
+Setting this attribute in setUp() has no effect!
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$backupStaticAttributes" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">NULL</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="$backupStaticAttributesBlacklist">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            array
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#129" class="property-name">$backupStaticAttributesBlacklist</a>
+        </code>
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$backupStaticAttributesBlacklist" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">array</span> (
+)</code>
+        </div>
+    </td>
+</tr>
+<tr id="$runTestInSeparateProcess">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            bool
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#136" class="property-name">$runTestInSeparateProcess</a>
+        </code>
+        <div class="description">
+            Whether or not this test is to be run in a separate PHP process.
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$runTestInSeparateProcess" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">NULL</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="$preserveGlobalState">
+    <td class="attributes">
+        <code class="keyword">
+            protected 
+
+            bool
+        </code>
+    </td>
+
+    <td class="name">
+        <code>
+            <a href="source-class-PHPUnit.Framework.TestCase.html#151" class="property-name">$preserveGlobalState</a>
+        </code>
+        <div class="description">
+            Whether or not this test should preserve the global state when
+running in a separate PHP process.
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#$preserveGlobalState" class="anchor pull-right">#</a>
+            <code><span class="php-keyword1">true</span></code>
+        </div>
+    </td>
+</tr>
+        </table>
+
+
+    <div id="footer">
+        Generated by <a href="https://github.com/apigen/apigen">ApiGen</a>
+    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+    </body>
+</html>
+
+
