@@ -170,9 +170,9 @@ class Order extends AbstractModel
 
         $prefillData = array_merge(
             $customData,
-            $this->billingAddress->getData(),
-            $this->shippingAddress->getData(),
-            $this->basicAddress->getData()
+            $this->billingAddress->transform(),
+            $this->shippingAddress->transform(),
+            $this->basicAddress->transform()
         );
 
         $this->prefillData = $prefillData;

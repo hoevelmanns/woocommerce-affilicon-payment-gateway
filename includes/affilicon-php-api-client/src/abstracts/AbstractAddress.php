@@ -32,7 +32,7 @@ use AffiliconApiClient\Interfaces\AddressInterface;
 abstract class AbstractAddress extends AbstractModel implements AddressInterface
 {
     /** @var array */
-    private $data;
+    protected $data;
 
     public function __construct()
     {
@@ -248,5 +248,30 @@ abstract class AbstractAddress extends AbstractModel implements AddressInterface
     public function getData()
     {
         return $this->data;
+    }
+
+    public function transform()
+    {
+        $data = [];
+
+        $address = $this->getData();
+
+        // split camel case
+        $type = strtolower(preg_split('/(?=[A-Z])/', get_class_name($this))[1]);
+
+        $mapper = $this->client->config()->get("address.$type");
+
+        foreach($address as $key => $item) {
+
+            if (!empty($item)) {
+
+                $data[$mapper[$key]] = $item;
+
+            }
+
+        }
+
+        return $data;
+
     }
 }

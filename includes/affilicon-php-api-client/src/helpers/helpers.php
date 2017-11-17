@@ -42,6 +42,26 @@ if (!function_exists('array_accessible')) {
     }
 }
 
+if (!function_exists('get_class_name')) {
+
+    /**
+     * @param object $class
+     * @return string
+     */
+    function get_class_name($class)
+    {
+        $strClass = "";
+
+        $str = explode("\\", get_class($class));
+
+        if (!empty($str)) {
+            $strClass = $str[count($str) - 1];
+        }
+
+        return $strClass;
+    }
+}
+
 if (!function_exists('array_exists')) {
     /**
      * @param $key

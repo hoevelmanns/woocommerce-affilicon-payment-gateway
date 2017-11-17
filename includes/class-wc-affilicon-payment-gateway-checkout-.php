@@ -65,10 +65,10 @@ class WC_Affilicon_Payment_Gateway_Checkout
             'company' => call_user_func([$this->order, "get_{$type}_company"]),
             'firstname' => call_user_func([$this->order, "get_{$type}_first_name"]),
             'lastname' => call_user_func([$this->order, "get_{$type}_last_name"]),
-            'street' => call_user_func([$this->order, "get_{$type}_address_1"]),
-            'street2' => call_user_func([$this->order, "get_{$type}_address_2"]),
+            'address_1' => call_user_func([$this->order, "get_{$type}_address_1"]),
+            'address_2' => call_user_func([$this->order, "get_{$type}_address_2"]),
             'city' => call_user_func([$this->order, "get_{$type}_city"]),
-            'zip' => call_user_func([$this->order, "get_{$type}_postcode"]),
+            'postcode' => call_user_func([$this->order, "get_{$type}_postcode"]),
             'country' => call_user_func([$this->order, "get_{$type}_country"]),
         ];
 

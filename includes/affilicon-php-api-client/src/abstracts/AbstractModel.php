@@ -57,11 +57,9 @@ abstract class AbstractModel implements ModelInterface
      */
     protected function setRoute()
     {
-        $class = explode("\\", get_class($this));
-
         $route = $this->client
             ->config()
-            ->get('routes.' . $class[count($class) - 1]);
+            ->get('routes.' . get_class_name($this));
 
         if (!is_string($route)) {
             throw new ConfigurationInvalid('Route must be a string');
