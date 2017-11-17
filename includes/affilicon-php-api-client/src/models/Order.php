@@ -165,7 +165,7 @@ class Order extends AbstractModel
     protected function collectPrefillData()
     {
         $customData = [
-            'custom' => $this->getCustomData()
+            'custom' => json_encode($this->getCustomData())
         ];
 
         $prefillData = array_merge(

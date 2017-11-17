@@ -33,7 +33,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
         $this->affiliconClient = \AffiliconApiClient\Client::getInstance();
 
         $this->affiliconClient
-            ->setEnv('development')
+            ->setEnv('production')
             ->setSecretKey($gateway->itns_secret_key)
             ->setCountryId('de')// todo get from woocommerce
             ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
@@ -102,7 +102,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
 
         $this->affiliconOrder->addCustomData([
-            'register_hook' => [
+            'register' => [
                 'itns_name' => 'WOOCOMMERCE_GATEWAY',
                 // todo dynamically
                 'endpoint' => "https://testshop.artsolution.de/api" //todo "core" should be checking the itns_name in ITNS.php newItns()
