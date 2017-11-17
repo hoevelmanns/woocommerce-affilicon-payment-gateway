@@ -70,6 +70,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
             'city' => call_user_func([$this->order, "get_{$type}_city"]),
             'postcode' => call_user_func([$this->order, "get_{$type}_postcode"]),
             'country' => call_user_func([$this->order, "get_{$type}_country"]),
+            'email' => call_user_func([$this->order, "get_{$type}_email"]),
         ];
 
         return $address;
