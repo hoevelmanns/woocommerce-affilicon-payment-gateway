@@ -80,7 +80,7 @@ return [
     ],
 
     'error_log' => [
-        'path' => __DIR__ . '/logs/error.log'
+        'path' => __DIR__ . '/../error.log'
     ],
 
     'security' => [

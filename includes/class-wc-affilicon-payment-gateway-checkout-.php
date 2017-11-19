@@ -69,8 +69,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
             'address_2' => call_user_func([$this->order, "get_{$type}_address_2"]),
             'city' => call_user_func([$this->order, "get_{$type}_city"]),
             'postcode' => call_user_func([$this->order, "get_{$type}_postcode"]),
-            'country' => call_user_func([$this->order, "get_{$type}_country"]),
-            'email' => call_user_func([$this->order, "get_{$type}_email"]),
+            'country' => call_user_func([$this->order, "get_{$type}_country"])
         ];
 
         return $address;
@@ -78,11 +77,15 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     public function wcBasicAddress()
     {
-        return $this->address('billing');
+        $address =  $this->address('billing');
+        $address['email'] = $this->order->get_billing_email();
+        return $address;
     }
 
     public function wcBillingAddress()
     {
+        $address =  $this->address('billing');
+        $address['email'] = $this->order->get_billing_email();
         return $this->address('billing');
     }
 
@@ -103,9 +106,11 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
         $this->affiliconOrder->addCustomData([
             'register' => [
-                'itns_name' => 'WOOCOMMERCE_GATEWAY',
+                'wc_order_id' => $this->order->get_id(),
+                'wc_order_key' => $this->order->get_order_key(),
+                'itns_id' => 15,
                 // todo dynamically
-                'endpoint' => "https://testshop.artsolution.de/api" //todo "core" should be checking the itns_name in ITNS.php newItns()
+                'endpoint' => "https://requestb.in/1a80n9l1" //todo "core" should be checking the itns_name in ITNS.php newItns()
             ]
         ]);
 

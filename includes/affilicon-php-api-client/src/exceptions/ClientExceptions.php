@@ -28,6 +28,10 @@ class ClientExceptions extends \Exception
         $logPath = null;
     }
 
+    if (!file_exists($logPath)) {
+        fopen($logPath, "w");
+    }
+
     error_log($this->getTraceAsString(), 3, $logPath);
   }
 }
