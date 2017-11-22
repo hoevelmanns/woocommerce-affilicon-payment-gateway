@@ -24,26 +24,25 @@ trait HasEncryption
     /** @var  Client */
     protected $client;
 
-    protected function init()
+    protected function initEncryption()
     {
-        $this->cryptKey = $this->client->getSecretKey();
+        $this->cryptKey = $this->getSecretKey();
 
-        $cryptMethod = $this->client->config()->get('security.crypt_method');
+        $cryptMethod = $this->config()->get('security.crypt_method');
 
         if (!is_string($cryptMethod)) {
             throw new ConfigurationInvalid('Crypt method must be a string.');
         }
 
-        $this->cryptMethod = $this->client->config()->get('security.crypt_method');
+        $this->cryptMethod = $this->config()->get('security.crypt_method');
     }
     /**
      * Returns an encrypted string
      * @param string $data json encoded prefill data
      * @return string
      */
-    protected function encrypt($data)
+    public function encrypt($data)
     {
-        $this->init();
         return urlencode(openssl_encrypt($data, $this->cryptMethod, $this->cryptKey));
     }
 
@@ -52,9 +51,8 @@ trait HasEncryption
      * @param $data
      * @return string
      */
-    protected function decrypt($data)
+    public function decrypt($data)
     {
-        $this->init();
         return urlencode(openssl_decrypt($data, $this->cryptMethod, $this->cryptKey));
     }
 }

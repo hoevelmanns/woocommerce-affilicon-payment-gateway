@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class WC_Affilicon_Payment_Gateway_Itns
  */
-class WC_Affilicon_Payment_Gateway_Itns
+class WC_Affilicon_Payment_Gateway_ItnsService
 {
     /** @var WC_Affilicon_Payment_Gateway */
     protected $gateway;
@@ -21,72 +21,63 @@ class WC_Affilicon_Payment_Gateway_Itns
     /** @var  WP_REST_Request */
     protected $request;
 
-    protected $transaction;
+    protected $transactionData;
 
     protected $affiliconClient;
 
     public function __construct(\AffiliconApiClient\Client $client)
     {
-        //$this->gateway = $gateway;
         $this->affiliconClient = $client;
+
         add_action('rest_api_init', [$this, 'registerRoutes']);
     }
 
     public function registerRoutes()
     {
-        register_rest_route( 'affilicon/v1', 'transaction', array(
+        register_rest_route( 'affilicon/v1', 'transaction', [
             'methods' => 'POST',
-            'callback' => [$this, 'checkResponse'],
-        ) );
+            'callback' => [$this, 'checkItnsRequest'],
+        ]);
     }
 
-    protected function checkResponse(WP_REST_Request $request)
+    public function checkItnsRequest(WP_REST_Request $request)
     {
         $this->request = $request;
-        if (!$this->hasTransactionData()) {
-            return false; // todo no response handling
+
+        if ($this->hasTransactionData()) {
+
+            $this->hasValidTransaction();
+
         }
+
+        return false;
     }
 
     protected function hasTransactionData()
     {
-        return $this->getTransactionData();
+        return !empty($this->getTransactionData());
     }
-
 
     /**
      * Check for affilicon ITNS Response.
      */
     public function getTransactionData()
     {
-        $transaction = $this->decrypt($this->request->get_body());
+        $transaction = $this->affiliconClient->decrypt($this->request->get_body());
 
-        // check client, etc...
-        if (!empty($itnsData)) {
-            do_action('valid-affilicon-standard-itns-request', $itnsData);
-            exit;
-        }
+        $this->transactionData = $transaction;
 
-        wp_die('affilicon ITNS Request Failure', 'affilicon ITNS', array('response' => 500));
+        return $transaction;
     }
-
-    protected function decrypt($body)
-    {
-        $secretKey = $this->gateway->itns_secret_key;
-
-    }
-
-
 
     /**x
      * There was a valid response.
-     * @param  array $posted Post data after wp_unslash
-     * @return bool
+     * @return void
      */
-    public function validResponse($posted)
+    public function hasValidTransaction()
     {
-        $data = $posted['data'];
 
+        return;
         if (!empty($data['transaction']) && ($order = $this->getAffiliconOrder($data['transaction']))) {
             // order exist
 

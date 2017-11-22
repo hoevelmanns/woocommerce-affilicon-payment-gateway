@@ -18,6 +18,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     /** @var WC_Affilicon_Payment_Gateway $gateway */
     public $gateway;
+
     private $checkoutUrl;
 
     /** @var  WC_Order $order */
@@ -109,7 +110,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
         $this->affiliconOrder->addCustomData([
             'register' => [
                 'itns_type_id' => 15,
-                'url' => "https://requestb.in/1a80n9l1" //todo "core" should be checking the itns_name in ITNS.php newItns()
+                'url' => "https://requestb.in/1j6gd9i1" //todo "core" should be checking the itns_name in ITNS.php newItns()
             ],
             'data' => [
                 'wc_order_id' => $this->order->get_id(),

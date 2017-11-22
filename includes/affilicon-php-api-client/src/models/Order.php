@@ -13,7 +13,6 @@ namespace AffiliconApiClient\Models;
 
 use AffiliconApiClient\Abstracts\AbstractModel;
 use AffiliconApiClient\Exceptions\ConfigurationInvalid;
-use AffiliconApiClient\Traits\HasEncryption;
 
 /**
  * Class Order
@@ -41,8 +40,6 @@ class Order extends AbstractModel
 
     /** @var  string */
     protected $checkoutUrl;
-
-    use HasEncryption;
 
     public function cart()
     {
@@ -207,7 +204,7 @@ class Order extends AbstractModel
     protected function addUrlParams($baseUrl)
     {
         $prefillData = json_encode($this->collectPrefillData());
-        $encryptedPrefillData = $this->encrypt($prefillData);
+        $encryptedPrefillData = $this->client->encrypt($prefillData);
 
         $cartId = $this->cart()->getCartId();
         $clientId = $this->client->getClientId();
@@ -221,7 +218,7 @@ class Order extends AbstractModel
             "countryId/$countryId",
             "token/$token",
             "language/$userLanguage"
-        ]; // todo testmode
+        ];
 
         return $baseUrl . "/" . join('/', $params) . "?prefill=$encryptedPrefillData";
     }

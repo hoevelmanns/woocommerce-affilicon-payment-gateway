@@ -15,6 +15,7 @@ use AffiliconApiClient\Exceptions\ConfigurationInvalid;
 use AffiliconApiClient\Services\ConfigService;
 use AffiliconApiClient\Services\HttpService;
 use AffiliconApiClient\Services\AuthService;
+use AffiliconApiClient\Traits\HasEncryption;
 use AffiliconApiClient\Traits\Singleton;
 
 /**
@@ -51,6 +52,7 @@ class Client
     protected $environment;
 
     use Singleton;
+    use HasEncryption;
 
 
     /**
@@ -68,6 +70,8 @@ class Client
         $this->auth = (new AuthService($this))
             ->anonymous()
             ->authenticate();
+
+        $this->initEncryption();
 
         return $this;
     }
