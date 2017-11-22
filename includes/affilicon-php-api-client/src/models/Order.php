@@ -206,7 +206,7 @@ class Order extends AbstractModel
      */
     protected function addUrlParams($baseUrl)
     {
-        $prefillData = $this->toJson($this->collectPrefillData());
+        $prefillData = json_encode($this->collectPrefillData());
         $encryptedPrefillData = $this->encrypt($prefillData);
 
         $cartId = $this->cart()->getCartId();
@@ -224,17 +224,6 @@ class Order extends AbstractModel
         ]; // todo testmode
 
         return $baseUrl . "/" . join('/', $params) . "?prefill=$encryptedPrefillData";
-    }
-
-    /**
-     * Converts array to json string
-     *
-     * @param array $data
-     * @return string
-     */
-    protected function toJson($data)
-    {
-        return json_encode($data);
     }
 
 }

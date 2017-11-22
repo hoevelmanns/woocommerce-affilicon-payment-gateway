@@ -10,32 +10,56 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WC_Affilicon_Payment_Gateway_ITNS_Handler extends WC_Affilicon_Payment_Gateway_Response
+/**
+ * Class WC_Affilicon_Payment_Gateway_Itns
+ */
+class WC_Affilicon_Payment_Gateway_Itns
 {
-    /** @var string Receiver email address to validate */
-    protected $receiver_email;
-    public $sandbox;
-    public $query;
+    /** @var WC_Affilicon_Payment_Gateway */
+    protected $gateway;
 
-    public $gateway;
+    /** @var  WP_REST_Request */
+    protected $request;
 
+    protected $transaction;
 
-    public function __construct($gateway)
+    protected $affiliconClient;
+
+    public function __construct(\AffiliconApiClient\Client $client)
     {
-        $this->gateway = $gateway;
-        $this->itns_url = $gateway->get_option('affilicon_itns_url');
-        $this->itns_secret = $gateway->get_option('affilicon_itns_secret');
-
-        add_action('valid-affilicon-standard-itns-request', array($this, 'validResponse'));
+        //$this->gateway = $gateway;
+        $this->affiliconClient = $client;
+        add_action('rest_api_init', [$this, 'registerRoutes']);
     }
+
+    public function registerRoutes()
+    {
+        register_rest_route( 'affilicon/v1', 'transaction', array(
+            'methods' => 'POST',
+            'callback' => [$this, 'checkResponse'],
+        ) );
+    }
+
+    protected function checkResponse(WP_REST_Request $request)
+    {
+        $this->request = $request;
+        if (!$this->hasTransactionData()) {
+            return false; // todo no response handling
+        }
+    }
+
+    protected function hasTransactionData()
+    {
+        return $this->getTransactionData();
+    }
+
 
     /**
      * Check for affilicon ITNS Response.
      */
-    public function checkResponse($query)
+    public function getTransactionData()
     {
-
-        $itnsData = json_decode( file_get_contents( 'php://input' ), true );
+        $transaction = $this->decrypt($this->request->get_body());
 
         // check client, etc...
         if (!empty($itnsData)) {
@@ -45,6 +69,14 @@ class WC_Affilicon_Payment_Gateway_ITNS_Handler extends WC_Affilicon_Payment_Gat
 
         wp_die('affilicon ITNS Request Failure', 'affilicon ITNS', array('response' => 500));
     }
+
+    protected function decrypt($body)
+    {
+        $secretKey = $this->gateway->itns_secret_key;
+
+    }
+
+
 
     /**x
      * There was a valid response.
@@ -75,7 +107,7 @@ class WC_Affilicon_Payment_Gateway_ITNS_Handler extends WC_Affilicon_Payment_Gat
     {
         // todo: Momentan wird Status "complete" anhand des "transaction" evaluiert -> Woocommerce-Plugin ITNS soll da einen eindeutigeren Status liefern
 
-        $this->paymentComplete($order);
+       // $this->paymentComplete($order);
 
         // add affilicon customer-id to order
     }
