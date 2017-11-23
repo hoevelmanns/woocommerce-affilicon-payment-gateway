@@ -10,9 +10,11 @@ require 'includes/class-wc-affilicon-payment-gateway-itns-service.php';
 
 class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 {
+    // todo phpdoc
     /** @var WC_Order order */
     public $order;
     public $sandbox;
+    public $testMode;
     public $receiver_email;
     public $vendor_id;
     public $itns_url;
@@ -64,7 +66,8 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
         $this->enabled = $this->get_option('enabled');
         $this->title = $this->get_option('affilicon_custom_method_name') ?: 'affilicon payment';
         $this->description = $this->get_option('description');
-        $this->sandbox = $this->get_option('sandbox') !== "no";
+        $this->sandbox = $this->get_option('sandbox') !== 'no';
+        $this->testMode = $this->get_option('test_mode') !== 'no';
         $this->receiver_email = $this->get_option('receiver_email');
         $this->vendor_id = $this->get_option('vendor_id');
         $this->itns_url = $this->get_option('affilicon_itns_url');
@@ -84,6 +87,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 
         $affiliconClient
             ->setEnv($this->sandbox ? 'staging' : 'production')
+            ->setTestMode($this->testMode)
             ->setSecretKey($this->itns_secret_key)
             ->setCountryId('de')// todo get from woocommerce
             ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
@@ -216,13 +220,21 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
             'enabled' => array(
                 'title' => __('Enable Affilicon Payment', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Yes', 'woocommerce-affilicon-payment-gateway'),
+                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'yes'
             ),
+
             'sandbox' => array(
-                'title' => __('Use Sandbox', 'woocommerce-affilicon-payment-gateway'),
+                'title' => __('Sandbox', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Yes', 'woocommerce-affilicon-payment-gateway'),
+                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
+                'default' => 'no'
+            ),
+
+            'test_mode' => array(
+                'title' => __('Test mode', 'woocommerce-affilicon-payment-gateway'),
+                'type' => 'checkbox',
+                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
             ),
 

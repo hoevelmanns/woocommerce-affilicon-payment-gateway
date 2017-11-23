@@ -172,6 +172,10 @@ class Order extends AbstractModel
             $this->basicAddress->transform()
         );
 
+        if ($this->client->isTestMode()) {
+            $prefillData['testmode'] = 'true';
+        }
+
         $this->prefillData = $prefillData;
 
         return $prefillData;

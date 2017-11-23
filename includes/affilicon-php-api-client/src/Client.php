@@ -33,6 +33,9 @@ class Client
     /** @var string */
     public $userLanguage;
 
+    /** @var boolean */
+    public $testMode;
+
     /** @var string */
     private $secretKey;
 
@@ -178,6 +181,24 @@ class Client
     public function setUserLanguage($userLanguage)
     {
         $this->userLanguage = $userLanguage;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTestMode()
+    {
+        return $this->testMode;
+    }
+
+    /**
+     * @param bool $testMode
+     * @return $this
+     */
+    public function setTestMode($testMode)
+    {
+        $this->testMode = $testMode;
         return $this;
     }
 
