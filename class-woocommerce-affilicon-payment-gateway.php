@@ -2,7 +2,7 @@
 
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
 require 'includes/class-wc-affilicon-payment-gateway-checkout.php';
-require 'includes/class-wc-affilicon-payment-gateway-itnsService.php';
+require 'includes/class-wc-affilicon-payment-gateway-itns-service.php';
 
 /**
  * Class WC_Affilicon_Payment_Gateway
@@ -36,6 +36,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     public function init()
     {
         // define additional product attributes for woocommerce product
+        // todo get from config file
         if (!defined('extraProductFields')) {
             define('extraProductFields', [
                 'affilicon_product_id' => [

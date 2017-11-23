@@ -15,17 +15,18 @@
 
 class WC_Affilicon_Payment_Gateway_Checkout
 {
-
     /** @var WC_Affilicon_Payment_Gateway $gateway */
     public $gateway;
 
+    /** @var string */
     private $checkoutUrl;
 
-    /** @var  WC_Order $order */
+    /** @var WC_Order $order */
     private $order;
 
     /** @var \AffiliconApiClient\Models\Order */
     private $affiliconOrder;
+
 
     public function __construct(WC_Order $order)
     {
@@ -47,6 +48,11 @@ class WC_Affilicon_Payment_Gateway_Checkout
         return false;
     }
 
+    /**
+     * Maps the address for the given type
+     * @param $type
+     * @return array
+     */
     public function address($type)
     {
         $address = [
@@ -63,6 +69,10 @@ class WC_Affilicon_Payment_Gateway_Checkout
         return $address;
     }
 
+    /**
+     * Returns the mapped WooCommerce basic address
+     * @return array
+     */
     public function wcBasicAddress()
     {
         $address =  $this->address('billing');
@@ -70,6 +80,10 @@ class WC_Affilicon_Payment_Gateway_Checkout
         return $address;
     }
 
+    /**
+     * Returns the mapped WooCommerce billing address
+     * @return array
+     */
     public function wcBillingAddress()
     {
         $address =  $this->address('billing');
@@ -77,6 +91,10 @@ class WC_Affilicon_Payment_Gateway_Checkout
         return $this->address('billing');
     }
 
+    /**
+     * Returns the mapped WooCommerce shipping address
+     * @return array
+     */
     public function wcShippingAddress()
     {
         return $this->address('shipping');
@@ -105,6 +123,12 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
     }
 
+    /**
+     * Adds the hook registering data to the custom field,
+     * in this case, an ints-connection called Woocommerce Payment Gateway
+     *
+     * @return void
+     */
     protected function addHookRegisterData()
     {
         $this->affiliconOrder->addCustomData([
@@ -119,12 +143,20 @@ class WC_Affilicon_Payment_Gateway_Checkout
         ]);
     }
 
+    /**
+     * Returns the generated checkout url
+     * @return string
+     */
     protected function getCheckoutUrl()
     {
         $this->generateCheckoutUrl();
         return $this->checkoutUrl;
     }
 
+    /**
+     * Generates the checkout url
+     * @return void
+     */
     protected function generateCheckoutUrl()
     {
         $this->checkoutUrl = $this->affiliconOrder->generateCheckoutUrl();
@@ -159,6 +191,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
      */
     public function buildCart()
     {
+        /** @var \AffiliconApiClient\Models\Cart $cart */
         $cart = $this->affiliconOrder->cart();
 
         // todo extend WC_ORDER -> set_affilicon_cart_id()
