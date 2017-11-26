@@ -162,7 +162,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
                 <img src="https://www.affilicon.net/wp-content/uploads/2015/05/affilicon_Logo_Google_143x59.png" alt="">
             <h3>Sichere und bequeme Bezahlung mit affilicon.</h3>
-            <p><a href="https://www.affilicon.net" target="_blank">Weitere Informationen zur affilicon GmbH</a></p>
+            <p><a href="https://www.affilicon.net/informationen_zu_affilicon" target="_blank">Weitere Informationen zur affilicon GmbH</a></p>
             </p>
             <div class="clear"></div>
         </fieldset>
