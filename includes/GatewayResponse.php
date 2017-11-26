@@ -5,7 +5,7 @@
  * Date: 14.09.16
  * Time: 22:32
  */
-class WC_Affilicon_Payment_Gateway_Response
+class GatewayResponse
 {
 
     /**

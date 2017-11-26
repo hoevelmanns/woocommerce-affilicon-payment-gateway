@@ -43,7 +43,7 @@ trait HasEncryption
      */
     public function encrypt($data)
     {
-        return urlencode(openssl_encrypt($data, $this->cryptMethod, $this->cryptKey));
+        return openssl_encrypt($data, $this->cryptMethod, $this->cryptKey);
     }
 
     /**
@@ -53,6 +53,6 @@ trait HasEncryption
      */
     public function decrypt($data)
     {
-        return urlencode(openssl_decrypt($data, $this->cryptMethod, $this->cryptKey));
+        return openssl_decrypt($data, $this->cryptMethod, $this->cryptKey);
     }
 }

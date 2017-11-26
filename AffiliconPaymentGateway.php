@@ -1,14 +1,16 @@
 <?php
 
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
-require 'includes/class-wc-affilicon-payment-gateway-checkout.php';
-require 'includes/class-wc-affilicon-payment-gateway-itns-service.php';
+require 'includes/helpers.php';
+require 'includes/services/CheckoutService.php';
+require 'includes/models/Transaction.php';
+require 'includes/services/ItnsService.php';
 
 /**
- * Class WC_Affilicon_Payment_Gateway
+ * Class AffiliconPaymentGateway
  */
 
-class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
+class AffiliconPaymentGateway extends WC_Payment_Gateway
 {
     // todo phpdoc
     /** @var WC_Order order */
@@ -21,7 +23,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     public $itns_secret_key;
     public $itns_prefix;
 
-    /** @var  WC_Affilicon_Payment_Gateway_ItnsService */
+    /** @var  ItnsService */
     protected $itnsService;
 
     const CHECKOUT_FORM_VERSIONS = [
@@ -94,7 +96,7 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
             ->setClientId($this->vendor_id)
             ->init();
 
-        $this->itnsService = new WC_Affilicon_Payment_Gateway_ItnsService($affiliconClient);
+        $this->itnsService = new ItnsService($affiliconClient);
     }
 
     public function __construct()
@@ -118,8 +120,9 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
     public function process_payment($orderId)
     {
         $this->order = wc_get_order($orderId);
-        /** @var WC_Affilicon_Payment_Gateway_Checkout $checkoutForm */
-        $checkout = new WC_Affilicon_Payment_Gateway_Checkout($this->order);
+        
+        /** @var CheckoutService $checkoutForm */
+        $checkout = new CheckoutService($this->order);
 
         try {
             // until we support the legacy form, we need to check the version and call the legacy form preparer
@@ -139,14 +142,9 @@ class WC_Affilicon_Payment_Gateway extends WC_Payment_Gateway
 
         return array(
             'result' => 'success',
-            'redirect' => $checkout->getUrl()//@todo testmodus berücksichtigen
+            'redirect' => $checkout->getCheckoutUrl()//@todo testmodus berücksichtigen
         );
 
-    }
-
-    public function getTransactionUrl($order)
-    {
-        return parent::get_transaction_url($order);
     }
 
     public function payment_fields()

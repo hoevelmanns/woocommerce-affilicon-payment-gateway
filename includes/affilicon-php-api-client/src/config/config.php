@@ -51,7 +51,7 @@ return [
             'city'      => 'basic_addr_city',
             'postcode'  => 'basic_addr_zip',
             'country'   => 'basic_addr_country',
-            //'phone'   => 'basic_addr_lastname',
+            'phone'     => 'basic_addr_phone',
             //'fax'     => 'basic_addr_lastname',
             //'mobile'  => 'basic_addr_lastname',
         ],
@@ -65,6 +65,7 @@ return [
             'postcode'  => 'billing_addr_zip',
             'country'   => 'billing_addr_country',
             'email'     => 'billing_addr_email',
+            'phone'     => 'billing_addr_phone',
         ],
         'shipping' => [
             'company'   => 'shipping_addr_company',

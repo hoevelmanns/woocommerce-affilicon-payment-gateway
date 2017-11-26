@@ -84,7 +84,7 @@ class AuthService
                 ->body();
 
         } catch (\Exception $e) {
-
+            // todo refreshToken if message says token expired
             throw new AuthenticationFailed($e->getMessage(), $e->getCode());
         }
 

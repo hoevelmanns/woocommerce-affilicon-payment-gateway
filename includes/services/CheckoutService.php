@@ -1,21 +1,11 @@
 <?php
 
 /**
- * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
- *
- * @file        Cart.php
- * @author      Marcelle Hövelmanns
- * @site        http://www.artsolution.de
- * Date: 04.10.17
+ * Class CheckoutService
  */
-
-/**
- * Class WC_Affilicon_Payment_Gateway_Checkout
- */
-
-class WC_Affilicon_Payment_Gateway_Checkout
+class CheckoutService
 {
-    /** @var WC_Affilicon_Payment_Gateway $gateway */
+    /** @var AffiliconPaymentGateway $gateway */
     public $gateway;
 
     /** @var string */
@@ -31,21 +21,6 @@ class WC_Affilicon_Payment_Gateway_Checkout
     public function __construct(WC_Order $order)
     {
         $this->order = $order;
-    }
-
-    /**
-     * @param WC_Order_Item $item
-     * @param string $key
-     * @return bool
-     */
-    public function getMetaDataValue($item, $key)
-    {
-        foreach ($item->get_meta_data() as $meta) {
-            if ($meta->key === $key) {
-                return $meta->value;
-            }
-        }
-        return false;
     }
 
     /**
@@ -75,9 +50,10 @@ class WC_Affilicon_Payment_Gateway_Checkout
      */
     public function wcBasicAddress()
     {
-        $address =  $this->address('billing');
-        $address['email'] = $this->order->get_billing_email();
-        return $address;
+        /* at the moment the customer data does not differ from the billing data, therefore
+           we use the billing address */
+
+        return $this->wcBillingAddress();
     }
 
     /**
@@ -87,8 +63,11 @@ class WC_Affilicon_Payment_Gateway_Checkout
     public function wcBillingAddress()
     {
         $address =  $this->address('billing');
+
         $address['email'] = $this->order->get_billing_email();
-        return $this->address('billing');
+        $address['phone'] = $this->order->get_billing_phone();
+
+        return $address;
     }
 
     /**
@@ -109,7 +88,7 @@ class WC_Affilicon_Payment_Gateway_Checkout
     {
         $this->affiliconOrder = new \AffiliconApiClient\Models\Order();
 
-        $this->addHookRegisterData();
+        $this->addItnsCallback();
 
         $this->addBillingData();
 
@@ -120,22 +99,22 @@ class WC_Affilicon_Payment_Gateway_Checkout
         $this->buildCart();
 
         $this->checkoutUrl = $this->getCheckoutUrl();
-
     }
 
     /**
      * Adds the hook registering data to the custom field,
-     * in this case, an ints-connection called Woocommerce Payment Gateway
+     * in this case, an ITNS connection called Woocommerce Payment Gateway
      *
      * @return void
      */
-    protected function addHookRegisterData()
+    protected function addItnsCallback()
     {
-        $this->affiliconOrder->addCustomData([
-            'register' => [
-                'itns_type_id' => 15,
-                'url' => "https://requestb.in/1j6gd9i1" //todo "core" should be checking the itns_name in ITNS.php newItns()
-            ],
+        $this->affiliconOrder
+            ->setCallbackUrl($this->getTransactionEndpoint())
+            //->setCallbackUrl('https://hookb.in/ZV8nBgOk')
+            ->setCallbackItnsTypeId('15'); // todo define // Woocommerce Payment Gateway
+
+        $this->affiliconOrder->addCallbackData([
             'data' => [
                 'wc_order_id' => $this->order->get_id(),
                 'wc_order_key' => $this->order->get_order_key(),
@@ -144,23 +123,25 @@ class WC_Affilicon_Payment_Gateway_Checkout
     }
 
     /**
-     * Returns the generated checkout url
+     * Get the transaction endpoint
      * @return string
      */
-    protected function getCheckoutUrl()
+    public function getTransactionEndpoint()
     {
-        $this->generateCheckoutUrl();
-        return $this->checkoutUrl;
+        return get_rest_url() .
+            AFFILICON_REST_BASE_URI . '/' .
+            AFFILICON_REST_TRANSACTION_ROUTE;
     }
 
     /**
-     * Generates the checkout url
-     * @return void
+     * Returns the generated checkout url
+     * @return string
      */
-    protected function generateCheckoutUrl()
+    public function getCheckoutUrl()
     {
-        $this->checkoutUrl = $this->affiliconOrder->generateCheckoutUrl();
+        return $this->affiliconOrder->getCheckoutUrl();
     }
+
 
     /**
      * Adds the woocommerce billing data to affilicon order
@@ -196,12 +177,16 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
         // todo extend WC_ORDER -> set_affilicon_cart_id()
 
+        if (getMetaDataValue($this->order, 'affilicon_cart_id')){
+            $this->order->delete_meta_data('affilicon_cart_id');
+        }
+
         $this->order->add_meta_data('affilicon_cart_id', $cart->getCartId());
 
         /** @var WC_Order_Item $wcLineItem */
         foreach ($this->order->get_items() as $wcLineItem) {
 
-            $affiliconProductId = $this->getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
+            $affiliconProductId = getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
             if ($affiliconProductId) {
 
@@ -213,16 +198,6 @@ class WC_Affilicon_Payment_Gateway_Checkout
 
         $this->order->save();
     }
-
-    /**
-     * Get the checkout form url from the created order
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->affiliconOrder->getCheckoutUrl();
-    }
-
 
     /**
      * @param $code

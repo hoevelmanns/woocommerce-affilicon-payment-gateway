@@ -41,6 +41,12 @@ class Order extends AbstractModel
     /** @var  string */
     protected $checkoutUrl;
 
+    /** @var  string */
+    protected $callbackUrl;
+
+    /** @var  string */
+    protected $callbackItnsTypeId;
+
     public function cart()
     {
         if (!$this->cart instanceof Cart) {
@@ -70,7 +76,7 @@ class Order extends AbstractModel
      */
     public function setBillingAddress($data)
     {
-        if (!$this->shippingAddress instanceof BillingAddress) {
+        if (!$this->billingAddress instanceof BillingAddress) {
             $this->billingAddress = new BillingAddress();
         }
 
@@ -135,6 +141,71 @@ class Order extends AbstractModel
     }
 
     /**
+     * Sets the ITNS callback
+     *
+     * @param array $data
+     * @return array|null
+     */
+    public function addCallbackData($data)
+    {
+        if (empty($this->callbackUrl) || empty($data)) {
+            return null;
+        }
+
+        $data['register'] = [
+            'itns_type_id' => $this->getCallbackItnsTypeId(),
+            'url' => $this->getCallbackUrl()
+        ];
+
+        return $this->addCustomData($data);
+    }
+
+    /**
+     * Sets the ITNS Type ID
+     *
+     * @param string $typeId
+     * @return $this
+     */
+    public function setCallbackItnsTypeId($typeId)
+    {
+        $this->callbackItnsTypeId = $typeId;
+        return $this;
+    }
+
+    /**
+     * Gets the ITNS Type ID
+     *
+     * @return mixed
+     */
+    public function getCallbackItnsTypeId()
+    {
+        return $this->callbackItnsTypeId;
+    }
+
+    /**
+     * Sets the ITNS callback url
+     *
+     * @param $callbackUrl
+     * @return $this
+     */
+    public function setCallbackUrl($callbackUrl)
+    {
+        $this->callbackUrl = $callbackUrl;
+        return $this;
+    }
+
+
+    /**
+     * Gets the ITNS callback url
+     *
+     * @return string
+     */
+    public function getCallbackUrl()
+    {
+        return $this->callbackUrl;
+    }
+
+    /**
      * Gets the custom data of the order
      *
      * @return array
@@ -151,6 +222,10 @@ class Order extends AbstractModel
      */
     public function getCheckoutUrl()
     {
+        if (empty($this->checkoutUrl)) {
+            $this->generateCheckoutUrl();
+        }
+
         return $this->checkoutUrl;
     }
 
@@ -208,7 +283,7 @@ class Order extends AbstractModel
     protected function addUrlParams($baseUrl)
     {
         $prefillData = json_encode($this->collectPrefillData());
-        $encryptedPrefillData = $this->client->encrypt($prefillData);
+        $encryptedPrefillData = urlencode($this->client->encrypt($prefillData));
 
         $cartId = $this->cart()->getCartId();
         $clientId = $this->client->getClientId();
