@@ -17,6 +17,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     public $order;
     public $sandbox;
     public $testPurchase;
+    public $formConfigId;
     public $receiver_email;
     public $vendor_id;
     public $itns_url;
@@ -72,6 +73,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->testPurchase = $this->get_option('test_purchase') !== 'no';
         $this->receiver_email = $this->get_option('receiver_email');
         $this->vendor_id = $this->get_option('vendor_id');
+        $this->formConfigId = $this->get_option('affilicon_form_configuration_id');
         $this->itns_url = $this->get_option('affilicon_itns_url');
         $this->itns_secret_key = $this->get_option('affilicon_itns_secret');
         $this->itns_prefix = $this->get_option('affilicon_itns_prefix'); // optional
@@ -80,11 +82,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->has_fields = true;
 
         if (is_admin()) {
+
             $this->init_form_fields();
             $this->init_settings();
-        }
 
-        if (!is_admin()) {
+        } else {
+
             /** @var \AffiliconApiClient\Client $affiliconClient */
             $affiliconClient = \AffiliconApiClient\Client::getInstance();
 
@@ -94,11 +97,14 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 ->setSecretKey($this->itns_secret_key)
                 ->setCountryId('de')// todo get from woocommerce
                 ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
+                ->setFormConfigId($this->formConfigId)
                 ->setClientId($this->vendor_id)
                 ->init();
 
             $this->itnsService = new ItnsService($affiliconClient);
+
         }
+
     }
 
     public function __construct()
@@ -164,7 +170,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
                 <img src="<?= plugin_dir_url( __FILE__ ) ?>/assets/img/affilicon_logo.png" alt="">
             <h3>Sichere und bequeme Bezahlung mit affilicon.</h3>
-            <p><a href="https://www.affilicon.net/informationen_zu_affilicon" target="_blank">Weitere Informationen zur affilicon GmbH</a></p>
+            <p><a href="https://www.affilicon.net/informationen_zu_affilicon" target="_blank">Weitere Informationen zur AffiliCon GmbH</a></p>
             </p>
             <div class="clear"></div>
         </fieldset>
@@ -239,18 +245,16 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'default' => 'no'
             ),
 
-            // todo option order theme
-            'affilicon_checkout_form_theme' => array(
-                'title' => __('Theme of Checkout form', 'woocommerce-affilicon-payment-gateway'),
-                'type' => 'select',
-                'description' => __('This controls the checkout form theme', 'woocommerce-affilicon-payment-gateway'),
-                'default' => __('3', 'woocommerce-affilicon-payment-gateway'),
-                'desc_tip' => true,
-                'readonly' => true,
-                'options' => self::CHECKOUT_FORM_VERSIONS
-            ),
-
             // $orderFormTheme
+
+            'vendor_id' => array(
+                'title' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
+                'type' => 'text',
+                'description' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
+                'default' => __('', 'woocommerce-affilicon-payment-gateway'),
+                'desc_tip' => true,
+                'required' => 'required'
+            ),
 
             'affilicon_itns_secret' => array(
                 'title' => __('Affilicon Secret-Key', 'woocommerce-affilicon-payment-gateway'),
@@ -258,14 +262,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'description' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'desc_tip' => true,
-                'readonly' => true
             ),
 
-            'vendor_id' => array(
-                'title' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
+            'affilicon_form_configuration_id' => array(
+                'title' => __('Affilicon Checkout Form Configuration ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
                 'type' => 'text',
-                'description' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
-                'default' => __('', 'woocommerce-affilicon-payment-gateway'),
+                'description' => __('', 'woocommerce-affilicon-payment-gateway_desc-form-config-id'),
                 'desc_tip' => true,
             ),
 

@@ -251,6 +251,10 @@ class Order extends AbstractModel
             $prefillData['testmode'] = 'true';
         }
 
+        if ($this->client->hasFormConfiguration()) {
+            $prefillData['formConfig'] = $this->client->getFormConfigId();
+        }
+
         $this->prefillData = $prefillData;
 
         return $prefillData;

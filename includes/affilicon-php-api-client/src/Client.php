@@ -33,6 +33,9 @@ class Client
     /** @var string */
     public $userLanguage;
 
+    /** @var string */
+    public $formConfigId;
+
     /** @var boolean */
     public $testPurchase;
 
@@ -182,6 +185,32 @@ class Client
     {
         $this->userLanguage = $userLanguage;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormConfigId()
+    {
+        return $this->formConfigId;
+    }
+
+    /**
+     * @param string $formConfigId
+     * @return $this
+     */
+    public function setFormConfigId($formConfigId)
+    {
+        $this->formConfigId = $formConfigId;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFormConfiguration()
+    {
+        return !empty($this->formConfigId);
     }
 
     /**
