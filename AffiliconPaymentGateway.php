@@ -265,7 +265,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             ),
 
             'affilicon_form_configuration_id' => array(
-                'title' => __('Checkout Form\n Configuration ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
+                'title' => __('Checkout Form Config ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
                 'type' => 'text',
                 'description' => __('', 'woocommerce-affilicon-payment-gateway_desc-form-config-id'),
                 'desc_tip' => true,
