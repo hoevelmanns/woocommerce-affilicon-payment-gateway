@@ -62,12 +62,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         }
 
         $this->id = 'affilicon_payment';
-        $this->method_title = __('Affilicon Payment', 'woocommerce-affilicon-payment-gateway');
-        $this->title = __('Affilicon Payment', 'woocommerce-affilicon-payment-gateway');
+        $this->method_title = __('AffiliCon Payment', 'woocommerce-affilicon-payment-gateway');
+        $this->title = __('AffiliCon Payment', 'woocommerce-affilicon-payment-gateway');
         $this->has_fields = true;
         $this->enabled = $this->get_option('enabled');
-        $this->title = $this->get_option('affilicon_custom_method_name') ?: 'affilicon payment';
-        $this->description = $this->get_option('description');
+        $this->title =  __('AffiliCon Payment', 'woocommerce-affilicon-payment-method-name');
+        $this->description = ""; //todo customer message necessary? $this->get_option('description');
         $this->sandbox = $this->get_option('sandbox') !== 'no';
         $this->testPurchase = $this->get_option('test_purchase') !== 'no';
         $this->receiver_email = $this->get_option('receiver_email');
@@ -84,19 +84,21 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             $this->init_settings();
         }
 
-        /** @var \AffiliconApiClient\Client $affiliconClient */
-        $affiliconClient = \AffiliconApiClient\Client::getInstance();
+        if (!is_admin()) {
+            /** @var \AffiliconApiClient\Client $affiliconClient */
+            $affiliconClient = \AffiliconApiClient\Client::getInstance();
 
-        $affiliconClient
-            ->setEnv($this->sandbox ? 'staging' : 'production')
-            ->setTestPurchase($this->testPurchase)
-            ->setSecretKey($this->itns_secret_key)
-            ->setCountryId('de')// todo get from woocommerce
-            ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
-            ->setClientId($this->vendor_id)
-            ->init();
+            $affiliconClient
+                ->setEnv($this->sandbox ? 'staging' : 'production')
+                ->setTestPurchase($this->testPurchase)
+                ->setSecretKey($this->itns_secret_key)
+                ->setCountryId('de')// todo get from woocommerce
+                ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
+                ->setClientId($this->vendor_id)
+                ->init();
 
-        $this->itnsService = new ItnsService($affiliconClient);
+            $this->itnsService = new ItnsService($affiliconClient);
+        }
     }
 
     public function __construct()
@@ -160,7 +162,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         <fieldset>
             <p class="form-row form-row-wide">
 
-                <img src="https://www.affilicon.net/wp-content/uploads/2015/05/affilicon_Logo_Google_143x59.png" alt="">
+                <img src="<?= plugin_dir_url( __FILE__ ) ?>/assets/img/affilicon_logo.png" alt="">
             <h3>Sichere und bequeme Bezahlung mit affilicon.</h3>
             <p><a href="https://www.affilicon.net/informationen_zu_affilicon" target="_blank">Weitere Informationen zur affilicon GmbH</a></p>
             </p>
@@ -238,16 +240,6 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             ),
 
             // todo option order theme
-            'affilicon_custom_method_name' => array(
-                'title' => __('Custom Payment-Method Title', 'woocommerce-affilicon-payment-gateway'),
-                'type' => 'text',
-                'description' => __('Custom name of payment-method', 'woocommerce-affilicon-payment-gateway'),
-                'default' => __('affilicon Payment', 'woocommerce-affilicon-payment-gateway'),
-                'desc_tip' => true,
-                'readonly' => true
-            ),
-
-            // todo option order theme
             'affilicon_checkout_form_theme' => array(
                 'title' => __('Theme of Checkout form', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'select',
@@ -278,6 +270,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             ),
 
 
+            /*
             'description' => array(
                 'title' => __('Customer Message', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'textarea',
@@ -285,6 +278,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'default' => '', // todo default description
                 'description' => __('The message which you want it to appear to the customer in the checkout page.', 'woocommerce-affilicon-payment-gateway'),
             )
+            */
 
         );
     }
@@ -299,8 +293,9 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     public function admin_options()
     {
         ?>
-        <h3><?php _e('Affilicon Payment Settings', 'woocommerce-affilicon-payment-gateway'); ?></h3>
-        <img src="https://my.affilicon.net/_files/images/affilicon_Logo_Google_143x59.png" alt="">
+        <h3>
+            <?php _e('AffiliCon Payment Settings', 'woocommerce-affilicon-payment-gateway'); ?>
+        </h3>
 
         <div id="poststuff">
             <div id="post-body" class="metabox-holder columns-2">
@@ -312,6 +307,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 <div id="postbox-container-1" class="postbox-container">
                     <div id="side-sortables" class="meta-box-sortables ui-sortable">
 
+                        <!--
                         <div class="postbox">
                             <div class="handlediv" title="Click to toggle"><br></div>
                             <h3 class="hndle"><span><i class="dashicons dashicons-admin-tools"></i>&nbsp;&nbsp;ITNS-Einstellungen</span>
@@ -333,13 +329,15 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                                 </div>
                             </div>
                         </div>
+                        -->
                         <div class="postbox">
                             <div class="handlediv" title="Click to toggle"><br></div>
                             <h3 class="hndle"><span><i class="dashicons dashicons-editor-help"></i>&nbsp;&nbsp;Plugin Support</span>
                             </h3>
                             <div class="inside">
+                                <img style="margin:20px 0" height="30px" width="auto" src="<?= plugin_dir_url( __FILE__ ) ?>/assets/img/affilicon_logo.png" alt="">
                                 <div class="support-widget">
-                                    <a href="https://support.affilicon.net/index.php?/Knowledgebase/Article/View/103/0/itns-instant-transaction-notification-service---anbindung">ITNS-Dokumentation</a>
+                                    <a target="_blank" href="https://affilicon.atlassian.net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin">Instructions for the plugin</a>
                                 </div>
                             </div>
                         </div>
