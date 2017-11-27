@@ -247,7 +247,7 @@ class Order extends AbstractModel
             $this->basicAddress->transform()
         );
 
-        if ($this->client->isTestMode()) {
+        if ($this->client->isTestPurchaseEnabled()) {
             $prefillData['testmode'] = 'true';
         }
 

@@ -34,7 +34,7 @@ class Client
     public $userLanguage;
 
     /** @var boolean */
-    public $testMode;
+    public $testPurchase;
 
     /** @var string */
     private $secretKey;
@@ -187,18 +187,18 @@ class Client
     /**
      * @return bool
      */
-    public function isTestMode()
+    public function isTestPurchaseEnabled()
     {
-        return $this->testMode;
+        return $this->testPurchase;
     }
 
     /**
      * @param bool $testMode
      * @return $this
      */
-    public function setTestMode($testMode)
+    public function setTestPurchase($testMode)
     {
-        $this->testMode = $testMode;
+        $this->testPurchase = $testMode;
         return $this;
     }
 
