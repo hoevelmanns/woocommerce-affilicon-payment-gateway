@@ -3,7 +3,8 @@
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
 require 'includes/helpers.php';
 require 'includes/services/CheckoutService.php';
-require 'includes/models/Transaction.php';
+require 'includes/models/AbstractTransaction.php';
+require 'includes/models/PurchaseTransaction.php';
 require 'includes/services/ItnsService.php';
 
 /**

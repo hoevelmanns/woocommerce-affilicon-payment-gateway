@@ -24,7 +24,7 @@ class ItnsService
     /** @var object */
     protected $requestData;
 
-    /** @var Transaction */
+    /** @var AbstractTransaction */
     public $transaction;
 
     /** @var  WC_Order */
@@ -73,6 +73,17 @@ class ItnsService
         return false;
     }
 
+    protected function getTransactionType()
+    {
+        $type = $this->requestData->type;
+
+        if (!$type) {
+            exit;
+        }
+
+        return $type;
+    }
+
     protected function hasTransactionData()
     {
         return !empty($this->getTransactionData());
@@ -98,91 +109,31 @@ class ItnsService
      */
     public function hasValidTransactionData()
     {
-        $this->transaction = (new Transaction())
-            ->set($this->requestData);
 
-        $this->wcOrder = wc_get_order($this->transaction->getWcOrderId());
+        switch ($this->getTransactionType()) {
+            case 'sale': {
 
-        $this->updateLineItemState();
+                $this->transaction = new PurchaseTransaction();
+                $this->transaction->execute();
 
-        $this->updatePaymentState();
-    }
-
-    /**
-     * Sets the item state of the product from requested transaction
-     *
-     */
-    public function updateLineItemState()
-    {
-        $wcLineItems = $this->wcOrder->get_items();
-
-        /** @var WC_Order_Item $item */
-        foreach ($wcLineItems as $item) {
-
-            /** @var WC_Order_Item_Product $product */
-            $orderItemProduct = $item->get_product();
-
-            $itemProductId = getMetaDataValue($orderItemProduct, 'affilicon_product_id'); // todo const affilicon_product_id
-
-            if ($itemProductId === $this->transaction->getProductId()) {
-                $this->applyState($item);
-            }
-        }
-    }
-
-    /**
-     * @param WC_Order_Item $item $item
-     */
-    protected function applyState($item)
-    {
-        $transactionType = $this->transaction->getType();
-
-        switch ($transactionType) {
-
-            case self::REFUND: {
-                // todo refund for single entry possible?
-                wc_create_refund($this->transaction->getWcOrderId());
                 break;
             }
 
-            case self::CHARGEBACK: {
-                // todo chargeback case
-
+            case 'refund': {
+                //$this->transaction = new RefundTransaction();
+                break;
             }
 
-        }
+            case 'chargeback': {
 
-        $metaKey = "affilicon_$transactionType";
-
-        if (empty(getMetaDataValue($item, $metaKey))) {
-
-            $item->add_meta_data($metaKey, 1);
-            $item->save();
-
-        }
-    }
-
-    protected function updatePaymentState()
-    {
-        $orderLineItems = $this->wcOrder->get_items();
-        $countPaidLineItems = 0;
-
-        foreach ($orderLineItems as $orderLineItem) {
-            $isPaid = (integer) getMetaDataValue($orderLineItem, 'affilicon_sale');
-            if ($isPaid) {
-                $countPaidLineItems++;
+                break;
+            }
+            default: {
+                exit;
             }
         }
 
-        if ($countPaidLineItems === count($orderLineItems)) {
-            $this->paymentComplete();
-        }
-    }
+        $this->transaction->set($this->requestData);
 
-    protected function paymentComplete()
-    {
-        $this->wcOrder->add_order_note('Payment method: ' . $this->transaction->getPaymentMethod());
-        $this->wcOrder->payment_complete();
     }
-
 }

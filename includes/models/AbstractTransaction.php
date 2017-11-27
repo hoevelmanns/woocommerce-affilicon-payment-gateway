@@ -1,17 +1,12 @@
 <?php
-/**
- * Copyright (C) Marcelle Hövelmanns, art solution - All Rights Reserved
- *
- * @file        ItnsTransaction.php
- * @author      Marcelle Hövelmanns
- * @site        http://www.artsolution.de
- * @date        23.11.17
- */
 
 /**
- * Class Transaction
+ * Created by PhpStorm.
+ * User: marcelle
+ * Date: 27.11.17
+ * Time: 14:10
  */
-class Transaction
+class AbstractTransaction
 {
     /** @var string */
     private $documentId;
@@ -34,13 +29,15 @@ class Transaction
     /** @var string */
     private $paymentMethod;
     /** @var object */
-    private $custom;
+    private $customData;
     /** @var string */
     private $cartId;
     /** @var integer */
     private $wcOrderId;
     /** @var string */
     private $wcOrderKey;
+    /** @var  WC_Order */
+    protected $wcOrder;
 
     /**
      * @param $data
@@ -53,11 +50,11 @@ class Transaction
             if (property_exists($this, $key)) {
 
                 if ($key==='custom') {
-                    $this->custom = json_decode($value);
+                    $this->customData = json_decode($value);
 
-                    if ($this->custom->data) {
-                        $this->setWcOrderId($this->custom->data->wc_order_id);
-                        $this->setWcOrderKey($this->custom->data->wc_order_key);
+                    if ($this->customData->data) {
+                        $this->setWcOrderId($this->customData->data->wc_order_id);
+                        $this->setWcOrderKey($this->customData->data->wc_order_key);
                     }
 
                     continue;
@@ -67,6 +64,9 @@ class Transaction
 
             }
         }
+
+        // todo error handling
+        $this->wcOrder = wc_get_order($this->transaction->getWcOrderId());
 
         return $this;
     }
@@ -293,4 +293,41 @@ class Transaction
         $this->cartId = $cartId;
     }
 
+    /**
+     * Sets the item state of the product from requested transaction
+     *
+     */
+    public function updateLineItemState()
+    {
+        $wcLineItems = $this->wcOrder->get_items();
+
+        /** @var WC_Order_Item $item */
+        foreach ($wcLineItems as $item) {
+
+            /** @var WC_Order_Item_Product $product */
+            $orderItemProduct = $item->get_product();
+
+            $itemProductId = getMetaDataValue($orderItemProduct, 'affilicon_product_id'); // todo const affilicon_product_id
+
+            if ($itemProductId === $this->getProductId()) {
+                $this->applyState($item);
+            }
+        }
+    }
+
+    /**
+     * @param WC_Order_Item $item $item
+     */
+    protected function applyState($item)
+    {
+        $transactionType = $this->getType();
+
+        $metaKey = "affilicon_$transactionType";
+
+        if (empty(getMetaDataValue($item, $metaKey))) {
+
+            $item->add_meta_data($metaKey, 1);
+            $item->save();
+        }
+    }
 }
