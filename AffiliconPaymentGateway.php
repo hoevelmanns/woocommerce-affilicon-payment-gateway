@@ -257,7 +257,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             ),
 
             'affilicon_itns_secret' => array(
-                'title' => __('Affilicon Secret-Key', 'woocommerce-affilicon-payment-gateway'),
+                'title' => __('Secret-Key', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'text',
                 'description' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => __('', 'woocommerce-affilicon-payment-gateway'),
@@ -265,7 +265,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             ),
 
             'affilicon_form_configuration_id' => array(
-                'title' => __('Affilicon Checkout Form Configuration ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
+                'title' => __('Checkout Form Configuration ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
                 'type' => 'text',
                 'description' => __('', 'woocommerce-affilicon-payment-gateway_desc-form-config-id'),
                 'desc_tip' => true,
