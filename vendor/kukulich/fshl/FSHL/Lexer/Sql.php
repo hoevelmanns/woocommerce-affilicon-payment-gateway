@@ -520,7 +520,7 @@ class Sql implements FSHL\Lexer
 				'top' => 1,
 				'tpe' => 1,
 				'tran' => 1,
-				'PurchaseTransaction' => 1,
+				'ChargebackTransaction' => 1,
 				'translate' => 1,
 				'trigger' => 1,
 				'type' => 1,

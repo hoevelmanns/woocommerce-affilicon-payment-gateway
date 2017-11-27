@@ -113,8 +113,8 @@ class ItnsService
         switch ($this->getTransactionType()) {
             case 'sale': {
 
-                $this->transaction = new PurchaseTransaction();
-                $this->transaction->execute();
+                $this->transaction = (new ChargebackTransaction())
+                    ->execute();
 
                 break;
             }
@@ -134,6 +134,5 @@ class ItnsService
         }
 
         $this->transaction->set($this->requestData);
-
     }
 }

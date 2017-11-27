@@ -5,6 +5,8 @@ require 'includes/helpers.php';
 require 'includes/services/CheckoutService.php';
 require 'includes/models/AbstractTransaction.php';
 require 'includes/models/PurchaseTransaction.php';
+require 'includes/models/RefundTransaction.php';
+require 'includes/models/ChargebackTransaction.php';
 require 'includes/services/ItnsService.php';
 
 /**
