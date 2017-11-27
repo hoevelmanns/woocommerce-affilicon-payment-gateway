@@ -69,8 +69,7 @@ class ItnsService
             $this->hasValidTransactionData();
 
         }
-
-        return false;
+        // todo json message
     }
 
     protected function hasTransactionData()

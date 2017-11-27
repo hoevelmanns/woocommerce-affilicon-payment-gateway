@@ -46,11 +46,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             define('extraProductFields', [
                 'affilicon_product_id' => [
                     'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
-                    'label' => __('affilicon Product-ID', 'woocommerce-affilicon-payment-gateway'),
+                    'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
                     'type' => 'text',
                     'class' => 'short',
                     'wrapper_class' => 'form-field'
                 ],
+                /*
                 'affilicon_product_type' => [
                     'placeholder' => __('Please select the type of your affilicon product', 'woocommerce-affilicon-payment-gateway'),
                     'label' => __('affilicon Product type', 'woocommerce-affilicon-payment-gateway'),
@@ -58,7 +59,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                     'class' => 'select short',
                     'wrapper_class' => 'form-field',
                     'options' => self::AFFILICON_PRODUCT_TYPES
-                ]
+                ]*/
             ]);
         }
 
