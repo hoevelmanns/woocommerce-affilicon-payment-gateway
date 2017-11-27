@@ -225,23 +225,23 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     {
         $this->form_fields = array(
             'enabled' => array(
-                'title' => __('Enable Affilicon Payment', 'woocommerce-affilicon-payment-gateway'),
+                'title' => __('Enable AffiliCon Payment', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
+                'label' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'yes'
             ),
 
             'sandbox' => array(
                 'title' => __('Use Sandbox', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
+                'label' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
             ),
 
             'test_purchase' => array(
                 'title' => __('Show Test Purchase payment method in checkout form', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
+                'label' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
             ),
 
