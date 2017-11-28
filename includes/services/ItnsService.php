@@ -6,10 +6,6 @@
  * Time: 22:41
  */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 /**
  * Class ItnsService
  */
@@ -33,8 +29,11 @@ class ItnsService
     /** @var \AffiliconApiClient\Client */
     protected $affiliconClient;
 
+    /** @var string */
     const REFUND = 'refund';
+    /** @var string */
     const CHARGEBACK = 'chargeback';
+    /** @var string */
     const SALE = 'sale';
 
     public function __construct(\AffiliconApiClient\Client $client)
@@ -112,26 +111,27 @@ class ItnsService
         switch ($this->getTransactionType()) {
             case 'sale': {
 
-                $this->transaction = (new ChargebackTransaction())
-                    ->execute();
+                $this->transaction = new PurchaseTransaction();
 
                 break;
             }
 
             case 'refund': {
-                //$this->transaction = new RefundTransaction();
+                $this->transaction = new RefundTransaction();
                 break;
             }
 
             case 'chargeback': {
-
+                $this->transaction = new ChargebackTransaction();
                 break;
             }
             default: {
-                exit;
+                exit; // todo response message
             }
         }
 
-        $this->transaction->set($this->requestData);
+        $this->transaction
+            ->set($this->requestData)
+            ->execute();
     }
 }

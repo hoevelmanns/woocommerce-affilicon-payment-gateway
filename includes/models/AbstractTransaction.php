@@ -29,7 +29,7 @@ class AbstractTransaction
     /** @var string */
     private $paymentMethod;
     /** @var object */
-    private $customData;
+    private $custom;
     /** @var string */
     private $cartId;
     /** @var integer */
@@ -50,11 +50,11 @@ class AbstractTransaction
             if (property_exists($this, $key)) {
 
                 if ($key==='custom') {
-                    $this->customData = json_decode($value);
+                    $this->custom = json_decode($value);
 
-                    if ($this->customData->data) {
-                        $this->setWcOrderId($this->customData->data->wc_order_id);
-                        $this->setWcOrderKey($this->customData->data->wc_order_key);
+                    if ($this->custom->data) {
+                        $this->setWcOrderId($this->custom->data->wc_order_id);
+                        $this->setWcOrderKey($this->custom->data->wc_order_key);
                     }
 
                     continue;
@@ -66,7 +66,7 @@ class AbstractTransaction
         }
 
         // todo error handling
-        $this->wcOrder = wc_get_order($this->transaction->getWcOrderId());
+        $this->wcOrder = wc_get_order($this->getWcOrderId());
 
         return $this;
     }
@@ -264,17 +264,17 @@ class AbstractTransaction
     /**
      * @return object
      */
-    public function getCustomData()
+    public function getCustom()
     {
-        return $this->customData;
+        return $this->custom;
     }
 
     /**
-     * @param object $customData
+     * @param object $custom
      */
-    public function setCustomData($customData)
+    public function setCustom($custom)
     {
-        $this->customData = $customData;
+        $this->custom = $custom;
     }
 
     /**

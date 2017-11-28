@@ -21,8 +21,22 @@ class RefundTransaction extends AbstractTransaction
 
     protected function updateOrderState()
     {
+        // todo complete refund, line items also possible to refund
         // todo complete refund
+        /*
+         *   /**
+         * $default_args = array(
+        'amount'         => 0,
+        'reason'         => null,
+        'order_id'       => 0,
+        'refund_id'      => 0,
+        'line_items'     => array(),
+        'refund_payment' => false,
+        'restock_items'  => false,
+        );
+
         wc_order_refund($this->getWcOrderId());
+        */
     }
 
 }
