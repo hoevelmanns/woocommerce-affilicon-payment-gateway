@@ -185,7 +185,9 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         <?php
     }
 
-
+    /**
+     * @return void
+     */
     public function custom_woocommerce_product_fields()
     {
         foreach (extraProductFields as $key => $field) {
@@ -196,7 +198,10 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         }
     }
 
-    public function add_woocommerce_field(Array $field)
+    /**
+     * @param array $field
+     */
+    public function add_woocommerce_field($field)
     {
         switch ($field['type']) {
             case 'text': {
@@ -220,12 +225,15 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
      */
     public function save_custom_woocommerce_product_fields($post_id)
     {
-        foreach (extraProductFields as $key => $field) {
-            // todo use wp_post...
+        $productKeys = array_keys(extraProductFields);
+
+        foreach ($productKeys as $key) {
+
             $fieldValue = isset($_POST[$key]) ? $_POST[$key] : '';
             $product = wc_get_product($post_id);
             $product->update_meta_data($key, $fieldValue);
             $product->save();
+            
         }
     }
 
