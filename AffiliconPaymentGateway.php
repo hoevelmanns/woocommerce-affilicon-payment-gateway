@@ -11,22 +11,26 @@ require 'includes/services/ItnsService.php';
 
 /**
  * Class AffiliconPaymentGateway
+ * @property integer $id
+ * @property string $method_title
+ * @property string $title
+ * @property boolean $has_fields
+ * @property boolean $enabled
+ * @property string $description
+ * @property array $form_fields
+ * @property WC_Order $order
+ * @property boolean $sandbox
+ * @property boolean $testPurchase
+ * @property integer $formConfigId
+ * @property string $receiver_email
+ * @property string $vendor_id
+ * @property string $itns_url
+ * @property string $itns_secret_key
+ * @property string $itns_prefix
  */
 
 class AffiliconPaymentGateway extends WC_Payment_Gateway
 {
-    // todo phpdoc
-    /** @var WC_Order order */
-    public $order;
-    public $sandbox;
-    public $testPurchase;
-    public $formConfigId;
-    public $receiver_email;
-    public $vendor_id;
-    public $itns_url;
-    public $itns_secret_key;
-    public $itns_prefix;
-
     /** @var  ItnsService */
     protected $itnsService;
 
