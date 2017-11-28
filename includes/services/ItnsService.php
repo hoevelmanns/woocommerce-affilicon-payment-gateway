@@ -36,6 +36,10 @@ class ItnsService
     /** @var string */
     const SALE = 'sale';
 
+    /**
+     * ItnsService constructor.
+     * @param \AffiliconApiClient\Client $client
+     */
     public function __construct(\AffiliconApiClient\Client $client)
     {
         $this->affiliconClient = $client;
@@ -59,7 +63,7 @@ class ItnsService
      * @param WP_REST_Request $request
      * @return bool
      */
-    public function checkItnsRequest($request)
+    public function checkItnsRequest(WP_REST_Request $request)
     {
         $this->request = $request;
 
@@ -71,6 +75,11 @@ class ItnsService
         // todo json message
     }
 
+    /**
+     * Gets the transaction type
+     *
+     * @return mixed
+     */
     protected function getTransactionType()
     {
         $type = $this->requestData->type;
@@ -82,6 +91,11 @@ class ItnsService
         return $type;
     }
 
+    /**
+     * Checks for data in the request body
+     *
+     * @return bool
+     */
     protected function hasTransactionData()
     {
         return !empty($this->getTransactionData());
@@ -107,7 +121,6 @@ class ItnsService
      */
     public function hasValidTransactionData()
     {
-
         switch ($this->getTransactionType()) {
             case 'sale': {
 

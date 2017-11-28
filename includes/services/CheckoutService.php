@@ -17,7 +17,10 @@ class CheckoutService
     /** @var \AffiliconApiClient\Models\Order */
     private $affiliconOrder;
 
-
+    /**
+     * CheckoutService constructor.
+     * @param WC_Order $order
+     */
     public function __construct(WC_Order $order)
     {
         $this->order = $order;
@@ -25,7 +28,7 @@ class CheckoutService
 
     /**
      * Maps the address for the given type
-     * @param $type
+     * @param string $type
      * @return array
      */
     public function address($type)
@@ -96,7 +99,7 @@ class CheckoutService
 
         $this->addBasicAddressData();
 
-        $this->buildCart();
+        $this->generateCart();
 
         $this->checkoutUrl = $this->getCheckoutUrl();
     }
@@ -111,7 +114,6 @@ class CheckoutService
     {
         $this->affiliconOrder
             ->setCallbackUrl($this->getTransactionEndpoint())
-            //->setCallbackUrl('https://hookb.in/ZV8nBgOk')
             ->setCallbackItnsTypeId('15'); // todo define // Woocommerce Payment Gateway
 
         $this->affiliconOrder->addCallbackData([
@@ -168,18 +170,14 @@ class CheckoutService
     }
 
     /**
-     * Build the affilicon cart
+     * Generates the affilicon cart
      */
-    public function buildCart()
+    public function generateCart()
     {
-        /** @var \AffiliconApiClient\Models\Cart $cart */
         $cart = $this->affiliconOrder->cart();
 
         // todo extend WC_ORDER -> set_affilicon_cart_id()
-
-        if (getMetaDataValue($this->order, 'affilicon_cart_id')){
-            $this->order->delete_meta_data('affilicon_cart_id');
-        }
+        $this->order->delete_meta_data('affilicon_cart_id');
 
         $this->order->add_meta_data('affilicon_cart_id', $cart->getCartId());
 

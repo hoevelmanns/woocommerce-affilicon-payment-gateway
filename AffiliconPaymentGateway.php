@@ -11,6 +11,7 @@ require 'includes/services/ItnsService.php';
 
 /**
  * Class AffiliconPaymentGateway
+ *
  * @property string $id
  * @property string $method_title
  * @property string $title
@@ -45,31 +46,25 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         '2' => 'Subscription product'
     ];
 
+    /**
+     * AffiliconPaymentGateway constructor.
+     */
+    public function __construct()
+    {
+        $this->init();
+
+        add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+
+        // generate custom product fields
+        add_action('woocommerce_product_options_general_product_data', array($this, 'custom_woocommerce_product_fields'));
+
+        // save custom field inputs
+        add_action('woocommerce_process_product_meta', array($this, 'save_custom_woocommerce_product_fields'));
+
+    }
+
     public function init()
     {
-        // define additional product attributes for woocommerce product
-        // todo get from config file
-        if (!defined('extraProductFields')) {
-            define('extraProductFields', [
-                'affilicon_product_id' => [
-                    'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
-                    'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
-                    'type' => 'text',
-                    'class' => 'short',
-                    'wrapper_class' => 'form-field'
-                ],
-                /*
-                'affilicon_product_type' => [
-                    'placeholder' => __('Please select the type of your affilicon product', 'woocommerce-affilicon-payment-gateway'),
-                    'label' => __('affilicon Product type', 'woocommerce-affilicon-payment-gateway'),
-                    'type' => 'select',
-                    'class' => 'select short',
-                    'wrapper_class' => 'form-field',
-                    'options' => self::AFFILICON_PRODUCT_TYPES
-                ]*/
-            ]);
-        }
-
         $this->id = 'affilicon_payment';
         $this->method_title = __('AffiliCon Payment', 'woocommerce-affilicon-payment-gateway');
         $this->title = __('AffiliCon Payment', 'woocommerce-affilicon-payment-gateway');
@@ -86,47 +81,45 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->itns_secret_key = $this->get_option('affilicon_itns_secret');
         $this->itns_prefix = $this->get_option('affilicon_itns_prefix'); // optional
         $this->receiver_email = "marcelle.hoevelmanns@gmail.com"; // todo option
-
         $this->has_fields = true;
 
         if (is_admin()) {
 
+            // define additional product attributes for woocommerce product
+            // todo get from config file
+            if (!defined('extraProductFields')) {
+                define('extraProductFields', [
+                    'affilicon_product_id' => [
+                        'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
+                        'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
+                        'type' => 'text',
+                        'class' => 'short',
+                        'wrapper_class' => 'form-field'
+                    ]
+                ]);
+            }
+
             $this->init_form_fields();
+
             $this->init_settings();
 
-        } else {
-
-            /** @var \AffiliconApiClient\Client $affiliconClient */
-            $affiliconClient = \AffiliconApiClient\Client::getInstance();
-
-            $affiliconClient
-                ->setEnv($this->sandbox ? 'staging' : 'production')
-                ->setTestPurchase($this->testPurchase)
-                ->setSecretKey($this->itns_secret_key)
-                ->setCountryId('de')// todo get from woocommerce
-                ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
-                ->setFormConfigId($this->formConfigId)
-                ->setClientId($this->vendor_id)
-                ->init();
-
-            $this->itnsService = new ItnsService($affiliconClient);
-
+            return;
         }
 
-    }
+        /** @var \AffiliconApiClient\Client $affiliconClient */
+        $affiliconClient = \AffiliconApiClient\Client::getInstance();
 
-    public function __construct()
-    {
-        $this->init();
+        $affiliconClient
+            ->setEnv($this->sandbox ? 'staging' : 'production')
+            ->setTestPurchase($this->testPurchase)
+            ->setSecretKey($this->itns_secret_key)
+            ->setCountryId('de')// todo get from woocommerce
+            ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
+            ->setFormConfigId($this->formConfigId)
+            ->setClientId($this->vendor_id)
+            ->init();
 
-        add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
-
-        // generate custom product fields
-        add_action('woocommerce_product_options_general_product_data', array($this, 'custom_woocommerce_product_fields'));
-
-        // save custom field inputs
-        add_action('woocommerce_process_product_meta', array($this, 'save_custom_woocommerce_product_fields'));
-
+        $this->itnsService = new ItnsService($affiliconClient);
     }
 
     /**
@@ -136,18 +129,13 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     public function process_payment($orderId)
     {
         $this->order = wc_get_order($orderId);
-        
+
         /** @var CheckoutService $checkoutForm */
         $checkout = new CheckoutService($this->order);
 
         try {
-            // until we support the legacy form, we need to check the version and call the legacy form preparer
-            if (intval($this->get_option('affilicon_checkout_form_theme')) < 3) { // todo get selected checkout form
-              // todo  $checkout->buildLegacyFormUrl();
-            } else {
-                // checkout form 3 with widget
-                $checkout->createOrder();
-            } // todo use case for checkout form 4
+
+            $checkout->createOrder();
 
         } catch (Exception $e) {
             return [
@@ -286,18 +274,6 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'description' => __('', 'woocommerce-affilicon-payment-gateway_desc-form-config-id'),
                 'desc_tip' => true,
             ),
-
-
-            /*
-            'description' => array(
-                'title' => __('Customer Message', 'woocommerce-affilicon-payment-gateway'),
-                'type' => 'textarea',
-                'css' => 'width:500px;',
-                'default' => '', // todo default description
-                'description' => __('The message which you want it to appear to the customer in the checkout page.', 'woocommerce-affilicon-payment-gateway'),
-            )
-            */
-
         );
     }
 
