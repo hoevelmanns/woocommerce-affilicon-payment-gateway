@@ -11,7 +11,7 @@ require 'includes/services/ItnsService.php';
 
 /**
  * Class AffiliconPaymentGateway
- * @property integer $id
+ * @property string $id
  * @property string $method_title
  * @property string $title
  * @property boolean $has_fields
