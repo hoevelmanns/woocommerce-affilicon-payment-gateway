@@ -138,10 +138,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             $checkout->createOrder();
 
         } catch (Exception $e) {
+
             return [
                 'result' => 'failed',
                 'message' => $e->getMessage()
             ];
+            
         }
 
         return array(

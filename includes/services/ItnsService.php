@@ -44,35 +44,31 @@ class ItnsService
     {
         $this->affiliconClient = $client;
 
-        add_action('rest_api_init', [$this, 'registerRoutes']);
+        add_action('rest_api_init', [$this, 'registerRoute']);
     }
 
     /**
      * Registers the route
      * @return void
      */
-    public function registerRoutes()
+    public function registerRoute()
     {
         register_rest_route(AFFILICON_REST_BASE_URI, AFFILICON_REST_TRANSACTION_ROUTE, [
             'methods' => 'POST',
-            'callback' => [$this, 'checkItnsRequest'],
+            'callback' => [$this,
+
+            /** WP_REST_Request */
+            function(WP_REST_Request $request) {
+                $this->request = $request;
+
+                if ($this->hasTransactionData()) {
+
+                    $this->processTransaction();
+
+                }
+            }],
+
         ]);
-    }
-
-    /**
-     * @param WP_REST_Request $request
-     * @return bool
-     */
-    public function checkItnsRequest(WP_REST_Request $request)
-    {
-        $this->request = $request;
-
-        if ($this->hasTransactionData()) {
-
-            $this->hasValidTransactionData();
-
-        }
-        // todo json message
     }
 
     /**
@@ -116,12 +112,12 @@ class ItnsService
     }
 
     /**
-     * There was a valid response.
      * @return boolean
      */
-    public function hasValidTransactionData()
+    public function processTransaction()
     {
         switch ($this->getTransactionType()) {
+
             case 'sale': {
 
                 $this->transaction = new PurchaseTransaction();
@@ -141,6 +137,7 @@ class ItnsService
             default: {
                 exit; // todo response message
             }
+
         }
 
         $this->transaction
