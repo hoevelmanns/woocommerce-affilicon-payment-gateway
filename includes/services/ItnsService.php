@@ -57,8 +57,8 @@ class ItnsService
             'methods' => 'POST',
             'callback' => [$this,
 
-            /** WP_REST_Request */
             function(WP_REST_Request $request) {
+
                 $this->request = $request;
 
                 if ($this->hasTransactionData()) {
@@ -66,6 +66,9 @@ class ItnsService
                     $this->processTransaction();
 
                 }
+
+                // todo response message
+
             }],
 
         ]);
