@@ -14,20 +14,20 @@ class ItnsService
     /** @var AffiliconPaymentGateway */
     protected $gateway;
 
-    /** @var  WP_REST_Request */
-    protected $request;
-
-    /** @var object */
-    protected $requestData;
-
-    /** @var AbstractTransaction */
-    public $transaction;
-
     /** @var  WC_Order */
     protected $wcOrder;
 
     /** @var \AffiliconApiClient\Client */
     protected $affiliconClient;
+
+    /** @var  WP_REST_Request */
+    private $request;
+
+    /** @var object */
+    private $requestData;
+
+    /** @var AbstractTransaction */
+    private $transaction;
 
     /** @var string */
     const REFUND = 'refund';
