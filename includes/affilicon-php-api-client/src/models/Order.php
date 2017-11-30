@@ -247,13 +247,8 @@ class Order extends AbstractModel
             $this->basicAddress->transform()
         );
 
-        if ($this->client->isTestPurchaseEnabled()) {
-            $prefillData['testmode'] = 'true';
-        }
-
-        if ($this->client->hasFormConfiguration()) {
-            $prefillData['formConfig'] = $this->client->getFormConfigId();
-        }
+        $prefillData['testmode'] = (string) $this->client->isTestPurchaseEnabled();
+        $prefillData['formConfig'] = $this->client->getFormConfigId();
 
         $this->prefillData = $prefillData;
 
