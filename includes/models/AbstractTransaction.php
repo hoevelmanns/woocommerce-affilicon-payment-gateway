@@ -5,12 +5,12 @@
  */
 class AbstractTransaction
 {
+    /** @var Document */
+    protected $document;
+    /** @var Payment */
+    protected $payment;
     /** @var string */
-    private $documentId;
-    /** @var stdClass */
-    private $documentFile;
-    /** @var string */
-    private $productId;
+    protected $productId;
     /** @var string */
     private $amount;
     /** @var string */
@@ -23,116 +23,59 @@ class AbstractTransaction
     private $ip;
     /** @var string */
     private $date;
-    /** @var string */
-    private $paymentMethod;
     /** @var object */
     private $custom;
     /** @var string */
     private $cartId;
-    /** @var integer */
-    private $wcOrderId;
-    /** @var string */
-    private $wcOrderKey;
-    /** @var  WC_Order */
-    protected $wcOrder;
-
-    /** @var  array */
+    /** @var WC_Order */
+    protected $order;
+    /** @var array */
     protected $orderLineItems;
-    /** @var  int */
-    protected $orderFulfilledLineItems;
 
     /**
-     * @param $data
-     * @return $this
+     * AbstractTransaction constructor.
+     * @param object $requestData
      */
-    public function set($data)
+    public function __construct($requestData)
     {
-        foreach ($data as $key => $value)
-        {
-            if (property_exists($this, $key)) {
+        $this->setCustom(json_decode($requestData->custom));
+        $this->setCartId($requestData->cartId);
+        $this->setProductId($requestData->productId);
+        $this->setType($requestData->type);
 
-                if ($key==='custom') {
-                    $this->custom = json_decode($value);
 
-                    if ($this->custom->data) {
-                        $this->setWcOrderId($this->custom->data->wc_order_id);
-                        $this->setWcOrderKey($this->custom->data->wc_order_key);
-                    }
+        $this->payment = (new Payment())
+            ->setState('sale')
+            ->setMethod($requestData->paymentMethod);
 
-                    continue;
-                }
+        $this->document = (new Document())
+            ->setFile($requestData->documentFile)
+            ->setDocumentId($requestData->documentId);
 
-                $this->{$key} = $value;
+        $orderId = $this->custom->data->wc_order_id;
 
-            }
-        }
+        $this->order = new Order($orderId);
 
-        // todo error handling
-        $this->wcOrder = wc_get_order($this->getWcOrderId());
-
-        return $this;
     }
 
-    /** @param string $orderId */
-    public function setWcOrderId($orderId)
+    public function execute()
     {
-        $this->wcOrderId = $orderId;
+
     }
 
-    /**
-     * @return int
-     */
-    public function getWcOrderId()
+    public function payment()
     {
-        return $this->wcOrderId;
+        return $this->payment;
     }
 
-    /**
-     * @param string $orderKey
-     */
-    public function setWcOrderKey($orderKey)
+    public function document()
     {
-        $this->wcOrderKey = $orderKey;
+        return $this->document;
     }
 
-    /**
-     * @return string
-     */
-    public function getWcOrderKey()
+    public function order()
     {
-        return $this->wcOrderKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDocumentId()
-    {
-        return $this->documentId;
-    }
-
-    /**
-     * @param string $documentId
-     */
-    public function setDocumentId(string $documentId)
-    {
-        $this->documentId = $documentId;
-    }
-
-    /**
-     * @return stdClass
-     */
-    public function getDocumentFile()
-    {
-        return $this->documentFile;
-    }
-
-    /**
-     * @param stdClass $documentFile
-     */
-    public function setDocumentFile($documentFile)
-    {
-        $this->$documentFile = $documentFile;
+        return $this->order;
     }
 
     /**
@@ -248,22 +191,6 @@ class AbstractTransaction
     }
 
     /**
-     * @return string
-     */
-    public function getPaymentMethod()
-    {
-        return $this->paymentMethod;
-    }
-
-    /**
-     * @param string $paymentMethod
-     */
-    public function setPaymentMethod($paymentMethod)
-    {
-        $this->paymentMethod = $paymentMethod;
-    }
-
-    /**
      * @return object
      */
     public function getCustom()
@@ -301,7 +228,7 @@ class AbstractTransaction
      */
     public function updateLineItemStates()
     {
-        $wcLineItems = $this->wcOrder->get_items();
+        $wcLineItems = $this->order()->get_items();
 
         /** @var WC_Order_Item_Product $item */
         foreach ($wcLineItems as $item) {
@@ -358,7 +285,9 @@ class AbstractTransaction
         if (empty(getMetaDataValue($item, $metaKey))) {
 
             $item->add_meta_data($metaKey, 1);
+
             $item->save();
+
         }
     }
 }

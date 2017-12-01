@@ -397,7 +397,7 @@ class Sql implements FSHL\Lexer
 				'open' => 1,
 				'option' => 1,
 				'or' => 1,
-				'order' => 1,
+				'Order' => 1,
 				'out' => 1,
 				'outer' => 1,
 				'output' => 1,

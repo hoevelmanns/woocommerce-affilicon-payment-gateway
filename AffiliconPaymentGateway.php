@@ -3,9 +3,12 @@
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
 require 'includes/helpers.php';
 require 'includes/traits/Address.php';
+require 'includes/models/Document.php';
+require 'includes/models/Order.php';
+require 'includes/models/Payment.php';
 require 'includes/services/OrderService.php';
 require 'includes/models/AbstractTransaction.php';
-require 'includes/models/PurchaseTransaction.php';
+require 'includes/models/SaleTransaction.php';
 require 'includes/models/RefundTransaction.php';
 require 'includes/models/ChargebackTransaction.php';
 require 'includes/services/ItnsService.php';

@@ -41,7 +41,7 @@ class FireLogger implements ILogger
 		$item = [
 			'name' => 'PHP',
 			'level' => $priority,
-			'order' => count($this->payload['logs']),
+			'Order' => count($this->payload['logs']),
 			'time' => str_pad(number_format((microtime(true) - Debugger::$time) * 1000, 1, '.', ' '), 8, '0', STR_PAD_LEFT) . ' ms',
 			'template' => '',
 			'message' => '',

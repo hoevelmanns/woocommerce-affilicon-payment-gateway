@@ -98,7 +98,9 @@ class ItnsService
         $body = json_decode($this->affiliconClient->decrypt($this->request->get_body()));
 
         if (empty($body->data)) {
+
             return null;
+
         }
 
         return $this->requestData = $body->data->transaction;
@@ -106,36 +108,19 @@ class ItnsService
 
     /**
      * @return boolean
+     * @return $transaction
      */
     public function processTransaction()
     {
-        switch ($this->getTransactionType()) {
+        $transactionModel = ucfirst($this->getTransactionType() . 'Transaction');
 
-            case 'sale': {
+        if (class_exists($transactionModel)) {
 
-                $this->transaction = new PurchaseTransaction();
+            $this->transaction = new $transactionModel($this->requestData);
 
-                break;
-            }
-
-            case 'refund': {
-                $this->transaction = new RefundTransaction();
-                break;
-            }
-
-            case 'chargeback': {
-                $this->transaction = new ChargebackTransaction();
-                break;
-            }
-
-            default: {
-                exit; // todo response message
-            }
+            $this->transaction->execute();
 
         }
 
-        $this->transaction
-            ->set($this->requestData)
-            ->execute();
     }
 }

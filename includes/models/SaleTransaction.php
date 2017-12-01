@@ -9,16 +9,22 @@
  */
 
 /**
- * Class PurchaseTransaction
+ * Class SaleTransaction
  */
-class PurchaseTransaction extends AbstractTransaction
+class SaleTransaction extends AbstractTransaction
 {
+
+    public function __construct($requestData)
+    {
+        parent::__construct($requestData);
+    }
+
     /**
      * Processing the ITNS transaction
      */
     public function execute()
     {
-        $this->orderLineItems = $this->wcOrder->get_items();
+        $this->orderLineItems = $this->order()->get_items();
 
         $this->updateLineItemStates();
 
@@ -38,9 +44,9 @@ class PurchaseTransaction extends AbstractTransaction
      */
     protected function paymentComplete()
     {
-        $this->wcOrder->add_order_note('Payment method: ' . $this->getPaymentMethod());
+        $this->order()->add_order_note('Payment method: ' . $this->payment()->getMethod());
 
-        $this->wcOrder->payment_complete();
+        $this->order()->payment_complete();
     }
 
 }
