@@ -40,7 +40,7 @@ return [
 
     ],
 
-    'address' => [
+    'Address' => [
         'basic' => [
             'email'     => 'basic_addr_email',
             'company'   => 'basic_addr_company',

@@ -2,7 +2,7 @@
 
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
 require 'includes/helpers.php';
-require 'includes/services/CheckoutService.php';
+require 'includes/services/OrderService.php';
 require 'includes/models/AbstractTransaction.php';
 require 'includes/models/PurchaseTransaction.php';
 require 'includes/models/RefundTransaction.php';
@@ -130,8 +130,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     {
         $this->order = wc_get_order($orderId);
 
-        /** @var CheckoutService $checkoutForm */
-        $checkout = new CheckoutService($this->order);
+        /** @var OrderService $checkoutForm */
+        $checkout = new OrderService($this->order);
 
         try {
 

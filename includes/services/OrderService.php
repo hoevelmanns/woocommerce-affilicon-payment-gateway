@@ -3,19 +3,21 @@
 /**
  * Class CheckoutService
  */
-class CheckoutService
+class OrderService
 {
     /** @var AffiliconPaymentGateway $gateway */
     public $gateway;
 
     /** @var string */
-    private $checkoutUrl;
+    protected $checkoutUrl;
 
     /** @var WC_Order $order */
-    private $order;
+    protected $order;
 
     /** @var \AffiliconApiClient\Models\Order */
     private $affiliconOrder;
+
+    use Address;
 
     /**
      * CheckoutService constructor.
@@ -24,62 +26,6 @@ class CheckoutService
     public function __construct(WC_Order $order)
     {
         $this->order = $order;
-    }
-
-    /**
-     * Maps the address for the given type
-     * @param string $type
-     * @return array
-     */
-    public function address($type)
-    {
-        $address = [
-            'company' => call_user_func([$this->order, "get_{$type}_company"]),
-            'firstname' => call_user_func([$this->order, "get_{$type}_first_name"]),
-            'lastname' => call_user_func([$this->order, "get_{$type}_last_name"]),
-            'address_1' => call_user_func([$this->order, "get_{$type}_address_1"]),
-            'address_2' => call_user_func([$this->order, "get_{$type}_address_2"]),
-            'city' => call_user_func([$this->order, "get_{$type}_city"]),
-            'postcode' => call_user_func([$this->order, "get_{$type}_postcode"]),
-            'country' => call_user_func([$this->order, "get_{$type}_country"])
-        ];
-
-        return $address;
-    }
-
-    /**
-     * Returns the mapped WooCommerce basic address
-     * @return array
-     */
-    public function wcBasicAddress()
-    {
-        /* at the moment the customer data does not differ from the billing data, therefore
-           we use the billing address */
-
-        return $this->wcBillingAddress();
-    }
-
-    /**
-     * Returns the mapped WooCommerce billing address
-     * @return array
-     */
-    public function wcBillingAddress()
-    {
-        $address =  $this->address('billing');
-
-        $address['email'] = $this->order->get_billing_email();
-        $address['phone'] = $this->order->get_billing_phone();
-
-        return $address;
-    }
-
-    /**
-     * Returns the mapped WooCommerce shipping address
-     * @return array
-     */
-    public function wcShippingAddress()
-    {
-        return $this->address('shipping');
     }
 
     /**
@@ -142,31 +88,6 @@ class CheckoutService
     public function getCheckoutUrl()
     {
         return $this->affiliconOrder->getCheckoutUrl();
-    }
-
-
-    /**
-     * Adds the woocommerce billing data to affilicon order
-     */
-    public function addBillingData()
-    {
-        $this->affiliconOrder->setBillingAddress($this->wcBillingAddress());
-    }
-
-    /**
-     * Adds the woocommerce shipping data to affilicon order
-     */
-    public function addShippingData()
-    {
-        $this->affiliconOrder->setShippingAddress($this->wcShippingAddress());
-    }
-
-    /**
-     * Adds the woocommerce basic address data to affilicon order
-     */
-    public function addBasicAddressData()
-    {
-        $this->affiliconOrder->setBasicAddress($this->wcBasicAddress());
     }
 
     /**
