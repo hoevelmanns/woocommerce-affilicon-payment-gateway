@@ -13,14 +13,14 @@ trait Address
     public function mapper($type)
     {
         $address = [
-            'company' => call_user_func([$this->order, "get_{$type}_company"]),
-            'firstname' => call_user_func([$this->order, "get_{$type}_first_name"]),
-            'lastname' => call_user_func([$this->order, "get_{$type}_last_name"]),
-            'address_1' => call_user_func([$this->order, "get_{$type}_address_1"]),
-            'address_2' => call_user_func([$this->order, "get_{$type}_address_2"]),
-            'city' => call_user_func([$this->order, "get_{$type}_city"]),
-            'postcode' => call_user_func([$this->order, "get_{$type}_postcode"]),
-            'country' => call_user_func([$this->order, "get_{$type}_country"])
+            'company' => call_user_func([$this->wcOrder, "get_{$type}_company"]),
+            'firstname' => call_user_func([$this->wcOrder, "get_{$type}_first_name"]),
+            'lastname' => call_user_func([$this->wcOrder, "get_{$type}_last_name"]),
+            'address_1' => call_user_func([$this->wcOrder, "get_{$type}_address_1"]),
+            'address_2' => call_user_func([$this->wcOrder, "get_{$type}_address_2"]),
+            'city' => call_user_func([$this->wcOrder, "get_{$type}_city"]),
+            'postcode' => call_user_func([$this->wcOrder, "get_{$type}_postcode"]),
+            'country' => call_user_func([$this->wcOrder, "get_{$type}_country"])
         ];
 
         return $address;
@@ -46,8 +46,8 @@ trait Address
     {
         $address =  $this->mapper('billing');
 
-        $address['email'] = $this->order->get_billing_email();
-        $address['phone'] = $this->order->get_billing_phone();
+        $address['email'] = $this->wcOrder->get_billing_email();
+        $address['phone'] = $this->wcOrder->get_billing_phone();
 
         return $address;
     }
@@ -66,7 +66,7 @@ trait Address
      */
     public function addBillingData()
     {
-        $this->affiliconOrder->setBillingAddress($this->wcBillingAddress());
+        $this->apiOrder->setBillingAddress($this->wcBillingAddress());
     }
 
     /**
@@ -74,7 +74,7 @@ trait Address
      */
     public function addShippingData()
     {
-        $this->affiliconOrder->setShippingAddress($this->wcShippingAddress());
+        $this->apiOrder->setShippingAddress($this->wcShippingAddress());
     }
 
     /**
@@ -82,6 +82,6 @@ trait Address
      */
     public function addBasicAddressData()
     {
-        $this->affiliconOrder->setBasicAddress($this->wcBasicAddress());
+        $this->apiOrder->setBasicAddress($this->wcBasicAddress());
     }
 }

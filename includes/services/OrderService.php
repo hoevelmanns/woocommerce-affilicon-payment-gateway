@@ -11,21 +11,21 @@ class OrderService
     /** @var string */
     protected $checkoutUrl;
 
-    /** @var WC_Order $order */
-    protected $order;
+    /** @var WC_Order */
+    protected $wcOrder;
 
     /** @var \AffiliconApiClient\Models\Order */
-    private $affiliconOrder;
+    private $apiOrder;
 
     use Address;
 
     /**
      * CheckoutService constructor.
-     * @param WC_Order $order
+     * @param WC_Order $wcOrder
      */
-    public function __construct(WC_Order $order)
+    public function __construct(WC_Order $wcOrder)
     {
-        $this->order = $order;
+        $this->wcOrder = $wcOrder;
     }
 
     /**
@@ -35,7 +35,7 @@ class OrderService
      */
     public function createOrder()
     {
-        $this->affiliconOrder = new \AffiliconApiClient\Models\Order();
+        $this->apiOrder = new \AffiliconApiClient\Models\Order();
 
         $this->addItnsCallback();
 
@@ -58,14 +58,14 @@ class OrderService
      */
     protected function addItnsCallback()
     {
-        $this->affiliconOrder
+        $this->apiOrder
             ->setCallbackUrl($this->getTransactionEndpoint())
             ->setCallbackItnsTypeId('15'); // todo define // Woocommerce Payment Gateway
 
-        $this->affiliconOrder->addCallbackData([
+        $this->apiOrder->addCallbackData([
             'data' => [
-                'wc_order_id' => $this->order->get_id(),
-                'wc_order_key' => $this->order->get_order_key(),
+                'wc_order_id' => $this->wcOrder->get_id(),
+                'wc_order_key' => $this->wcOrder->get_order_key(),
             ]
         ]);
     }
@@ -87,7 +87,7 @@ class OrderService
      */
     public function getCheckoutUrl()
     {
-        return $this->affiliconOrder->getCheckoutUrl();
+        return $this->apiOrder->getCheckoutUrl();
     }
 
     /**
@@ -95,15 +95,15 @@ class OrderService
      */
     public function generateCart()
     {
-        $cart = $this->affiliconOrder->cart();
+        $cart = $this->apiOrder->cart();
 
         // todo extend WC_ORDER -> set_affilicon_cart_id()
-        $this->order->delete_meta_data('affilicon_cart_id');
+        $this->wcOrder->delete_meta_data('affilicon_cart_id');
 
-        $this->order->add_meta_data('affilicon_cart_id', $cart->getCartId());
+        $this->wcOrder->add_meta_data('affilicon_cart_id', $cart->getCartId());
 
         /** @var WC_Order_Item $wcLineItem */
-        foreach ($this->order->get_items() as $wcLineItem) {
+        foreach ($this->wcOrder->get_items() as $wcLineItem) {
 
             $affiliconProductId = getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
@@ -115,7 +115,7 @@ class OrderService
 
         }
 
-        $this->order->save();
+        $this->wcOrder->save();
     }
 
     /**
