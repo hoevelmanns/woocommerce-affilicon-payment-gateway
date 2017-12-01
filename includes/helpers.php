@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param WC_Order_Item $item
+ * @param WC_Product $item
  * @param string $key
  * @return bool
  */

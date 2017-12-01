@@ -18,9 +18,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// todo remove
 define('AFFILICON_CHECKOUT_FORM_URL_LEGACY', 'https://secure.affilibank.de');
 define('AFFILICON_CHECKOUT_FORM_URL', 'https://secure.affilicon.net');
 define('AFFILICON_SERVICE_URL', 'https://service.affilicon.net/api');
+// todo remove
 define('AFFILICON_REST_BASE_URI', 'affilicon/v1');
 define('AFFILICON_REST_TRANSACTION_ROUTE', 'itns');
 

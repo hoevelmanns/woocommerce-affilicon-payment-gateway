@@ -303,16 +303,16 @@ class AbstractTransaction
     {
         $wcLineItems = $this->wcOrder->get_items();
 
-        /** @var WC_Order_Item $item */
+        /** @var WC_Order_Item_Product $item */
         foreach ($wcLineItems as $item) {
 
-            /** @var WC_Order_Item_Product $product */
-            $orderItemProduct = $item->get_product();
+            /** @var WC_Product $product */
+            $product = $item->get_product();
 
-            $itemProductId = getMetaDataValue($orderItemProduct, 'affilicon_product_id'); // todo const affilicon_product_id
+            $itemProductId = getMetaDataValue($product, 'affilicon_product_id'); // todo const affilicon_product_id
 
             if ($itemProductId === $this->getProductId()) {
-                $this->applyState($item);
+                $this->applyState($product);
             }
         }
     }
@@ -347,7 +347,7 @@ class AbstractTransaction
     }
 
     /**
-     * @param WC_Order_Item $item $item
+     * @param WC_Product $item $item
      */
     protected function applyState($item)
     {

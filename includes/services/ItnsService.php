@@ -1,12 +1,6 @@
 <?php
 
 /**
- * Created by Marcelle Hövelmanns, art solution
- * Date: 14.09.16
- * Time: 22:41
- */
-
-/**
  * Class ItnsService
  */
 class ItnsService
@@ -31,8 +25,10 @@ class ItnsService
 
     /** @var string */
     const REFUND = 'refund';
+
     /** @var string */
     const CHARGEBACK = 'chargeback';
+
     /** @var string */
     const SALE = 'sale';
 
@@ -54,10 +50,10 @@ class ItnsService
     public function registerRoute()
     {
         register_rest_route(AFFILICON_REST_BASE_URI, AFFILICON_REST_TRANSACTION_ROUTE, [
-            'methods' => 'POST',
-            'callback' => [$this,
 
-            function(WP_REST_Request $request) {
+            'methods' => 'POST',
+
+            'callback' => function(WP_REST_Request $request) {
 
                 $this->request = $request;
 
@@ -69,7 +65,7 @@ class ItnsService
 
                 // todo response message
 
-            }],
+            },
 
         ]);
     }

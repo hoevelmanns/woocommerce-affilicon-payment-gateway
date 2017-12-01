@@ -2,6 +2,7 @@
 
 require 'includes/affilicon-php-api-client/vendor/autoload.php';
 require 'includes/helpers.php';
+require 'includes/traits/Address.php';
 require 'includes/services/OrderService.php';
 require 'includes/models/AbstractTransaction.php';
 require 'includes/models/PurchaseTransaction.php';
