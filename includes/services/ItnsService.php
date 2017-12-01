@@ -81,13 +81,7 @@ class ItnsService
      */
     protected function getTransactionType()
     {
-        $type = $this->requestData->type;
-
-        if (!$type) {
-            return false;
-        }
-
-        return $type;
+        return $this->requestData->type;
     }
 
     /**
