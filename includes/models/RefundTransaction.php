@@ -9,13 +9,13 @@
  */
 
 /**
- * Class Transaction
+ * Class RefundTransaction
  */
 class RefundTransaction extends AbstractTransaction
 {
     public function execute()
     {
-        $this->updateLineItemState();
+        $this->updateLineItemStates();
         $this->updateOrderState();
     }
 

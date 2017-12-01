@@ -9,13 +9,13 @@
  */
 
 /**
- * Class Transaction
+ * Class ChargebackTransaction
  */
 class ChargebackTransaction extends AbstractTransaction
 {
     public function execute()
     {
-        $this->updateLineItemState();
+        $this->updateLineItemStates();
         $this->updateOrderState();
 
     }

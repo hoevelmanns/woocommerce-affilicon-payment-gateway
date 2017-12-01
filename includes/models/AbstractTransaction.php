@@ -1,10 +1,7 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: marcelle
- * Date: 27.11.17
- * Time: 14:10
+ * Class AbstractTransaction
  */
 class AbstractTransaction
 {
@@ -38,6 +35,11 @@ class AbstractTransaction
     private $wcOrderKey;
     /** @var  WC_Order */
     protected $wcOrder;
+
+    /** @var  array */
+    protected $orderLineItems;
+    /** @var  int */
+    protected $orderFulfilledLineItems;
 
     /**
      * @param $data
@@ -297,7 +299,7 @@ class AbstractTransaction
      * Sets the item state of the product from requested transaction
      *
      */
-    public function updateLineItemState()
+    public function updateLineItemStates()
     {
         $wcLineItems = $this->wcOrder->get_items();
 
@@ -313,6 +315,35 @@ class AbstractTransaction
                 $this->applyState($item);
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function lineItemsFulfilled()
+    {
+        $fulfilled = 0;
+
+        foreach ($this->orderLineItems as $orderLineItem) {
+
+            if ($this->lineItemFulfilled($orderLineItem)) {
+
+                $fulfilled++;
+
+            }
+
+        }
+
+        return $fulfilled === count($this->orderLineItems);
+    }
+
+    /**
+     * @param WC_Order_Item_Product
+     * @return bool
+     */
+    protected function lineItemFulfilled($lineItem)
+    {
+        return !empty(getMetaDataValue($lineItem, 'affilicon_' . $this->type));
     }
 
     /**

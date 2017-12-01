@@ -9,7 +9,7 @@
  */
 
 /**
- * Class Transaction
+ * Class PurchaseTransaction
  */
 class PurchaseTransaction extends AbstractTransaction
 {
@@ -18,8 +18,15 @@ class PurchaseTransaction extends AbstractTransaction
      */
     public function execute()
     {
-        $this->updateLineItemState();
-        $this->updatePaymentState();
+        $this->orderLineItems = $this->wcOrder->get_items();
+
+        $this->updateLineItemStates();
+
+        if ($this->lineItemsFulfilled()) {
+
+            $this->paymentComplete();
+
+        }
 
         // todo return result
     }
@@ -28,31 +35,11 @@ class PurchaseTransaction extends AbstractTransaction
      * Updates the payment state of the woocommerce current line item order and
      * sets order to complete if all line item from order are successfully processed.
      *
-     * @return void
-     */
-    protected function updatePaymentState()
-    {
-        $orderLineItems = $this->wcOrder->get_items();
-        $countPaidLineItems = 0;
-
-        foreach ($orderLineItems as $orderLineItem) {
-            $isPaid = (integer) getMetaDataValue($orderLineItem, 'affilicon_sale');
-            if ($isPaid) {
-                $countPaidLineItems++;
-            }
-        }
-
-        if ($countPaidLineItems === count($orderLineItems)) {
-            $this->paymentComplete();
-        }
-    }
-
-    /**
-     * Sets the woocommerce order state to complete
      */
     protected function paymentComplete()
     {
         $this->wcOrder->add_order_note('Payment method: ' . $this->getPaymentMethod());
+
         $this->wcOrder->payment_complete();
     }
 
