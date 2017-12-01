@@ -84,7 +84,7 @@ class ItnsService
         $type = $this->requestData->type;
 
         if (!$type) {
-            exit;
+            return false;
         }
 
         return $type;
@@ -137,6 +137,7 @@ class ItnsService
                 $this->transaction = new ChargebackTransaction();
                 break;
             }
+
             default: {
                 exit; // todo response message
             }

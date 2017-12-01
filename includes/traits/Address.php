@@ -1,10 +1,7 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: marcelle
- * Date: 01.12.17
- * Time: 09:41
+ * Trait Address
  */
 trait Address
 {
