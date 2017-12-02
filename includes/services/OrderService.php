@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class CheckoutService
+ * Class OrderService
  */
 class OrderService
 {

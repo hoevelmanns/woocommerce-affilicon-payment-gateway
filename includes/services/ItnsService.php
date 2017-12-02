@@ -95,7 +95,9 @@ class ItnsService
      */
     public function getTransactionData()
     {
-        $body = json_decode($this->affiliconClient->decrypt($this->request->get_body()));
+        $body = json_decode(
+            $this->affiliconClient->decrypt($this->request->get_body())
+        );
 
         if (empty($body->data)) {
 
@@ -112,6 +114,10 @@ class ItnsService
      */
     public function processTransaction()
     {
+        // todo remove!
+        $this->transaction = 'refund';
+        // remove!
+
         $transactionModel = ucfirst($this->getTransactionType() . 'Transaction');
 
         if (class_exists($transactionModel)) {

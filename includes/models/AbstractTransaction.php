@@ -3,7 +3,7 @@
 /**
  * Class AbstractTransaction
  */
-class AbstractTransaction
+abstract class AbstractTransaction
 {
     /** @var Document */
     protected $document;
@@ -55,7 +55,6 @@ class AbstractTransaction
         $orderId = $this->custom->data->wc_order_id;
 
         $this->order = new Order($orderId);
-
     }
 
     public function execute()
@@ -270,7 +269,7 @@ class AbstractTransaction
      */
     protected function lineItemFulfilled($lineItem)
     {
-        return !empty(getMetaDataValue($lineItem, 'affilicon_' . $this->type));
+        return !empty(getMetaDataValue($lineItem, 'affilicon_' . $this->getType()));
     }
 
     /**
