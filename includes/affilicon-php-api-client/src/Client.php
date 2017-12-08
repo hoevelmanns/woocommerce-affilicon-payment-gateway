@@ -222,12 +222,12 @@ class Client
     }
 
     /**
-     * @param bool $testMode
+     * @param bool $enabled
      * @return $this
      */
-    public function setTestPurchase($testMode)
+    public function setTestPurchase($enabled)
     {
-        $this->testPurchase = $testMode;
+        $this->testPurchase = $enabled;
         return $this;
     }
 

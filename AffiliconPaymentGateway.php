@@ -39,17 +39,6 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     /** @var  ItnsService */
     protected $itnsService;
 
-    const CHECKOUT_FORM_VERSIONS = [
-        '4' => 'Checkout form 4',
-        '3' => 'Modern (flat design / Responsive)',
-        '2' => 'Classic (conventional theme)' // todo i18n
-    ];
-
-    const AFFILICON_PRODUCT_TYPES = [
-        '1' => 'Standard product', // todo i18n
-        '2' => 'Subscription product'
-    ];
-
     /**
      * AffiliconPaymentGateway constructor.
      */
