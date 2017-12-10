@@ -94,18 +94,21 @@ class Cart extends AbstractModel
 
     /**
      * @param LineItem
-     * @param $quantity
+     * @param int $quantity
      * @return $this
      */
     public function addLineItem($itemId, $quantity)
     {
-        $item = (new LineItem())
-            ->setCartId($this->cartId)
-            ->setId($itemId)
-            ->setQuantity($quantity)
-            ->store();
+        if ($itemId && $quantity) {
 
-        $this->lineItems->addItem($item);
+            $item = (new LineItem())
+                ->setCartId($this->cartId)
+                ->setId($itemId)
+                ->setQuantity($quantity)
+                ->store();
+
+            $this->lineItems->addItem($item);
+        }
 
         return $this;
     }

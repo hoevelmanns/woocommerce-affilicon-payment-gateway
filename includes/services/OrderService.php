@@ -105,16 +105,9 @@ class OrderService
         /** @var WC_Order_Item_Product $wcLineItem */
         foreach ($this->wcOrder->get_items() as $wcLineItem) {
 
-            /** @var WC_Product $product */
-            $product = $wcLineItem->get_product();
+            $affiliconProductId = getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
-            $affiliconProductId = getMetaDataValue($product, 'affilicon_product_id');
-
-            if ($affiliconProductId) {
-
-                $cart->addLineItem($affiliconProductId, $wcLineItem->get_quantity());
-
-            }
+            $cart->addLineItem($affiliconProductId, $wcLineItem->get_quantity());
 
         }
 
