@@ -58,6 +58,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         load_plugin_textdomain( 'woocommerce-affilicon-payment-gateway', false, $plugin_rel_path );
 
         $this->init();
+
     }
 
     public function init()
