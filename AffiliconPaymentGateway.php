@@ -40,12 +40,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     /** @var  ItnsService */
     protected $itnsService;
 
-    /**
-     * AffiliconPaymentGateway constructor.
-     */
     public function __construct()
     {
-
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
 
         // generate custom product fields
@@ -58,9 +54,13 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         load_plugin_textdomain( 'woocommerce-affilicon-payment-gateway', false, $plugin_rel_path );
 
         $this->init();
-
     }
 
+    /**
+     * Initializes the plugin
+     *
+     * @return void
+     */
     public function init()
     {
         $this->id = 'affilicon_payment';
@@ -86,6 +86,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             // define additional product attributes for woocommerce product
             // todo get from config file
             $this->extraProductFields = [
+
                 'affilicon_product_id' => [
                     'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
                     'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
@@ -184,7 +185,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     }
 
     /**
-     * iterate defined custom fields and store input values
+     * Iterates defined custom fields and stores the input values
      * @param $post_id
      */
     public function save_custom_woocommerce_product_fields($post_id)
@@ -201,60 +202,58 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         }
     }
 
+    /**
+     * Initializes the form input fields of the plugin settings
+     * @return void
+     */
     public function init_form_fields()
     {
-        $this->form_fields = array(
-            'enabled' => array(
+        $this->form_fields = [
+
+            'enabled' => [
                 'title' => __('Use AffiliCon Payment', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
                 'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'yes'
-            ),
-
-            'sandbox' => array(
+            ],
+            'sandbox' => [
                 'title' => __('Use Sandbox', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
                 'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
-            ),
-
-            'test_purchase' => array(
+            ],
+            'test_purchase' => [
                 'title' => __('Show Test Purchase payment method in checkout form', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
                 'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
-            ),
-
-            // $orderFormTheme
-
-            'vendor_id' => array(
+            ],
+            'vendor_id' => [
                 'title' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'text',
                 'description' => __('Vendor ID', 'woocommerce-affilicon-payment-gateway'),
                 'default' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'desc_tip' => true,
                 'required' => 'required'
-            ),
-
-            'affilicon_itns_secret' => array(
+            ],
+            'affilicon_itns_secret' => [
                 'title' => __('Secret-Key', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'text',
                 'description' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'default' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'desc_tip' => true,
-            ),
-
-            'affilicon_form_configuration_id' => array(
+            ],
+            'affilicon_form_configuration_id' => [
                 'title' => __('Checkout Form Config ID', 'woocommerce-affilicon-payment-gateway_label-form-config-id'),
                 'type' => 'text',
                 'description' => __('', 'woocommerce-affilicon-payment-gateway_desc-form-config-id'),
                 'desc_tip' => true,
-            ),
-        );
+            ]
+        ];
     }
 
     /**
-     * Admin Panel Options
+     * Gets the template for the admin settings options
      *
      * @return void
      */
@@ -264,6 +263,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     }
 
     /**
+     * Gets the template for the payment fields
+     *
      * @return void
      */
     public function payment_fields()
