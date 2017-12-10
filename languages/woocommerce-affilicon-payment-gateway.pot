@@ -2,7 +2,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Other Payment Gateway\n"
+"Project-Id-Version: WooCommerce AffiliCon Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Fri Aug 28 2015 19:09:42 GMT+0200 (Central European "
 "Standard Time)\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: /class-woocommerce-other-payment-gateway.php:10 /class-woocommerce-other-
 #: payment-gateway.php:11 /class-woocommerce-other-payment-gateway.php:49
-msgid "Other Payment"
+msgid "AffiliCon Payment"
 msgstr ""
 
 #: /class-woocommerce-other-payment-gateway.php:40
@@ -61,4 +61,60 @@ msgstr ""
 
 #: /class-woocommerce-other-payment-gateway.php:96
 msgid "Awaiting payment"
+msgstr ""
+
+
+#: /AffiliconPaymentGateway.php
+msgid "AffiliCon Payment Settings"
+msgstr ""
+
+#: /AffiliconPaymentGateway.php
+msgid "Use AffiliCon Payment"
+msgstr ""
+
+
+#: /AffiliconPaymentGateway.php
+msgid "Use Sandbox"
+msgstr ""
+
+
+#: /AffiliconPaymentGateway.php
+msgid "Show Test Purchase payment method in checkout form"
+msgstr ""
+
+#: /AffiliconPaymentGateway.php
+msgid "Vendor ID"
+msgstr ""
+
+#: /AffiliconPaymentGateway.php
+msgid "Secret Key"
+msgstr ""
+
+#: /AffiliconPaymentGateway.php
+msgid "Checkout Form Config ID"
+msgstr ""
+
+#: /templates/admin_options.php
+msgid "Instructions for the plugin"
+msgstr ""
+
+#: /templates/admin_options.php
+msgid "url-plugin-instructions"
+msgstr ""
+
+#: /templates/admin_options.php
+msgid "Enabled"
+msgstr ""
+
+#: /templates/payment_fields.php
+msgid "url-informations-about-affilicon"
+msgstr ""
+
+
+#: /templates/payment_fields.php
+msgid "Further information about AffiliCon GmbH"
+msgstr ""
+
+#: /templates/payment_fields.php
+msgid "Secure and comfortable payment with AffiliCon."
 msgstr ""

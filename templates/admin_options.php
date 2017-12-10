@@ -32,11 +32,12 @@
                     <div class="inside">
                         <img style="margin:20px 0" height="30px" width="auto" src="<?= plugin_dir_url( __FILE__ ) ?>../assets/img/affilicon_logo.png" alt="">
                         <div class="support-widget">
-                            <a target="_blank" href="https://affilicon.atlassian.net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin">Instructions for the plugin</a>
+                            <a target="_blank" href="<?php esc_html_e('url-plugin-instructions', 'woocommerce-affilicon-payment-gateway') ?>">
+                                <?php esc_html_e('Instructions for the plugin', 'woocommerce-affilicon-payment-gateway') ?>
+                            </a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

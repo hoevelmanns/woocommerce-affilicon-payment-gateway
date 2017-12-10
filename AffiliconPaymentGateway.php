@@ -45,7 +45,6 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
      */
     public function __construct()
     {
-        $this->init();
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
 
@@ -55,6 +54,10 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         // save custom field inputs
         add_action('woocommerce_process_product_meta', array($this, 'save_custom_woocommerce_product_fields'));
 
+        $plugin_rel_path = basename( dirname( __FILE__ ) ) . '/languages';
+        load_plugin_textdomain( 'woocommerce-affilicon-payment-gateway', false, $plugin_rel_path );
+
+        $this->init();
     }
 
     public function init()
