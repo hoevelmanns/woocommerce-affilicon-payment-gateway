@@ -32,6 +32,7 @@ require 'includes/services/ItnsService.php';
  * @property string $itns_url
  * @property string $itns_secret_key
  * @property string $itns_prefix
+ * @property array $extraProductFields
  */
 
 class AffiliconPaymentGateway extends WC_Payment_Gateway
@@ -80,17 +81,15 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
             // define additional product attributes for woocommerce product
             // todo get from config file
-            if (!defined('extraProductFields')) {
-                define('extraProductFields', [
-                    'affilicon_product_id' => [
-                        'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
-                        'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
-                        'type' => 'text',
-                        'class' => 'short',
-                        'wrapper_class' => 'form-field'
-                    ]
-                ]);
-            }
+            $this->extraProductFields = [
+                'affilicon_product_id' => [
+                    'placeholder' => __('Please enter your affilicon product id', 'woocommerce-affilicon-payment-gateway'),
+                    'label' => __('AffiliCon Product-ID', 'woocommerce-affilicon-payment-gateway'),
+                    'type' => 'text',
+                    'class' => 'short',
+                    'wrapper_class' => 'form-field'
+                ]
+            ];
 
             $this->init_form_fields();
 
@@ -146,34 +145,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
     }
 
-    public function payment_fields()
-    {
-        ?>
-        <style>
-            div.payment_method_affilicon_payment fieldset {
-                display: block !important;
-                border: 0 !important;
-                margin: 0 !important;
-            }
-        </style>
-        <fieldset>
-            <p class="form-row form-row-wide">
-
-                <img src="<?= plugin_dir_url( __FILE__ ) ?>/assets/img/affilicon_logo.png" alt="">
-            <h3>Sichere und bequeme Bezahlung mit affilicon.</h3>
-            <p><a href="https://www.affilicon.net/informationen_zu_affilicon" target="_blank">Weitere Informationen zur AffiliCon GmbH</a></p>
-            </p>
-            <div class="clear"></div>
-        </fieldset>
-        <?php
-    }
-
     /**
      * @return void
      */
     public function custom_woocommerce_product_fields()
     {
-        foreach (extraProductFields as $key => $field) {
+        foreach ($this->extraProductFields as $key => $field) {
             $this->add_woocommerce_field(array_merge($field, [
                 'id' => $key,
                 'name' => $key,
@@ -208,7 +185,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
      */
     public function save_custom_woocommerce_product_fields($post_id)
     {
-        $productKeys = array_keys(extraProductFields);
+        $productKeys = array_keys($this->extraProductFields);
 
         foreach ($productKeys as $key) {
 
@@ -274,80 +251,20 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
     /**
      * Admin Panel Options
-     * - Options for bits like 'title' and availability on a country-by-country basis
      *
-     * @since 1.0.0
      * @return void
      */
     public function admin_options()
     {
-        ?>
-        <h3>
-            <?php _e('AffiliCon Payment Settings', 'woocommerce-affilicon-payment-gateway'); ?>
-        </h3>
-
-        <div id="poststuff">
-            <div id="post-body" class="metabox-holder columns-2">
-                <div id="post-body-content">
-                    <table class="form-table">
-                        <?php $this->generate_settings_html(); ?>
-                    </table><!--/.form-table-->
-                </div>
-                <div id="postbox-container-1" class="postbox-container">
-                    <div id="side-sortables" class="meta-box-sortables ui-sortable">
-
-                        <!--
-                        <div class="postbox">
-                            <div class="handlediv" title="Click to toggle"><br></div>
-                            <h3 class="hndle"><span><i class="dashicons dashicons-admin-tools"></i>&nbsp;&nbsp;ITNS-Einstellungen</span>
-                            </h3>
-                            <div class="inside">
-                                <h4>Woocommerce Anbindung einrichten</h4>
-                                Affilicon MY-Bereich -> Produkte -> Produkt bearbeiten -> Anbindungen -> "Neue Anbindung
-                                hinzufügen":<br><br>
-
-                                <div class="support-widget" style="display: inline-block;">
-                                    <p>
-                                        <strong>ITNS-URL:</strong><br>
-                                        <?php echo get_site_url() ?>/affilicon/payment
-                                    </p>
-                                    <p>
-                                        <strong>Secret Key:</strong><br>
-                                        <?php echo $this->get_option('affilicon_itns_secret') ?>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                        <div class="postbox">
-                            <div class="handlediv" title="Click to toggle"><br></div>
-                            <h3 class="hndle"><span><i class="dashicons dashicons-editor-help"></i>&nbsp;&nbsp;Plugin Support</span>
-                            </h3>
-                            <div class="inside">
-                                <img style="margin:20px 0" height="30px" width="auto" src="<?= plugin_dir_url( __FILE__ ) ?>/assets/img/affilicon_logo.png" alt="">
-                                <div class="support-widget">
-                                    <a target="_blank" href="https://affilicon.atlassian.net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin">Instructions for the plugin</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <style type="text/css">
-            .wpruby_button {
-                background-color: #4CAF50 !important;
-                border-color: #4CAF50 !important;
-                color: #ffffff !important;
-                width: 100%;
-                padding: 5px !important;
-                text-align: center;
-                height: 35px !important;
-                font-size: 12pt !important;
-            }
-        </style>
-        <?php
+       include_once 'templates/admin_options.php';
     }
+
+    /**
+     * @return void
+     */
+    public function payment_fields()
+    {
+        include_once 'templates/payment_fields.php';
+    }
+
 }

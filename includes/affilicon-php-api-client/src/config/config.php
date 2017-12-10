@@ -40,7 +40,7 @@ return [
 
     ],
 
-    'Address' => [
+    'address' => [
         'basic' => [
             'email'     => 'basic_addr_email',
             'company'   => 'basic_addr_company',
@@ -55,6 +55,7 @@ return [
             //'fax'     => 'basic_addr_lastname',
             //'mobile'  => 'basic_addr_lastname',
         ],
+
         'billing' => [
             'company'   => 'billing_addr_company',
             'firstname' => 'billing_addr_firstname',
@@ -67,6 +68,7 @@ return [
             'email'     => 'billing_addr_email',
             'phone'     => 'billing_addr_phone',
         ],
+
         'shipping' => [
             'company'   => 'shipping_addr_company',
             'firstname' => 'shipping_addr_firstname',

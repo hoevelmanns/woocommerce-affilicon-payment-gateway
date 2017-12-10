@@ -115,7 +115,7 @@ class ItnsService
     public function processTransaction()
     {
         // todo remove!
-        $this->transaction = 'refund';
+        //$this->transaction = 'refund';
         // remove!
 
         $transactionModel = ucfirst($this->getTransactionType() . 'Transaction');
