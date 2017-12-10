@@ -27,6 +27,7 @@ if(in_array('woocommerce/woocommerce.php', $active_plugins)){
   }
 
   add_action('plugins_loaded', 'init_affilicon_payment_gateway');
+
   function init_affilicon_payment_gateway(){
 
     if (class_exists('WC_Payment_Gateway')) {

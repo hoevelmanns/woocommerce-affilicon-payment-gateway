@@ -42,6 +42,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
     public function __construct()
     {
+        $this->init();
+
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
 
         // generate custom product fields
@@ -51,9 +53,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         add_action('woocommerce_process_product_meta', array($this, 'save_custom_woocommerce_product_fields'));
 
         $plugin_rel_path = basename( dirname( __FILE__ ) ) . '/languages';
-        load_plugin_textdomain( 'woocommerce-affilicon-payment-gateway', false, $plugin_rel_path );
 
-        $this->init();
+        load_plugin_textdomain( 'woocommerce-affilicon-payment-gateway', false, $plugin_rel_path );
     }
 
     /**
@@ -69,8 +70,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->has_fields = true;
         $this->enabled = $this->get_option('enabled');
         $this->title =  __('AffiliCon Payment', 'woocommerce-affilicon-payment-method-name');
-        $this->description = ""; //todo customer message necessary? $this->get_option('description');
         $this->sandbox = $this->get_option('sandbox') !== 'no';
+        $this->description = ""; //todo customer message necessary? $this->get_option('description');
         $this->testPurchase = $this->get_option('test_purchase') !== 'no';
         $this->receiver_email = $this->get_option('receiver_email');
         $this->vendor_id = $this->get_option('vendor_id');
@@ -145,7 +146,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
         return array(
             'result' => 'success',
-            'redirect' => $checkout->getCheckoutUrl()//@todo testmodus berücksichtigen
+            'redirect' => $checkout->getCheckoutUrl()
         );
 
     }
