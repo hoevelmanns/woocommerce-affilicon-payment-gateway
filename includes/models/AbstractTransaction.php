@@ -32,6 +32,9 @@ abstract class AbstractTransaction
     /** @var array */
     protected $orderLineItems;
 
+    const PRODUCT_ID_META_NAME = 'affilicon_product_id';
+    const STATE_PREFIX = 'affilicon';
+
     /**
      * AbstractTransaction constructor.
      * @param object $requestData
@@ -235,7 +238,7 @@ abstract class AbstractTransaction
             /** @var WC_Product $product */
             $product = $item->get_product();
 
-            $itemProductId = getMetaDataValue($product, 'affilicon_product_id'); // todo const affilicon_product_id
+            $itemProductId = getMetaDataValue($product, self::PRODUCT_ID_META_NAME);
 
             if ($itemProductId === $this->getProductId()) {
                 $this->applyState($product);
@@ -269,7 +272,7 @@ abstract class AbstractTransaction
      */
     protected function lineItemFulfilled($lineItem)
     {
-        return !empty(getMetaDataValue($lineItem, 'affilicon_' . $this->getType()));
+        return !empty(getMetaDataValue($lineItem, self::STATE_PREFIX . '_' . $this->getType()));
     }
 
     /**
@@ -279,7 +282,7 @@ abstract class AbstractTransaction
     {
         $transactionType = $this->getType();
 
-        $metaKey = "affilicon_$transactionType";
+        $metaKey = self::STATE_PREFIX . '_' . $transactionType;
 
         if (empty(getMetaDataValue($item, $metaKey))) {
 
