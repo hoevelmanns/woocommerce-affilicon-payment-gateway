@@ -1,0 +1,117 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce AffiliCon Payment Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-10 13:01+0000\n"
+"POT-Revision-Date: Fri Aug 28 2015 19:09:58 GMT+0200 (Central European "
+"Standard Time)\n"
+"PO-Revision-Date: 2017-12-10 13:01+0000\n"
+"Last-Translator: hoevelmanns <info@artsolution.de>\n"
+"Language-Team: English (United States)\n"
+"Language: en-US\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: class-woocommerce-other-payment-gateway.php:10 /class-woocommerce-other-
+#: payment-gateway.php:11 /class-woocommerce-other-payment-gateway.php:49
+msgid "AffiliCon Payment"
+msgstr ""
+
+#: class-woocommerce-other-payment-gateway.php:96
+msgid "Awaiting payment"
+msgstr ""
+
+#: AffiliconPaymentGateway.php
+msgid "AffiliCon Payment Settings"
+msgstr ""
+
+#: templates/admin_options.php
+msgid "Enabled"
+msgstr "Enabled"
+
+#: class-woocommerce-other-payment-gateway.php:40
+msgid "Enable/Disable"
+msgstr "Enable/Disable"
+
+#: class-woocommerce-other-payment-gateway.php:42
+msgid "Enable affilicon Payment"
+msgstr "Enable Affilicon Payment"
+
+#: class-woocommerce-other-payment-gateway.php:46
+msgid "Method Title"
+msgstr "Method Title"
+
+#: class-woocommerce-other-payment-gateway.php:48
+msgid "This controls the title"
+msgstr "This controls the title"
+
+#: class-woocommerce-other-payment-gateway.php:53
+msgid "Customer Message"
+msgstr "Customer Message"
+
+#: class-woocommerce-other-payment-gateway.php:56
+msgid ""
+"The message which you want it to appear to the customer in the checkout page."
+msgstr ""
+"The message which you want it to appear to the customer in the checkout page."
+
+#: class-woocommerce-other-payment-gateway.php:77
+msgid "Other Payment Settings"
+msgstr "Other Payment Settings"
+
+#: AffiliconPaymentGateway.php
+msgid "Use AffiliCon Payment"
+msgstr "Use AffiliCon Payment"
+
+#: AffiliconPaymentGateway.php
+msgid "Use Sandbox"
+msgstr "Use Sandbox"
+
+#: AffiliconPaymentGateway.php
+msgid "Show Test Purchase payment method in checkout form"
+msgstr "Show Test Purchase payment method in checkout form"
+
+#: AffiliconPaymentGateway.php
+msgid "Vendor ID"
+msgstr "Vendor ID"
+
+#: AffiliconPaymentGateway.php
+msgid "Secret Key"
+msgstr "Secret Key"
+
+#: AffiliconPaymentGateway.php
+msgid "Checkout Form Config ID"
+msgstr "Checkout form config id"
+
+#: templates/admin_options.php
+msgid "Instructions for the plugin"
+msgstr "Instructions for the plugin"
+
+#: templates/admin_options.php
+msgid "url-plugin-instructions"
+msgstr ""
+"https://affilicon.atlassian."
+"net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin"
+
+#: templates/payment_fields.php
+msgid "url-informations-about-affilicon"
+msgstr "https://www.affilicon.net/affilicon-service_en/"
+
+#: templates/payment_fields.php
+msgid "Further information about AffiliCon GmbH"
+msgstr "Further information about AffiliCon GmbH"
+
+#: templates/payment_fields.php
+msgid "Secure and comfortable payment with AffiliCon."
+msgstr "Secure and comfortable payment with AffiliCon."
