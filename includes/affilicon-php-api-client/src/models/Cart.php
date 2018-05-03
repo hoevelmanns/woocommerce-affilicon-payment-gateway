@@ -93,9 +93,10 @@ class Cart extends AbstractModel
     }
 
     /**
-     * @param LineItem
-     * @param int $quantity
+     * @param $itemId
+     * @param $quantity
      * @return $this
+     * @throws \AffiliconApiClient\Exceptions\KeyHasUseException
      */
     public function addLineItem($itemId, $quantity)
     {

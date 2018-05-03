@@ -30,8 +30,7 @@ class OrderService
 
     /**
      * Creates a new cart and passes the Woocommerce cart items.
-     *
-     * @return void
+     * @throws \AffiliconApiClient\Exceptions\ConfigurationInvalid
      */
     public function createOrder()
     {
@@ -83,7 +82,9 @@ class OrderService
 
     /**
      * Returns the generated checkout url
+     *
      * @return string
+     * @throws \AffiliconApiClient\Exceptions\ConfigurationInvalid
      */
     public function getCheckoutUrl()
     {
@@ -107,6 +108,7 @@ class OrderService
 
             $affiliconProductId = getMetaDataValue($wcLineItem->get_product(), 'affilicon_product_id');
 
+            // todo handling exception
             $cart->addLineItem($affiliconProductId, $wcLineItem->get_quantity());
 
         }

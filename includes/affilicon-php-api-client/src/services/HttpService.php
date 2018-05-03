@@ -72,10 +72,15 @@ class HttpService
     {
         $url = $this->endpoint . $route;
 
-        $this->response = $this->httpClient->request($method, $url, [
+        $options = [
             'headers' => $this->getHeaders(),
-            'json' => $body
-        ]);
+        ];
+
+        if ($body) {
+            $options['json'] = $body;
+        }
+
+        $this->response = $this->httpClient->request($method, $url, $options);
 
         return $this;
     }

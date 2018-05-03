@@ -130,7 +130,8 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
     /**
      * @param int $orderId
-     * @return array|WP_Error
+     * @return array
+     * @throws \AffiliconApiClient\Exceptions\ConfigurationInvalid
      */
     public function process_payment($orderId)
     {

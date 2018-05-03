@@ -219,11 +219,14 @@ class Order extends AbstractModel
      * Gets the complete checkout url with prefill data
      *
      * @return string
+     * @throws ConfigurationInvalid
      */
     public function getCheckoutUrl()
     {
         if (empty($this->checkoutUrl)) {
+
             $this->generateCheckoutUrl();
+
         }
 
         return $this->checkoutUrl;
