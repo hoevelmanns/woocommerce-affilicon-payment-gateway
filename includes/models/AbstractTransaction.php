@@ -241,7 +241,7 @@ abstract class AbstractTransaction
             $itemProductId = getMetaDataValue($product, self::PRODUCT_ID_META_NAME);
 
             if ($itemProductId === $this->getProductId()) {
-                $this->applyState($product);
+                $this->applyState($item);
             }
         }
     }
@@ -276,7 +276,7 @@ abstract class AbstractTransaction
     }
 
     /**
-     * @param WC_Product $item $item
+     * @param WC_Order_Item_Product $item
      */
     protected function applyState($item)
     {
