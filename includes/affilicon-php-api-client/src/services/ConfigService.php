@@ -30,7 +30,7 @@ class ConfigService
 
         } catch (\Exception $e) {
 
-            throw new ConfigurationInvalid('configuration is missing or invalid');
+            return new ConfigurationInvalid('configuration is missing or invalid');
 
         }
 

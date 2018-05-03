@@ -63,7 +63,10 @@ class Client
 
     /**
      * Initializes the Client
+     *
      * @return $this
+     * @throws ConfigurationInvalid
+     * @throws Exceptions\AuthenticationFailed
      */
     public function init()
     {

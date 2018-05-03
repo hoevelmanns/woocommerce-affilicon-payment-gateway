@@ -107,15 +107,23 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         /** @var \AffiliconApiClient\Client $affiliconClient */
         $affiliconClient = \AffiliconApiClient\Client::getInstance();
 
-        $affiliconClient
-            ->setEnv($this->sandbox ? 'staging' : 'production')
-            ->setTestPurchase($this->testPurchase)
-            ->setSecretKey($this->itns_secret_key)
-            ->setCountryId('de')// todo get from woocommerce
-            ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
-            ->setFormConfigId($this->formConfigId)
-            ->setClientId($this->vendor_id)
-            ->init();
+        try {
+
+            $affiliconClient
+                ->setEnv($this->sandbox ? 'staging' : 'production')
+                ->setTestPurchase($this->testPurchase)
+                ->setSecretKey($this->itns_secret_key)
+                ->setCountryId('de')// todo get from woocommerce
+                ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
+                ->setFormConfigId($this->formConfigId)
+                ->setClientId($this->vendor_id)
+                ->init();
+
+        } catch (Exception $e) {
+
+            // todo add exception class
+
+        }
 
         $this->itnsService = new ItnsService($affiliconClient);
     }
