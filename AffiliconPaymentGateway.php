@@ -282,4 +282,9 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         include_once 'templates/payment_fields.php';
     }
 
+    public function mm_jobs_plugins_loaded() {
+        load_plugin_textdomain( 'mm-jobs', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    }
+
+
 }

@@ -118,3 +118,8 @@ msgstr ""
 #: /templates/payment_fields.php
 msgid "Secure and comfortable payment with AffiliCon."
 msgstr ""
+
+
+#: /templates/payment_fields.php
+msgid "You have a discount code? Add it in the next step."
+msgstr ""
