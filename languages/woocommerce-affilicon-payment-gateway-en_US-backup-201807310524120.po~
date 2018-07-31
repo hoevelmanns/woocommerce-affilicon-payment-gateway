@@ -1,0 +1,119 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce AffiliCon Payment Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-31 05:20+0000\n"
+"POT-Revision-Date: Fri Aug 28 2015 19:09:58 GMT+0200 (Central European "
+"Standard Time)\n"
+"PO-Revision-Date: 2018-07-31 05:23+0000\n"
+"Last-Translator: hoevelmanns <info@artsolution.de>\n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: AffiliconPaymentGateway.php:68 AffiliconPaymentGateway.php:69
+msgid "AffiliCon Payment"
+msgstr ""
+
+#: AffiliconPaymentGateway.php:92
+msgid "Please enter your affilicon product id"
+msgstr ""
+
+#: AffiliconPaymentGateway.php:93
+msgid "AffiliCon Product-ID"
+msgstr ""
+
+#: AffiliconPaymentGateway.php:228
+msgid "Use AffiliCon Payment"
+msgstr "Use AffiliCon Payment"
+
+#: AffiliconPaymentGateway.php:230 AffiliconPaymentGateway.php:242
+msgid "Enabled"
+msgstr "Enabled"
+
+#: AffiliconPaymentGateway.php:240
+msgid "Show Test Purchase payment method in checkout form"
+msgstr "Show Test Purchase payment method in checkout form"
+
+#: AffiliconPaymentGateway.php:246 AffiliconPaymentGateway.php:248
+msgid "Vendor ID"
+msgstr "Vendor ID"
+
+#: AffiliconPaymentGateway.php:254 AffiliconPaymentGateway.php:256
+msgid "Checkout Version"
+msgstr "Checkout form-Version"
+
+#: AffiliconPaymentGateway.php:267
+msgid "Secret-Key"
+msgstr ""
+
+#: templates/admin_options.php:15
+msgid "AffiliCon Payment Settings"
+msgstr ""
+
+#: templates/admin_options.php:35
+msgid "url-plugin-instructions"
+msgstr ""
+"https://affilicon.atlassian."
+"net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin"
+
+#: templates/admin_options.php:36
+msgid "Instructions for the plugin"
+msgstr "Instructions for the plugin"
+
+#: templates/payment_fields.php:105
+msgid "Secure and comfortable payment with AffiliCon."
+msgstr "Pay <span class=\"text-color-affilicon\">securely</span> online."
+
+#: templates/payment_fields.php:113
+msgid "We accept the following payment methods:"
+msgstr ""
+
+#: templates/payment_fields.php:128
+msgid "You have a discount code? Add it in the next step."
+msgstr "You have a discount code? Add it in the next step."
+
+#: templates/payment_fields.php:135
+msgid "url-informations-about-affilicon"
+msgstr "https://www.affilicon.net/affilicon-service_en/"
+
+#: templates/payment_fields.php:136
+msgid "Further information about AffiliCon GmbH"
+msgstr "Further information about AffiliCon GmbH"
+
+#. Name of the plugin
+#. Description of the plugin
+msgid "WooCommerce Affilicon Payment Gateway"
+msgstr ""
+
+#. URI of the plugin
+msgid "affilicon.net"
+msgstr ""
+
+#. Author of the plugin
+msgid "Marcelle Hövelmanns, AffiliCon GmbH"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.affilicon.net"
+msgstr ""
+
+#. Checkout Version Option Single-Product
+msgid "Checkout form 3 (Single-Product-Version)"
+msgstr "Checkout form 3 (Single-Product-Version)"
+
+#. Checkout Version Option Cart Version
+msgid "Checkout form 3 (Cart-Version)"
+msgstr "Checkout form 3 (Cart-Version)"
