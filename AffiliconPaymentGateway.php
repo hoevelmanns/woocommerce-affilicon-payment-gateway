@@ -198,8 +198,6 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
         }
 
-        echo $this->checkout->getCheckoutUrlLegacy();
-
         return array(
             'result' => 'success',
             'redirect' => $this->checkout->getCheckoutUrlLegacy()
