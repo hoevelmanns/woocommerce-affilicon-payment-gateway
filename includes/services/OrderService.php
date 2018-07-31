@@ -116,8 +116,11 @@ class OrderService
         $product = reset($this->wcOrder->get_items())->get_product();
 
         $affiliconProductId = getMetaDataValue($product, 'affilicon_product_id');
+        $isSubscriptionProduct = getMetaDataValue($product, 'affilicon_product_is_subscription');
 
-        return $env->secure_url . "/{$client->getClientId()}/index?product=$affiliconProductId&language={$client->getUserLanguage()}&prefill=$encryptedPrefillData";
+        $urlPath = $isSubscriptionProduct ? 'abo' : 'index';
+
+        return $env->secure_url . "/{$client->getClientId()}/$urlPath?product=$affiliconProductId&language={$client->getUserLanguage()}&prefill=$encryptedPrefillData";
 
     }
 

@@ -97,6 +97,11 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                     'type' => 'text',
                     'class' => 'short',
                     'wrapper_class' => 'form-field'
+                ],
+                'affilicon_product_is_subscription' => [
+                    'placeholder' => __('Is this a subscription product?', 'woocommerce-affilicon-payment-gateway'),
+                    'label' => __('AffiliCon Subscription product?', 'woocommerce-affilicon-payment-gateway'),
+                    'type' => 'checkbox',
                 ]
             ];
 
@@ -234,6 +239,10 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             }
             case 'textarea': {
                 woocommerce_wp_textarea_input($field);
+                break;
+            }
+            case 'checkbox': {
+                woocommerce_wp_checkbox($field);
                 break;
             }
         }
