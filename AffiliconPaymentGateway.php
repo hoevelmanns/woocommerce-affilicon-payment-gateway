@@ -26,6 +26,7 @@ require 'includes/services/ItnsService.php';
  * @property WC_Order $order
  * @property boolean $sandbox
  * @property boolean $testPurchase
+ * @property boolean $checkoutVersion
  * @property integer $formConfigId
  * @property string $receiver_email
  * @property string $vendor_id
@@ -37,8 +38,10 @@ require 'includes/services/ItnsService.php';
 
 class AffiliconPaymentGateway extends WC_Payment_Gateway
 {
-    /** @var  ItnsService */
+    /** @var ItnsService */
     protected $itnsService;
+    /** @var OrderService */
+    protected $checkout;
 
     public function __construct()
     {
@@ -73,13 +76,13 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->sandbox = $this->get_option('sandbox') !== 'no';
         $this->description = ""; //todo customer message necessary? $this->get_option('description');
         $this->testPurchase = $this->get_option('test_purchase') !== 'no';
+        $this->checkoutVersion = $this->get_option('checkout_version');
         $this->receiver_email = $this->get_option('receiver_email');
         $this->vendor_id = $this->get_option('vendor_id');
         $this->formConfigId = $this->get_option('affilicon_form_configuration_id');
         $this->itns_url = $this->get_option('affilicon_itns_url');
         $this->itns_secret_key = $this->get_option('affilicon_itns_secret');
         $this->itns_prefix = $this->get_option('affilicon_itns_prefix'); // optional
-        $this->receiver_email = "marcelle.hoevelmanns@gmail.com"; // todo option
         $this->has_fields = true;
 
         if (is_admin()) {
@@ -137,12 +140,25 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
     {
         $this->order = wc_get_order($orderId);
 
-        /** @var OrderService $checkoutForm */
-        $checkout = new OrderService($this->order);
+        $this->checkout = new OrderService($this->order);
+
+        switch ($this->checkoutVersion) {
+            case "3": {
+                return $this->process_payment_legacy();
+            }
+            case "3.1": {
+                return $this->process_payment_microservice();
+            }
+        }
+
+    }
+
+    public function process_payment_microservice()
+    {
 
         try {
 
-            $checkout->createOrder();
+            $this->checkout->createOrderWithCart();
 
         } catch (Exception $e) {
 
@@ -150,12 +166,35 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'result' => 'failed',
                 'message' => $e->getMessage()
             ];
-            
+
         }
 
         return array(
             'result' => 'success',
-            'redirect' => $checkout->getCheckoutUrl()
+            'redirect' => $this->checkout->getCheckoutUrl()
+        );
+    }
+
+    public function process_payment_legacy()
+    {
+        try {
+
+            $this->checkout->createOrder();
+
+        } catch (Exception $e) {
+
+            return [
+                'result' => 'failed',
+                'message' => $e->getMessage()
+            ];
+
+        }
+
+        echo $this->checkout->getCheckoutUrlLegacy();
+
+        return array(
+            'result' => 'success',
+            'redirect' => $this->checkout->getCheckoutUrlLegacy()
         );
 
     }
@@ -226,12 +265,12 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'yes'
             ],
-            'sandbox' => [
+            /*'sandbox' => [
                 'title' => __('Use Sandbox', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
                 'label' => __('Enabled', 'woocommerce-affilicon-payment-gateway'),
                 'default' => 'no'
-            ],
+            ],*/
             'test_purchase' => [
                 'title' => __('Show Test Purchase payment method in checkout form', 'woocommerce-affilicon-payment-gateway'),
                 'type' => 'checkbox',
@@ -245,6 +284,19 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
                 'default' => __('', 'woocommerce-affilicon-payment-gateway'),
                 'desc_tip' => true,
                 'required' => 'required'
+            ],
+            'checkout_version' => [
+                'title' => __('Checkout Version', 'woocommerce-affilicon-payment-gateway'),
+                'type' => 'select',
+                'description' => __('Checkout Version', 'woocommerce-affilicon-payment-gateway'),
+                'default' => __('', 'woocommerce-affilicon-payment-gateway'),
+                'desc_tip' => true,
+                'required' => 'required',
+                'options' => [
+                    '3' => __('Checkout form 3 (Single-Product-Version)'),
+                    '3.1' => __('Checkout form 3 (Cart-Version)'),
+                    //'4' => 'Checkout form 4'
+                ]
             ],
             'affilicon_itns_secret' => [
                 'title' => __('Secret-Key', 'woocommerce-affilicon-payment-gateway'),

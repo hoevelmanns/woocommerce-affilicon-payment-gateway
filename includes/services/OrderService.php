@@ -32,6 +32,18 @@ class OrderService
      * Creates a new cart and passes the Woocommerce cart items.
      * @throws \AffiliconApiClient\Exceptions\ConfigurationInvalid
      */
+    public function createOrderWithCart()
+    {
+        $this->createOrder();
+
+        $this->generateCart();
+
+    }
+
+    /**
+     * Creates a new order for the legacy checkout form
+     * @throws \AffiliconApiClient\Exceptions\ConfigurationInvalid
+     */
     public function createOrder()
     {
         $this->apiOrder = new \AffiliconApiClient\Models\Order();
@@ -43,8 +55,6 @@ class OrderService
         $this->addShippingData();
 
         $this->addBasicAddressData();
-
-        $this->generateCart();
 
         $this->checkoutUrl = $this->getCheckoutUrl();
     }
@@ -89,6 +99,30 @@ class OrderService
     public function getCheckoutUrl()
     {
         return $this->apiOrder->getCheckoutUrl();
+    }
+
+    public function getCheckoutUrlLegacy()
+    {
+        $checkoutUrl = $this->apiOrder->getCheckoutUrl();
+
+        $params = explode('/', $checkoutUrl);
+
+        $indexCartId = array_search('cartId', $params);
+        $indexToken = array_search('token', $params);
+
+        if ($indexCartId) {
+            unset($params[$indexCartId]);
+            unset($params[$indexCartId + 1]);
+        }
+
+        if ($indexToken) {
+            unset($params[$indexToken]);
+            unset($params[$indexToken + 1]);
+        }
+
+        $checkoutUrl = implode("/", $params);
+
+        return $checkoutUrl;
     }
 
     /**

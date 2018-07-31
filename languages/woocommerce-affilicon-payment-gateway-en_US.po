@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce AffiliCon Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Fri Aug 28 2015 19:09:42 GMT+0200 (Central European "
-"Standard Time)\n"
+"POT-Creation-Date: 2018-07-31 05:20+0000\n"
 "POT-Revision-Date: Fri Aug 28 2015 19:09:58 GMT+0200 (Central European "
 "Standard Time)\n"
-"PO-Revision-Date: 2018-07-27 11:22+0000\n"
+"PO-Revision-Date: 2018-07-31 05:24+0000\n"
 "Last-Translator: hoevelmanns <info@artsolution.de>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -24,99 +23,97 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: class-woocommerce-other-payment-gateway.php:10 /class-woocommerce-other-
-#: payment-gateway.php:11 /class-woocommerce-other-payment-gateway.php:49
+#: AffiliconPaymentGateway.php:68 AffiliconPaymentGateway.php:69
 msgid "AffiliCon Payment"
 msgstr ""
 
-#: class-woocommerce-other-payment-gateway.php:40
-msgid "Enable/Disable"
-msgstr "Enable/Disable"
-
-#: class-woocommerce-other-payment-gateway.php:42
-msgid "Enable affilicon Payment"
-msgstr "Enable Affilicon Payment"
-
-#: class-woocommerce-other-payment-gateway.php:46
-msgid "Method Title"
-msgstr "Method Title"
-
-#: class-woocommerce-other-payment-gateway.php:48
-msgid "This controls the title"
-msgstr "This controls the title"
-
-#: class-woocommerce-other-payment-gateway.php:53
-msgid "Customer Message"
-msgstr "Customer Message"
-
-#: class-woocommerce-other-payment-gateway.php:56
-msgid ""
-"The message which you want it to appear to the customer in the checkout page."
-msgstr ""
-"The message which you want it to appear to the customer in the checkout page."
-
-#: class-woocommerce-other-payment-gateway.php:77
-msgid "Other Payment Settings"
-msgstr "Other Payment Settings"
-
-#: class-woocommerce-other-payment-gateway.php:96
-msgid "Awaiting payment"
+#: AffiliconPaymentGateway.php:92
+msgid "Please enter your affilicon product id"
 msgstr ""
 
-#: AffiliconPaymentGateway.php
-msgid "AffiliCon Payment Settings"
+#: AffiliconPaymentGateway.php:93
+msgid "AffiliCon Product-ID"
 msgstr ""
 
-#: AffiliconPaymentGateway.php
+#: AffiliconPaymentGateway.php:228
 msgid "Use AffiliCon Payment"
 msgstr "Use AffiliCon Payment"
 
-#: AffiliconPaymentGateway.php
-msgid "Use Sandbox"
-msgstr "Use Sandbox"
+#: AffiliconPaymentGateway.php:230 AffiliconPaymentGateway.php:242
+msgid "Enabled"
+msgstr "Enabled"
 
-#: AffiliconPaymentGateway.php
+#: AffiliconPaymentGateway.php:240
 msgid "Show Test Purchase payment method in checkout form"
 msgstr "Show Test Purchase payment method in checkout form"
 
-#: AffiliconPaymentGateway.php
+#: AffiliconPaymentGateway.php:246 AffiliconPaymentGateway.php:248
 msgid "Vendor ID"
 msgstr "Vendor ID"
 
-#: AffiliconPaymentGateway.php
-msgid "Secret Key"
-msgstr "Secret Key"
+#: AffiliconPaymentGateway.php:254 AffiliconPaymentGateway.php:256
+msgid "Checkout Version"
+msgstr "Checkout form version"
 
-#: AffiliconPaymentGateway.php
-msgid "Checkout Form Config ID"
-msgstr "Checkout form config id"
+#: AffiliconPaymentGateway.php:267
+msgid "Secret-Key"
+msgstr ""
 
-#: templates/admin_options.php
-msgid "Instructions for the plugin"
-msgstr "Instructions for the plugin"
+#: templates/admin_options.php:15
+msgid "AffiliCon Payment Settings"
+msgstr ""
 
-#: templates/admin_options.php
+#: templates/admin_options.php:35
 msgid "url-plugin-instructions"
 msgstr ""
 "https://affilicon.atlassian."
 "net/wiki/spaces/TECHWIKI/pages/127729744/Woocommerce+Gateway+Plugin"
 
-#: templates/admin_options.php
-msgid "Enabled"
-msgstr "Enabled"
+#: templates/admin_options.php:36
+msgid "Instructions for the plugin"
+msgstr "Instructions for the plugin"
 
-#: templates/payment_fields.php
-msgid "url-informations-about-affilicon"
-msgstr "https://www.affilicon.net/affilicon-service_en/"
-
-#: templates/payment_fields.php
-msgid "Further information about AffiliCon GmbH"
-msgstr "Further information about AffiliCon GmbH"
-
-#: templates/payment_fields.php
+#: templates/payment_fields.php:105
 msgid "Secure and comfortable payment with AffiliCon."
 msgstr "Pay <span class=\"text-color-affilicon\">securely</span> online."
 
-#: templates/payment_fields.php
+#: templates/payment_fields.php:113
+msgid "We accept the following payment methods:"
+msgstr ""
+
+#: templates/payment_fields.php:128
 msgid "You have a discount code? Add it in the next step."
 msgstr "You have a discount code? Add it in the next step."
+
+#: templates/payment_fields.php:135
+msgid "url-informations-about-affilicon"
+msgstr "https://www.affilicon.net/affilicon-service_en/"
+
+#: templates/payment_fields.php:136
+msgid "Further information about AffiliCon GmbH"
+msgstr "Further information about AffiliCon GmbH"
+
+#. Name of the plugin
+#. Description of the plugin
+msgid "WooCommerce Affilicon Payment Gateway"
+msgstr ""
+
+#. URI of the plugin
+msgid "affilicon.net"
+msgstr ""
+
+#. Author of the plugin
+msgid "Marcelle Hövelmanns, AffiliCon GmbH"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.affilicon.net"
+msgstr ""
+
+#. Checkout Version Option Single-Product
+msgid "Checkout form 3 (Single-Product-Version)"
+msgstr "Checkout form 3 (Single-Product-Version)"
+
+#. Checkout Version Option Cart Version
+msgid "Checkout form 3 (Cart-Version)"
+msgstr "Checkout form 3 (Cart-Version)"
