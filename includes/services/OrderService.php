@@ -103,26 +103,22 @@ class OrderService
 
     public function getCheckoutUrlLegacy()
     {
-        $checkoutUrl = $this->apiOrder->getCheckoutUrl();
+        /** @var \AffiliconApiClient\Client $client */
+        $client = \AffiliconApiClient\Client::getInstance();
 
-        $params = explode('/', $checkoutUrl);
+        $env = $client->getEnv();
 
-        $indexCartId = array_search('cartId', $params);
-        $indexToken = array_search('token', $params);
+        $prefillData = json_encode($this->apiOrder->collectPrefillData());
 
-        if ($indexCartId) {
-            unset($params[$indexCartId]);
-            unset($params[$indexCartId + 1]);
-        }
+        $encryptedPrefillData = urlencode($client->encrypt($prefillData));
 
-        if ($indexToken) {
-            unset($params[$indexToken]);
-            unset($params[$indexToken + 1]);
-        }
+        /** @var WC_Product $product */
+        $product = reset($this->wcOrder->get_items())->get_product();
 
-        $checkoutUrl = implode("/", $params);
+        $affiliconProductId = getMetaDataValue($product, 'affilicon_product_id');
 
-        return $checkoutUrl;
+        return $env->secure_url . "/{$client->getClientId()}/index?product=$affiliconProductId&language={$client->getUserLanguage()}&prefill=$encryptedPrefillData";
+
     }
 
     /**

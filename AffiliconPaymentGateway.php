@@ -107,20 +107,24 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
             return;
         }
 
-        /** @var \AffiliconApiClient\Client $affiliconClient */
-        $affiliconClient = \AffiliconApiClient\Client::getInstance();
+        /** @var \AffiliconApiClient\Client $apiClient */
+        $apiClient = \AffiliconApiClient\Client::getInstance();
 
         try {
 
-            $affiliconClient
+            $apiClient
                 ->setEnv($this->sandbox ? 'staging' : 'production')
                 ->setTestPurchase($this->testPurchase)
                 ->setSecretKey($this->itns_secret_key)
                 ->setCountryId('de')// todo get from woocommerce
                 ->setUserLanguage('de_DE')// todo get from wordpress/woocommerce
-                ->setFormConfigId($this->formConfigId)
-                ->setClientId($this->vendor_id)
-                ->init();
+                ->setClientId($this->vendor_id);
+
+            if (!$this->useLegacyCheckout()) {
+                $apiClient->setFormConfigId($this->formConfigId);
+            }
+
+            $apiClient->init();
 
         } catch (Exception $e) {
 
@@ -128,7 +132,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
         }
 
-        $this->itnsService = new ItnsService($affiliconClient);
+        $this->itnsService = new ItnsService($apiClient);
     }
 
     /**
@@ -142,14 +146,18 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
 
         $this->checkout = new OrderService($this->order);
 
-        switch ($this->checkoutVersion) {
-            case "3": {
-                return $this->process_payment_legacy();
-            }
-            case "3.1": {
-                return $this->process_payment_microservice();
-            }
+        if ($this->useLegacyCheckout()) {
+
+            return $this->process_payment_legacy();
+
         }
+
+        return $this->process_payment_microservice();
+    }
+
+    public function useLegacyCheckout() {
+
+        return $this->checkoutVersion === "3";
 
     }
 

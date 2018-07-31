@@ -237,7 +237,7 @@ class Order extends AbstractModel
      *
      * @return array
      */
-    protected function collectPrefillData()
+    public function collectPrefillData()
     {
         $customData = [
             'custom' => json_encode($this->getCustomData())
@@ -309,6 +309,16 @@ class Order extends AbstractModel
         ];
 
         return $baseUrl . "/" . join('/', $params) . "?prefill=$encryptedPrefillData";
+    }
+
+    /**
+     * Returns the prefill data
+     * @return array
+     */
+    public function getPrefillData() {
+
+        return $this->prefillData;
+
     }
 
 }
