@@ -3,7 +3,7 @@
  * Plugin Name:       WooCommerce Affilicon Payment Gateway
  * Plugin URI:        affilicon.net
  * Description:       WooCommerce Affilicon Payment Gateway
- * Version:           1.2.3
+ * Version:           1.2.4
  * Author:            Marcelle Hövelmanns, AffiliCon GmbH
  * Author URI:        http://www.affilicon.net
  * Text Domain:       woocommerce-affilicon-payment-gateway
