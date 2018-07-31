@@ -116,6 +116,7 @@ class OrderService
         $product = reset($this->wcOrder->get_items())->get_product();
 
         $affiliconProductId = getMetaDataValue($product, 'affilicon_product_id');
+
         $isSubscriptionProduct = getMetaDataValue($product, 'affilicon_product_is_subscription');
 
         $urlPath = $isSubscriptionProduct ? 'abo' : 'index';
