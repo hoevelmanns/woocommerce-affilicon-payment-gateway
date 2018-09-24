@@ -73,7 +73,7 @@ class AffiliconPaymentGateway extends WC_Payment_Gateway
         $this->has_fields = true;
         $this->enabled = $this->get_option('enabled');
         $this->title =  __('AffiliCon Payment', 'woocommerce-affilicon-payment-method-name');
-        $this->sandbox = $this->get_option('sandbox') !== 'no';
+        $this->sandbox = false; //$this->get_option('sandbox') !== 'no';
         $this->description = ""; //todo customer message necessary? $this->get_option('description');
         $this->testPurchase = $this->get_option('test_purchase') !== 'no';
         $this->checkoutVersion = $this->get_option('checkout_version');
